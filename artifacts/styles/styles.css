@@ -3,11 +3,34 @@
 			display: flex;
 			justify-content: left;
 			align-items: left;
-		}
+        }
+        
+        .right {
+			display: flex;
+			justify-content: right;
+			align-items: right;
+        }
+        
+        .head_element{
+            margin: 0.75rem;
+        }
 
 		.header{
-			padding: 0%;
+            height: 100%;
         }
+
+        .content{
+            min-height: 100%;
+        }
+
+        .navigation{
+            color: #FFF
+        }
+
+       .grid{
+        display: grid;
+        grid-template-columns:20% 80% ;   
+       }
 
         
         /* Font  ????*/
