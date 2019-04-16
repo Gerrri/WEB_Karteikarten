@@ -1,0 +1,66 @@
+
+		.left {
+			display: flex;
+			justify-content: left;
+			align-items: left;
+		}
+
+		.header{
+			padding: 0%;
+        }
+
+        
+        /* Font  ????*/
+        .text_Logo{
+            font-family: monospace;
+            font-size: 150%;
+            padding-left: 10%;
+        }
+     
+       
+
+
+        /* Colors */
+        .has_background_primary_grey{
+            background-color: #ECF0F1;
+        }
+
+        .has_background_primary_green{
+            background-color: #2ECC71;
+        }
+
+        .has_background_primary_yellow{
+            background-color: #FED330;
+        }
+
+        .has_background_primary_red{
+            background-color: #E74C3C;
+        }
+
+        .has_background_primary_blue{
+            background-color: #34495E;
+        }
+
+        .has_background_secondary_green{
+            background-color: #27AE60;
+        }
+
+        .has_background_secondary_yellow{
+            background-color: #F7B731;
+        }
+
+        .has_background_secondary_red{
+            background-color: #C0392B;
+        }
+
+        .has_background_secondary_blue{
+            background-color: #2C3E50;
+        }
+
+        .text_color_black{
+            color: #000;
+        }
+
+        .text_color_white{
+            color: #FFF;
+        }
