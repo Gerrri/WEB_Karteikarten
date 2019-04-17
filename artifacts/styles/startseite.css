@@ -1,0 +1,23 @@
+.Content_Box{
+	text-align: center;
+	margin: 30px;
+	margin-top: 60px;
+}
+
+.text_Willkommen{
+	font-size: 46px;
+	font-weight: bold;
+}
+
+.text_first_info{
+	font-size: 32px;
+}
+
+.text_Braintrain{
+	color: #27AE60;
+}
+
+.green_line{
+	min-height: 3px;
+	background-color: #27AE60;
+}

@@ -18,6 +18,7 @@
 
 		.col_content{
 			min-height: 100vh
+			
 		}
 	
 	
@@ -68,6 +69,11 @@
             font-weight: 600;
         }
      
+
+		.green_line{
+		min-height: 3px;
+		background-color: #27AE60;
+		}
        
 
 
@@ -115,3 +121,11 @@
         .text_color_white{
             color: #FFF !important;
         }
+
+		body {
+			background-color: #f5f5f5
+		}
+
+		.navbar_conf{
+			background-color: #f5f5f5
+		}
