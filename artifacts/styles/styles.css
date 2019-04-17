@@ -41,13 +41,20 @@
 		.menu_text{
 			text-align: left;
 		}
+
+		.logout_text{
+			font-size: 10px;
+
+		}
 	
 
-       .grid{
-        display: grid;
-        grid-template-columns:20% 80% ;   
-       }
-
+       
+       
+			
+		.profil_pic{
+			margin-top: 5px;
+			margin-right: 5px;
+		}
 	
 
 
