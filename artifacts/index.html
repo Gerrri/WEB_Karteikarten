@@ -8,85 +8,102 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
 		<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 		<link rel="stylesheet" href="styles/styles.css"> <!-- CSS eingebunden-->
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
 	</head>
 
 
-	<body>
-
-			<section class="hero has_background_primary_green">
-					<div class="hero-body ">
-					  <div class="container">
-							<div class="columns">
-									<div class="column is-one-fifth has_background_secondary_green">
-										<div class="columns">
-											<div class="column is-4">
-												<figure class="image">
-													<img src="Logo/Logo.svg" style="max-width: 50px ">
-												</figure>
-											</div>
-											<div class="column left" >
-													<h1 class="text_Logo is-hidden-touch" >BrainTrain</h1>
-											</div>
-										</div>
-									</div>
-									
-									<div class="column right ">
-											<input type="text" id="uname" name="name" class="head_element">
-											<input type="text" id="uname" name="name" class="head_element">
-											<button type="button" class="has_background_primary_yellow head_element">Login</button> 
-											<button type="button" class="has_background_primary_green head_element">Registrieren</button> 
-									</div>
-							</div>
-						
-					  </div>
-					</div>
-			</section>
-
-		<!-- .hero -->
-		<section class="hero">
-			
-				<div class="container">
-						<h1 class="title">
-							
-							  </h1>
-					<div class="columns">
-						<div class="column has_background_secondary_green is-one-fifth ">
-							<figure class="image left">
-								<img src="Logo/Logo.svg" style="max-width: 50px ">
-								<p class="text_Logo">BrainTrain</p>
-							</figure>
-						</div>
-						<div class="column has_background_primary_green">
-							<figure class="right">
-								<input type="text" id="uname" name="name" class="head_element">
-								<input type="text" id="uname" name="name" class="head_element">
-								<button type="button" class="has_background_primary_yellow head_element">Login</button> 
-								<button type="button" class="has_background_primary_green head_element">Registrieren</button> 
-									
-							</figure>
-						</div>
-					
-					</div>
-			
-				
-			</div>
-		</section>
-		<!-- /.hero -->
-
-		<!-- /.section -->
-
-		<section class="section">
-				<div class="container is-fluid">
-					<div class="columns" >
-						<div class="column has_background_secondary_blue content is-one-fifth navigation"></div>
-						<div class="column has_background_primary_grey content"></div>
-					</div>
-				</div>
-		</section>
-
-
+	<body >
 		
-		<!-- /.section -->
+<!-- Navbar -->
+			<nav class="navbar is-transparent ">
+				<div class="container has_background_primary_green">
+					<div class="navbar-brand has_background_secondary_green is-marginless" style="width: 20%">
+						<a class="navbar-item" href="index.html" >
+							<img src="Logo/Logo.svg"/>
+							<h1 class="text_Logo" ><span>Brain</span>Train</h1>
+						</a>
+						
+						<!-- HAMBURGER 
+						<div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+						 /HAMBURGER -->
+						
+					</div>
+				
+					<div id="navbarExampleTransparentExample " class="navbar-menu is-marginless">
+						<div class="navbar-start">
+							<a class="navbar-item" href="https://bulma.io/">
+								
+							</a>
+						</div>
+				
+						<div class="navbar-end">
+						   <div class="navbar-item">
+						   <input class="input is-primary control head_element" type="text" placeholder="Username">
+						   <input class="input is-primary control head_element" type="password" placeholder="Password">
+						   <a href="#" class="button is-warning head_element">Login</a>
+						   <a href="#" class="button is-success head_element">Registrieren</a> 
+						   </div>
+	 					</div>
+					</div> 
+				</div>
+			</nav>
+<!-- /Navbar -->
+
+
+
+	   
+
+
+
+	
+
+
+
+
+
+					
+	
+		<!-- section -->
+			  <section class="container has_background_primary_blue">
+				
+			    <div class="columns is-marginless text_color_white">
+					  <div class="column container is-one-fifth col_menu">
+						  <aside class="menu">
+						    <ul class="menu-list ">
+								<li>
+									<a class="text_color_white">
+										<div class="columns">
+											<div class="column is-one-fifth"><img class="menu_icon" src="Icons/Home.svg"/></div>
+											<div class="column"><p >Home</p></div>
+										</div>
+									</a>
+							  </li>
+								
+								<li>
+									<a class="text_color_white">
+										<div class="columns">
+											<div class="column is-one-fifth"><img class="menu_icon" src="Icons/Karteikasten.svg"/></div>
+											<div class="column"><p >Karteikasten</p></div>
+											<div class="column"><span class="tag is-success">22</span></div>
+										</div>
+									</a>
+							  </li>
+							  </ul>					  
+						  </aside>
+				  </div>
+					  
+					  <div class="column is-marginles has_background_primary_grey text_color_black col_content">&nbsp;</div>
+				  </div>
+					
+					
+				
+			  </section>
+		<!-- /section -->
 
 	</body>
 </html>

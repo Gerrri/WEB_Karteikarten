@@ -1,5 +1,6 @@
-
-		.left {
+		
+        
+        .left {
 			display: flex;
 			justify-content: left;
 			align-items: left;
@@ -10,9 +11,15 @@
 			justify-content: right;
 			align-items: right;
         }
-        
+
+
+		.col_content{
+			min-height: 100vh
+		}
+	
+	
         .head_element{
-            margin: 0.75rem;
+            margin-right: 0.75rem;
         }
 
 		.header{
@@ -27,17 +34,32 @@
             color: #FFF
         }
 
+		.menu_icon{
+			max-width: 20px;
+		}
+
+		.menu_text{
+			text-align: left;
+		}
+	
+
        .grid{
         display: grid;
         grid-template-columns:20% 80% ;   
        }
 
-        
+	
+
+
         /* Font  ????*/
         .text_Logo{
-            font-family: monospace;
-            font-size: 150%;
+            font-family: Roboto extralight, sans-serif;
+            font-size: 1.5rem;
             padding-left: 10%;
+            color: white;
+        }
+        .text_Logo span {
+            font-weight: 600;
         }
      
        
@@ -85,5 +107,5 @@
         }
 
         .text_color_white{
-            color: #FFF;
+            color: #FFF !important;
         }
