@@ -12,6 +12,9 @@
 			align-items: right;
         }
 
+		.navbar{
+			min-height: 55px;
+		}		
 
 		.col_content{
 			min-height: 100vh
@@ -47,10 +50,6 @@
 
 		}
 	
-
-       
-       
-			
 		.profil_pic{
 			margin-top: 5px;
 			margin-right: 5px;
