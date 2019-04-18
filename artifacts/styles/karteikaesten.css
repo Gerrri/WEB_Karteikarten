@@ -1,0 +1,117 @@
+.text_headline{
+	font-size: 30px;
+	font-weight: bold;
+}
+.text_headline_klein{
+	
+}
+
+.col_content{
+	padding-left: 25px;
+	padding-right: 25px;
+}
+
+.dropdown_sort{
+	width: 100%;
+	padding-top: 10px;
+	min-height: 75px;
+	
+}
+.kategorie_head{
+	font-weight: bold;
+	font-size: 22px;
+	margin-top: 25px;
+}
+
+.kartei{
+	padding: 5px;
+}
+
+.kartei_head{
+	text-align: center;
+	font-weight: bold;
+	color: #FFF;
+}
+
+.kartei_content_head{
+	margin-left: 8px;
+	margin-right: 8px;
+	margin-top: 8px;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.kartei_content{
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.kartei_button{
+	width: 50%;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	margin-left: 25%;
+		
+}
+
+.suche{
+
+	margin-left: 10px;
+}
+
+
+#hex_text{
+	margin-top: 16%;
+	margin-left: 3%;
+	z-index: 1;
+	position: relative;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#hex1 {
+  width: 40px;
+  height: 40px;
+  margin-left: 25%;
+  margin-top: 25%;
+  color:#FFF;
+}
+
+#color1 {
+  background-color: #27AE60; 
+}
+
+.hexagon-wrapper {
+  text-align: center;
+  margin: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+.hexagon {
+  height: 100%;
+  width: calc(100% * 0.57735);
+  display: inline-block;
+}
+
+.hexagon:before {
+  position: absolute;
+  top: 0;
+  right: calc((100% / 2) - ((100% * 0.57735) / 2));
+  background-color: inherit;
+  height: inherit;
+  width: inherit;
+  content: '';
+  transform: rotateZ(60deg);
+}
+
+.hexagon:after {
+  position: absolute;
+  top: 0;
+  right: calc((100% / 2) - ((100% * 0.57735) / 2));
+  background-color: inherit;
+  height: inherit;
+  width: inherit;
+  content: '';
+  transform: rotateZ(-60deg);
+}

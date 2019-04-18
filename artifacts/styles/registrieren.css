@@ -1,6 +1,4 @@
-.text_registrieben{
-	
-}
+
 
 .Content_Box{
 	text-align: left;
@@ -9,9 +7,6 @@
 	
 }
 
-.text_input{
-	
-}
 
 .text_headline{
 	margin-left: 20px;
@@ -23,18 +18,26 @@
 	padding: 12px;
 }
 
+.info_text{
+	font-size: 14px; 
+}
+
 
 
 .input_fields{
-	
-  
-    
+	margin-left:10%;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
 
 
 
 .input_field{
 	max-width: 400px;
+}
+
+.btn_registrieren{
+	width: 50%
 }
 
 
