@@ -1,0 +1,16 @@
+.Content_Box_reg{
+	text-align: center;
+	margin: 15%;
+	margin-top: 5%;
+}
+
+.col_content{
+	min-height: 100vh;
+	padding-left: 3%;
+}
+
+.mod_content{
+	text-align:  left;
+	padding: 2%;
+}
+

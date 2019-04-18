@@ -1,4 +1,12 @@
+		.text_headline{
+			font-size: 30px;
+			font-weight: bold;
+		}
 		
+		.text_headline_klein{
+			
+		}
+
         
         .left {
 			display: flex;
