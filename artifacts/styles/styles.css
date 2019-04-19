@@ -84,6 +84,10 @@ img {
     display: inline;
 }
 
+.text_size_120{
+    font-size: 120%;
+}
+
 .text_size_200{
     font-size: 200%;
 }
