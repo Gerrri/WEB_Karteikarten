@@ -10,11 +10,25 @@
 		<link rel="stylesheet" href="styles/styles.css"> <!-- CSS eingebunden-->
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 		<link rel="stylesheet" href="styles/modkarteikasten2.css"> <!-- CSS eingebunden-->
-	</head>
+		
+		
+		<!-- Einbinden simplemde -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+		<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+		
+		
 
+	
+		
+		
+	</head>
+<!--JavaScript -->
 
 	<body >
+
+
 		
+	
 <!-- Navbar -->
 			<nav class="navbar is-transparent ">
 				<div class="container has_background_primary_green">
@@ -117,10 +131,73 @@
 						  <h1 class="text_headline">Karteikasten erstellen / Karteikasten bearbeiten</h1>
 						  <p>Hier kannst du eine neue Kartei erstellen oder eine vorhandene nach Bedarf bearbeiten.</p>
 						  	
-						  <div class="has-background-dark uebersicht" >a</div>
+						  <div class="has_background_light uebersicht" >
+							  <div class="green_line"></div>a
+						  </div>
+						  
 						  <div class="columns is-marginless text_karten">
-						  		<div style="padding-right: " class="column has-background-info is-one-third">a</div>
-							    <div class="column has-background-danger">b</div>
+							  	<div class="column  is-paddingless is-3 card_container"> 
+							  		<div class="columns is-marginless text_karten is-multiline">
+										<!-- Karteikarten -->
+							  			<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div> a</div>
+										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div> a</div>
+										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div> a</div>
+										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div> a</div>
+										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div> a</div>
+										
+									</div>
+							  	</div>
+							  
+							  
+							    <div class="column has_background_light is-paddingless edit_cards"><div class="green_line"> </div> 
+									
+							  		<div class="field is-horizontal edit_fields">
+									  <div class="field-label is-normal">
+										<label class="label">Titel</label>
+									  </div>
+									  <div class="field-body">
+										<div class="field">
+										  <p class="control">
+											<input class="input " type="text"  readonly>
+										  </p>
+										</div>
+									  </div>
+									</div>
+
+									<div class="field is-horizontal edit_fields">
+									  <div class="field-label is-normal">
+										<label class="label">Frage</label>
+									  </div>
+									  <div class="field-body">
+										<div class="field">
+										  <p class="control">
+											<textarea id="textarea_frage" class="textarea" placeholder=""></textarea>
+										  </p>
+										</div>
+									  </div>
+									</div>
+									
+									<div class="field is-horizontal edit_fields" style="margin-bottom: 5%">
+									  <div class="field-label is-normal">
+										<label class="label">Antwort</label>
+									  </div>
+									  <div class="field-body">
+										<div class="field">
+										  <p class="control">
+											<textarea id="textarea_antwort" class="textarea" placeholder=""></textarea>
+										  </p>
+										</div>
+									  </div>
+									</div>
+											<a href="" class="button is-warning is-center" style="margin-left: 40%; margin-bottom: 5%">Speichern</a>
+											<a class="button is-danger is-center" style="margin-left: 2%">Abbrechen</a>
+							  	 </div>
+							  
+							  	<script>
+											var simplemde = new SimpleMDE({ element: document.getElementById("textarea_frage") });
+											var simplemde2 = new SimpleMDE({ element: document.getElementById("textarea_antwort") });
+								</script>	
+						  		
 						  </div>
 					  </div>
 				  </div>

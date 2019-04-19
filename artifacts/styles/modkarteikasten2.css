@@ -2,3 +2,30 @@
 	min-height: 100vh;
 	padding-left: 3%;
 }
+
+.uebersicht{
+	margin-bottom: 2%;
+	margin-top: 2%;
+}
+
+.text_karten{
+	
+}
+
+.card{
+	margin-bottom: 7%;
+}
+
+.edit_cards{
+	margin-left: 2%;
+	margin-bottom: 1%;
+}
+
+.edit_fields{
+	margin-right: 5%;
+	margin-top: 3%
+}
+
+.card_container{
+	
+}
