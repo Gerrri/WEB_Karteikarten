@@ -1,0 +1,162 @@
+.card_column{
+	margin: 0;
+	padding: 0;
+}
+
+.wd_column{
+	margin: 0;
+	margin-top: 5%;
+	padding: 0;
+}
+
+.col_content{
+	min-height: 100vh;
+	padding-left: 3%;
+}
+
+.uebersicht{
+	margin-bottom: 2%;
+	margin-top: 2%;
+}
+
+.text_karten{
+	
+}
+
+.btm_bearbeiten_head{
+	margin-top: 14%;
+	margin-left: 25%;
+}
+
+
+.btn_del_bearbeiten{
+	margin-right: 4%;
+	margin-bottom: 5%;
+	margin-top: 4%
+		
+}
+
+.card_number{
+	margin-left: 2%;
+	margin-top: 1%;
+}
+
+.card_titel{
+	font-weight: bold;
+	margin-left: 2%;
+}
+
+.card{
+	margin-bottom: 7%;
+}
+
+.edit_cards{
+	margin-left: 2%;
+	margin-bottom: 1%;
+}
+
+.edit_fields{
+	margin-right: 5%;
+	margin-top: 3%
+}
+
+.lern_cards{
+	margin: 6%
+}
+
+.card_container{
+	
+}
+#hex_text3{
+	margin-top: 16%;
+	margin-left: 3%;
+	z-index: 1;
+	position: relative;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#hex3 {
+  width: 40px;
+  height: 40px;
+  margin-left: 15%;
+  margin-top: 27%;
+  color:#FFF;
+}
+
+#color3 {
+  background-color: #27AE60; 
+}
+
+#hex_text{
+	margin-top: 16%;
+	margin-left: 3%;
+	z-index: 1;
+	position: relative;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#hex1 {
+  width: 40px;
+  height: 40px;
+  margin-left: 25%;
+  margin-top: 15%;
+  color:#FFF;
+}
+
+#color1 {
+  background-color: #27AE60; 
+}
+
+#hex_text2{
+	z-index: 1;
+	position: relative;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#hex2 {
+  width: 30px;
+  height: 30px;
+  color:#FFF;
+  margin: 1%;
+}
+
+#color2 {
+  background-color: #2C3E50; 
+}
+
+.hexagon-wrapper {
+  text-align: center;
+  position: relative;
+  display: inline-block;
+}
+
+.hexagon {
+  height: 100%;
+  width: calc(100% * 0.57735);
+  display: inline-block;
+}
+
+.hexagon:before {
+  position: absolute;
+  top: 0;
+  right: calc((100% / 2) - ((100% * 0.57735) / 2));
+  background-color: inherit;
+  height: inherit;
+  width: inherit;
+  content: '';
+  transform: rotateZ(60deg);
+}
+
+.hexagon:after {
+  position: absolute;
+  top: 0;
+  right: calc((100% / 2) - ((100% * 0.57735) / 2));
+  background-color: inherit;
+  height: inherit;
+  width: inherit;
+  content: '';
+  transform: rotateZ(-60deg);
+}
