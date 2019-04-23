@@ -9,9 +9,9 @@
 		<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 		<link rel="stylesheet" href="styles/styles.css"> <!-- CSS eingebunden-->
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-		<link rel="stylesheet" href="bulma-0.7.4/css/bulma.min.css"> <!-- bulma local eingebunden -->
-		<link rel="stylesheet" href="styles/modkarteikasten2.css"> <!-- CSS eingebunden-->
+		<link rel="stylesheet" href="styles/showKarteikarten.css"> <!-- CSS eingebunden-->
 		
+		<link rel="stylesheet" href="bulma-0.7.4/css/bulma.min.css"> <!-- bulma local eingebunden -->
 		
 		<!-- Einbinden simplemde -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
@@ -34,20 +34,10 @@
 			<nav class="navbar is-transparent ">
 				<div class="container has_background_primary_green">
 					<div class="navbar-brand has_background_secondary_green is-marginless" style="width: 20%">
-						<a class="navbar-item" href="L_home.html" >
+						<a class="navbar-item" href="nL_home.html" >
 							<img src="Logo/Logo.svg"/>
-							<h1 class="text_Logo"><span>Brain</span>Trainasdasdasd</h1>
-							<p>asdasda </p>
+							<h1 class="text_Logo" ><span>Brain</span>Train</h1>
 						</a>
-						
-						<!-- HAMBURGER 
-						<div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
-							<span></span>
-							<span></span>
-							<span></span>
-						</div>
-						 /HAMBURGER -->
-						
 					</div>
 				
 					<div id="navbarExampleTransparentExample " class="navbar-menu is-marginless">
@@ -59,25 +49,17 @@
 				
 						<div class="navbar-end">
 						   <div class="navbar-item">
-						   		<a href="L_modkarteikasten1.html" style="margin-right: 100px" class="button is-warning head_element">Neue Kartei</a>
-								
-							   	<div class="columns" style="text-align: right">
-							   		<div class="column">
-										<p class="text_color_black"><nobr>Max Mustermann</nobr></p>
-										<a href="nL_home.html" class="text_color_black"><p class="logout_text">Logout</p></a>
-									</div>
-							   		<div class="column profil_pic" >
-										<img  src="Icons/Mein-Profil.svg"/>
-									</div>
-							    </div>
-						
+						   <input class="input is-primary control head_element" type="text" placeholder="Username">
+						   <input class="input is-primary control head_element" type="password" placeholder="Password">
+						   <a href="L_meinekarteikaesten.html" class="button is-warning head_element">Login</a>
+						   <a href="nL_registrieren.html" class="button is-success head_element">Registrieren</a> 
 						   </div>
 	 					</div>
 					</div> 
 				</div>
 			</nav>
-<!-- /Navbar -->		
-	
+<!-- /Navbar -->
+
 <!--  MENU  -->
 			  <section class="container has_background_primary_blue">
 				
@@ -86,7 +68,7 @@
 						  <aside class="menu">
 						    <ul class="menu-list ">
 								<li>
-									<a href="L_home.html" class="menuitem text_color_white">
+									<a href="nL_home.html" class="menuitem text_color_white">
 										<div class="columns">
 											<div class="column is-2"><img class="menu_icon" src="Icons/Home.svg"/></div>
 											<div class="column"><p >Home</p></div>
@@ -95,7 +77,7 @@
 							    </li>
 								
 								<li>
-									<a href="L_karteikaesten.html" class="menuitem text_color_white">
+									<a href="nL_karteikaesten.html" class="menuitem text_color_white">
 										<div class="columns">
 											<div class="column is-2"><img class="menu_icon" src="Icons/Karteikasten.svg"/></div>
 											<div class="column"><p >Karteikasten</p></div>
@@ -105,33 +87,14 @@
 							    </li>
 								
 								
-								<li>
-									<a href="L_meinekarteikaesten.html" class="menuitem text_color_white">
-										<div class="columns">
-											<div class="column is-2"><img class="menu_icon" src="Icons/Meine-Karteien.svg"/></div>
-											<div class="column"><p >Meine Karteikästen</p></div>
-											<div class="column is-2"><span class="tag is-success">3</span></div>
-										</div>
-									</a>
-							    </li>
-								
-								<li>
-									<a href="L_meinprofil.html" class="menuitem text_color_white">
-										<div class="columns">
-											<div class="column is-2"><img class="menu_icon" src="Icons/Mein-Profil.svg"/></div>
-											<div class="column"><p >Mein Profil</p></div>
-										</div>
-									</a>
-							    </li>
-								
 							  </ul>					  
 						  </aside>
 					</div>
 <!--  /MENU  -->
 					  
 					  <div class="column is-marginles has_background_primary_grey text_color_black col_content">
-						  <h1 class="text_headline">Karteikasten erstellen / Karteikasten bearbeiten</h1>
-						  <p>Hier kannst du eine neue Kartei erstellen oder eine vorhandene nach Bedarf bearbeiten.</p>
+					    <h1 class="text_headline">Karteikasten anschauen</h1>
+					    <p>Hier kannst du dir beliebeige Karteikarten anscheuen ohne Sie zu bearbeiten.</p>
 						  	
 						  <div class="has_background_light uebersicht" >
 							  <div class="green_line"></div>
@@ -148,11 +111,14 @@
 								  	</div>
 								  
 								  	<div class="column is-2">
-								  		<p  class="card_number">Fortschritt</p>
-										<h1 class="card_titel">0%</h1>
+								  	  <p class="card_number">Erstellt von</p>
+								  	  <h1 class="card_titel">Gunter Müller</h1>
 								  	</div>
 								  	
-								  <div class="column is-2">  <a class="button is-success is-small btm_bearbeiten_head">Bearbeiten</a> </div>
+								  <div class="column is-2">
+								  	  <p class="card_number">Fortschriit</p>
+								  	  <h1 class="card_titel">12%</h1>
+								  </div>
 								  <div class="column is-2 is-paddingless">
 								  				<div id="hex1" class="hexagon-wrapper">
 													<div id="color1" class="hexagon"><h1 id="hex_text">22</h1> </div>
@@ -167,48 +133,25 @@
 										<!-- Karteikarten -->
 							  			<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
 											<p  class="card_number">#1</p>
-											<h1 class="card_titel">Titel der Karte</h1>
-											
-											<a href="" class="button is-small is-danger is-pulled-right btn_del_bearbeiten" ><img class="menu_icon" src="Icons/Delete.svg"></a>
-											<a href="" class="button is-small is-success is-pulled-right btn_del_bearbeiten">Bearbeiten</a>
-											
+											<h1 class="card_titel" style="margin-bottom: 10%">Titel der Karte</h1>
 										</div>
 										
 										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
 											<p  class="card_number">#2</p>
-											<h1 class="card_titel">Titel der Karte</h1>
-											
-											<a href="" class="button is-small is-danger is-pulled-right btn_del_bearbeiten" ><img class="menu_icon" src="Icons/Delete.svg"></a>
-											<a href="" class="button is-small is-success is-pulled-right btn_del_bearbeiten">Bearbeiten</a>
-											
+											<h1 class="card_titel" style="margin-bottom: 10%">Titel der Karte</h1>
 										</div>
 										
 										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
 											<p  class="card_number">#3</p>
-											<h1 class="card_titel">Titel der Karte</h1>
-											
-											<a href="" class="button is-small is-danger is-pulled-right btn_del_bearbeiten" ><img class="menu_icon" src="Icons/Delete.svg"></a>
-											<a href="" class="button is-small is-success is-pulled-right btn_del_bearbeiten">Bearbeiten</a>
-											
+											<h1 class="card_titel" style="margin-bottom: 10%">Titel der Karte</h1>
 										</div>
 										
 										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
 											<p  class="card_number">#4</p>
-											<h1 class="card_titel">Titel der Karte</h1>
-											
-											<a href="" class="button is-small is-danger is-pulled-right btn_del_bearbeiten" ><img class="menu_icon" src="Icons/Delete.svg"></a>
-											<a href="" class="button is-small is-success is-pulled-right btn_del_bearbeiten">Bearbeiten</a>
-											
+											<h1 class="card_titel" style="margin-bottom: 10%">Titel der Karte</h1>
 										</div>
 										
-										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
-											<p  class="card_number">#5</p>
-											<h1 class="card_titel">Titel der Karte</h1>
-											
-											<a href="" class="button is-small is-danger is-pulled-right btn_del_bearbeiten" ><img class="menu_icon" src="Icons/Delete.svg"></a>
-											<a href="" class="button is-small is-success is-pulled-right btn_del_bearbeiten">Bearbeiten</a>
-											
-										</div>
+										
 										
 									</div>
 							  	</div>
@@ -216,14 +159,49 @@
 							  
 							    <div class="column has_background_light is-paddingless edit_cards"><div class="green_line"> </div> 
 									
+									<div class="field is-horizontal edit_fields">
+									  <div class="field-label is-normal">
+										<label class="label"></label>
+									  </div>
+									  <div class="field-body" style="padding-top: 1%;font-weight: bold;">
+										<div class="field">
+										  <p class="control">
+											  
+											  
+											<div id="hex2" class="hexagon-wrapper">
+													<div id="color2" class="hexagon"><h1 id="hex_text2">0</h1> </div>
+											</div>
+											
+											<div id="hex2" class="hexagon-wrapper">
+													<div id="color2" class="hexagon"><h1 id="hex_text2">1</h1> </div>
+											</div>
+											
+											<div id="hex2" class="hexagon-wrapper">
+													<div id="color1" class="hexagon"><h1 id="hex_text2">2</h1> </div>
+											</div>
+											
+											<div id="hex2" class="hexagon-wrapper">
+													<div id="color2" class="hexagon"><h1 id="hex_text2">3</h1> </div>
+											</div>
+											
+											<div id="hex2" class="hexagon-wrapper">
+													<div id="color2" class="hexagon"><h1 id="hex_text2">4</h1> </div>
+											</div>
+											
+											
+										  </p>
+										</div>
+									  </div>
+									</div>
+									
 							  		<div class="field is-horizontal edit_fields">
 									  <div class="field-label is-normal">
 										<label class="label">Titel</label>
 									  </div>
-									  <div class="field-body">
+									  <div class="field-body" style="padding-top: 1%;font-weight: bold;">
 										<div class="field">
 										  <p class="control">
-											<input class="input " type="text"  readonly>
+											<p>Titel der Karte</p>
 										  </p>
 										</div>
 									  </div>
@@ -233,10 +211,10 @@
 									  <div class="field-label is-normal">
 										<label class="label">Frage</label>
 									  </div>
-									  <div class="field-body">
+									  <div class="field-body" style="padding-top: 1%;">
 										<div class="field">
 										  <p class="control">
-											<textarea id="textarea_frage" class="textarea" placeholder=""></textarea>
+											Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 										  </p>
 										</div>
 									  </div>
@@ -246,16 +224,15 @@
 									  <div class="field-label is-normal">
 										<label class="label">Antwort</label>
 									  </div>
-									  <div class="field-body">
+									  <div class="field-body" style="padding-top: 1%;">
 										<div class="field">
 										  <p class="control">
-											<textarea id="textarea_antwort" class="textarea" placeholder=""></textarea>
+											Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 										  </p>
 										</div>
 									  </div>
 									</div>
-											<a href="#" class="button is-warning is-center" style="margin-left: 40%; margin-bottom: 5%">Speichern</a>
-											<a href="#" class="button is-danger is-center" style="margin-left: 2%">Abbrechen</a>
+										
 							  	 </div>
 							  
 							  	<script>
