@@ -9,7 +9,9 @@
 		<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 		<link rel="stylesheet" href="styles/styles.css"> <!-- CSS eingebunden-->
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
+		<!-- Einbinden simplemde -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+        <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 	</head>
 
 
@@ -291,11 +293,26 @@
 												<li class="is-marginless has-background-white">
 													<div class="columns is-marginless">
 														<div class="column is-2" style="text-align: rigth;">
-															<p>Titel</p>
+															<p>Antwort</p>
 														</div>
 														<div class="column is-10"> 
-															<input type="text" style="width:100%"> 
+																<textarea id="textarea_antwort" class="textarea" placeholder=""></textarea>
 														</div>
+													</div>
+												</li>
+												<li class="is-marginless has-background-white">
+													<div class="columns is-marginless">
+														<div class="column is-2" style="text-align: rigth;">
+															<p>Frage</p>
+														</div>
+														<div class="column is-10"> 
+																<textarea id="textarea_frage" class="textarea" placeholder=""></textarea>
+														</div>
+														<script>
+																var simplemde = new SimpleMDE({ element: document.getElementById("textarea_frage") });
+																var simplemde2 = new SimpleMDE({ element: document.getElementById("textarea_antwort") });
+														</script>
+												
 													</div>
 												</li>
 											</ul>
@@ -310,6 +327,6 @@
 				
 			  </section>
 		<!-- /section -->
-
+		
 	</body>
 </html>
