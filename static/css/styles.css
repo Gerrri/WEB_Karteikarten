@@ -1,0 +1,474 @@
+/* --- styles.css --- */
+	.text_headline{
+		font-size: 30px;
+		font-weight: bold;
+	}
+	
+	.text_headline_klein{
+		
+	}
+
+	
+	.left {
+		display: flex;
+		justify-content: left;
+		align-items: left;
+	}
+	
+	.right {
+		display: flex;
+		justify-content: right;
+		align-items: right;
+	}
+
+	.navbar{
+		min-height: 55px;
+	}		
+
+	.col_content{
+		min-height: 100vh
+		
+	}
+
+
+	.head_element{
+		margin-right: 0.75rem;
+	}
+
+	.header{
+		height: 100%;
+	}
+
+	.content{
+		min-height: 100%;
+	}
+
+	.navigation{
+		color: #FFF
+	}
+
+	.menu_icon{
+		max-width: 20px;
+	}
+
+	.menu_text{
+		text-align: left;
+	}
+
+	.logout_text{
+		font-size: 10px;
+	}
+
+	.profil_pic{
+		margin-top: 5px;
+		margin-right: 5px;
+	}
+
+
+
+	/* Font  ????*/
+	.text_Logo{
+		font-family: Roboto extralight, sans-serif;
+		font-size: 1.5rem;
+		padding-left: 10%;
+		color: white;
+	}
+	.text_Logo span {
+		font-weight: 600;
+	}
+ 
+
+	.green_line{
+	min-height: 3px;
+	background-color: #27AE60;
+	}
+   
+
+
+	/* Colors */
+	.has_background_primary_grey{
+		background-color: #ECF0F1;
+	}
+
+	.has_background_primary_green{
+		background-color: #2ECC71;
+	}
+
+	.has_background_primary_yellow{
+		background-color: #FED330;
+	}
+
+	.has_background_primary_red{
+		background-color: #E74C3C;
+	}
+
+	.has_background_primary_blue{
+		background-color: #34495E;
+	}
+
+	.has_background_secondary_green{
+		background-color: #27AE60;
+	}
+
+	.has_background_secondary_yellow{
+		background-color: #F7B731;
+	}
+
+	.has_background_secondary_red{
+		background-color: #C0392B;
+	}
+
+	.has_background_secondary_blue{
+		background-color: #2C3E50;
+	}
+
+	.text_color_black{
+		color: #000;
+	}
+
+	.text_color_white{
+		color: #FFF !important;
+	}
+
+	body {
+		background-color: #f5f5f5
+	}
+	
+	.has_background_light{
+		background-color: #f5f5f5
+	}
+	
+	.navbar{
+		background-color: #f5f5f5
+	}
+
+	.navbar_conf{
+		background-color: #f5f5f5
+	}
+/* --- /styles.css --- */
+
+
+
+
+/* --- karteikaesten.css --- */
+	.col_content_kk{
+		padding-left: 25px;
+		padding-right: 25px;
+	}
+	
+	.dropdown_sort{
+		width: 100%;
+		padding-top: 10px;
+		min-height: 75px;
+		
+	}
+	.kategorie_head{
+		font-weight: bold;
+		font-size: 22px;
+		margin-top: 25px;
+	}
+
+	.kartei{
+		padding: 5px;
+	}
+
+	.kartei_head{
+		text-align: center;
+		font-weight: bold;
+		color: #FFF;
+	}
+
+	.kartei_content_head{
+		margin-left: 8px;
+		margin-right: 8px;
+		margin-top: 8px;
+		font-weight: bold;
+		font-size: 18px;
+	}
+
+	.kartei_content{
+		margin-left: 8px;
+		margin-right: 8px;
+	}
+
+	.kartei_button{
+		width: 50%;
+		margin-top: 5%;
+		margin-bottom: 5%;
+		margin-left: 25%;		
+	}
+	
+	.suche{
+	margin-left: 10px;
+	}
+	
+	#hex1_kk {
+	  width: 40px;
+	  height: 40px;
+	  margin-left: 25%;
+	  margin-top: 25%;
+	  color:#FFF;
+	}
+	
+	
+/* --- /karteikaesten.css --- */
+
+
+
+/* --- lernen.css --- */
+	.hexagon-wrapper-lernen {
+	  text-align: center;
+	  position: relative;
+	  display: inline-block;
+	}
+	
+	.card_column{
+		margin: 0;
+		padding: 0;
+	}
+
+	.wd_column{
+		margin: 0;
+		margin-top: 5%;
+		padding: 0;
+	}
+
+	.lern_cards{
+		margin: 6%
+	}
+
+
+/* --- /lernen.css --- */
+
+
+/* --- modkarteikaesten.css --- */
+
+	.Content_Box_reg{
+		text-align: center;
+		margin: 15%;
+		margin-top: 5%;
+	}
+
+	.mod_content{
+		text-align:  left;
+		padding: 2%;
+	}
+
+/* --- /modkarteikaesten.css --- */
+
+
+
+
+
+
+/* --- registrieren.css --- */
+		.Content_Box{
+			text-align: left;
+			margin: 30px;
+			margin-top: 30px;
+			
+		}
+
+		.text_headline{
+			margin-left: 20px;
+			font-size: 30px;
+			font-weight: bold;
+		}
+
+		.text_registrieren{
+			padding: 12px;
+		}
+
+		.info_text{
+			font-size: 14px; 
+		}
+
+		.input_fields{
+			margin-left:10%;
+			margin-top: 30px;
+			margin-bottom: 30px;
+		}
+
+		.input_field{
+			max-width: 400px;
+		}
+
+		.btn_registrieren{
+			width: 50%
+		}
+/* --- /registrieren.css --- */
+
+
+
+/* --- showKarteikarten.css modkarteikaesten2.css --- */
+
+		.col_content{
+			min-height: 100vh;
+			padding-left: 3%;
+		}
+
+		.uebersicht{
+			margin-bottom: 2%;
+			margin-top: 2%;
+		}
+
+		.btm_bearbeiten_head{
+			margin-top: 14%;
+			margin-left: 25%;
+		}
+
+		.btn_del_bearbeiten{
+			margin-right: 4%;
+			margin-bottom: 5%;
+			margin-top: 4%	
+		}
+
+		.card_number{
+			margin-left: 2%;
+			margin-top: 1%;
+		}
+
+		.card_titel{
+			font-weight: bold;
+			margin-left: 2%;
+		}
+
+		.card{
+			margin-bottom: 7%;
+		}
+
+		.edit_cards{
+			margin-left: 2%;
+			margin-bottom: 1%;
+		}
+
+		.edit_fields{
+			margin-right: 5%;
+			margin-top: 3%
+		}
+
+
+		#hex_text{
+			margin-top: 16%;
+			margin-left: 3%;
+			z-index: 1;
+			position: relative;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		#hex1 {
+		  width: 40px;
+		  height: 40px;
+		  margin-left: 25%;
+		  margin-top: 15%;
+		  color:#FFF;
+		}
+
+		#color1 {
+		  background-color: #27AE60; 
+		}
+
+		#hex_text2{
+			z-index: 1;
+			position: relative;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		#hex2 {
+		  width: 30px;
+		  height: 30px;
+		  color:#FFF;
+		  margin: 1%;
+		}
+
+		#color2 {
+		  background-color: #2C3E50; 
+		}
+		
+		#hex_text3{
+			margin-top: 16%;
+			margin-left: 3%;
+			z-index: 1;
+			position: relative;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		#hex3 {
+		  width: 40px;
+		  height: 40px;
+		  margin-left: 15%;
+		  margin-top: 27%;
+		  color:#FFF;
+		}
+
+		#color3 {
+		  background-color: #27AE60; 
+		}
+
+		.hexagon-wrapper {
+		  text-align: center;
+		  margin: 20px;
+		  position: relative;
+		  display: inline-block;
+		}
+
+		.hexagon {
+		  height: 100%;
+		  width: calc(100% * 0.57735);
+		  display: inline-block;
+		}
+
+		.hexagon:before {
+		  position: absolute;
+		  top: 0;
+		  right: calc((100% / 2) - ((100% * 0.57735) / 2));
+		  background-color: inherit;
+		  height: inherit;
+		  width: inherit;
+		  content: '';
+		  transform: rotateZ(60deg);
+		}
+
+		.hexagon:after {
+		  position: absolute;
+		  top: 0;
+		  right: calc((100% / 2) - ((100% * 0.57735) / 2));
+		  background-color: inherit;
+		  height: inherit;
+		  width: inherit;
+		  content: '';
+		  transform: rotateZ(-60deg);
+		}
+
+/* --- /showKarteikarten.css /modkarteikaesten2.css--- */
+
+
+
+/* --- startseite.css --- */
+		.Content_Box{
+			text-align: center;
+			margin: 30px;
+			margin-top: 60px;
+		}
+
+		.text_Willkommen{
+			font-size: 46px;
+			font-weight: bold;
+		}
+
+		.text_first_info{
+			font-size: 32px;
+		}
+
+		.text_Braintrain{
+			color: #27AE60;
+		}
+
+		.green_line{
+			min-height: 3px;
+			background-color: #27AE60;
+		}
+/* --- /startseite.css --- */
