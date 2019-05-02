@@ -6,6 +6,16 @@ import (
 	"net/http"
 )
 
+var tmpl = `<html>
+<head>
+    <title>Hello World!</title>
+</head>
+<body>
+    {{ . }}
+</body>
+</html>
+`
+
 type template_x struct {
 	Title string
 	News  string
@@ -37,4 +47,10 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 func Login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("test")
 	fmt.Fprint(w, "login")
+}
+
+func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
+	t := template.New("main")
+	t, _ = t.Parse(tmpl)
+	t.Execute(w, "My first Template ")
 }
