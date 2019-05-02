@@ -6,5 +6,5 @@ import (
 
 func main() {
 	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./"))))
-	http.ListenAndServe(":3000", nil)
+	http.ListenAndServe(":80", nil)
 }
