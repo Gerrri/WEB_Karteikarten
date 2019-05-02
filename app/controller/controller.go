@@ -49,8 +49,25 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "login")
 }
 
+/*
 func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
 	t := template.New("main")
 	t, _ = t.Parse(tmpl)
 	t.Execute(w, "My first Template ")
+}
+*/
+
+func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("test.html")
+	if err != nil {
+		fmt.Println(err)
+	}
+	items := struct {
+		Country string
+		City    string
+	}{
+		Country: "Australia",
+		City:    "Paris",
+	}
+	t.Execute(w, items)
 }
