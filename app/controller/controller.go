@@ -6,16 +6,6 @@ import (
 	"net/http"
 )
 
-var tmpl = `<html>
-<head>
-    <title>Hello World!</title>
-</head>
-<body>
-    {{ . }}
-</body>
-</html>
-`
-
 type template_x struct {
 	Title string
 	News  string
@@ -25,6 +15,10 @@ type TnL_home struct {
 	Nutzer     int
 	Lernkarten int
 	Karteien   int
+}
+
+type temp struct {
+	Content string
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -49,25 +43,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "login")
 }
 
-/*
+/*Working*/
 func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
-	t := template.New("main")
-	t, _ = t.Parse(tmpl)
-	t.Execute(w, "My first Template ")
-}
-*/
 
-func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("test.html")
-	if err != nil {
-		fmt.Println(err)
-	}
-	items := struct {
-		Country string
-		City    string
-	}{
-		Country: "Australia",
-		City:    "Paris",
-	}
-	t.Execute(w, items)
+	t, _ := template.ParseFiles("./templates/logged_in.html", "./templates/home.html")
+
+	t.ExecuteTemplate(w, "layout", "")
 }
