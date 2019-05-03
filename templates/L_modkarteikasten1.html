@@ -1,0 +1,120 @@
+{{ define "content" }}
+					    <h1 class="text_headline">Karteikasten erstellen / Karteikasten bearbeiten</h1>
+						  <p>Hier kannst du eine neue Kartei erstellen oder eine vorhandene nach Bedarf bearbeiten.</p>
+						  <div class="columns">
+								<div class="column has-background-light Content_Box_reg is-paddingless">
+									<div class="green_line"></div>
+									<div class="mod_content">
+										<h1 style="font-weight: bold; font-size: 20px; margin-bottom: 4%">Allgemeine Daten</h1>
+										
+										<div class="input_fields">
+											
+											<div class="columns">
+												<div class="column c1 is-2"> <label class="label">Titel</label> </div>
+												<div class="column is-6 c2"> <input class="input input_field" type="text" placeholder="Titel"> </div>
+												<div class="column c3"> <p class="help is-danger info_text"></p> </div>
+											</div>
+											
+											<div class="columns">
+												<div class="column c1 is-2"> <label class="label">Kategorie</label> </div>
+												<div class="column is-6 c2"> <div class="control">
+																				<div class="select" style="width:100%">
+																				  <select>
+																					 	  <optgroup label="Naturwissenschaften">
+																							<option>Biologie</option>
+																							<option>Chemie</option>
+																							<option>Elektrotechnik</option>
+																							<option>Informatik</option>
+																							<option>Mathematik</option>
+																							<option>Medizin</option>
+																							<option>Naturkunde</option>
+																							<option>Physik</option>
+																							<option>Sonstiges</option>
+																						  </optgroup>
+																						  <optgroup label="Sprachen">
+																							<option>Chinesisch</option>
+																							<option>Deutsch</option>
+																							<option>Englisch</option>
+																							<option>Französisch</option>
+																							<option>Griechisch</option>
+																							<option>Italienisch</option>
+																							<option>Latein</option>
+																							<option>Russisch</option>
+																							<option>Sonstiges</option>
+																						  </optgroup>
+																						  <optgroup label="Gesellschaft">
+																							<option>Ethik</option>
+																							<option>Geschichte</option>
+																							<option>Literatur</option>
+																							<option>Musik</option>
+																							<option>Politik</option>
+																							<option>Recht</option>
+																							<option>Soziales</option>
+																							<option>Sport</option>
+																							<option>Verkehrskunde</option>
+																							<option>Sonstiges</option>
+																						  </optgroup>
+																						  <optgroup label="Wirtschaft">
+																							<option>BWL</option>
+																							<option>Finanzen</option>
+																							<option>Landwirtschaft</option>
+																							<option>Marketing</option>
+																							<option>VWL</option>
+																							<option>Sonstiges</option>
+																						  </optgroup>
+																						  <optgroup label="Geisteswissenschaften">
+																							<option>Kriminilogie</option>
+																							<option>Philosophie</option>
+																							<option>Psychologie</option>
+																							<option>Pädagogik</option>
+																							<option>Theologie</option>
+																							<option>Sonstiges</option>
+																						  </optgroup>
+																				  </select>
+																				</div>
+																			  </div>
+												
+												
+												</div>
+												<div class="column c3"> <p class="help is-danger info_text">Pflichtfeld!</p> </div>
+											</div>
+											
+											<div class="columns">
+												<div class="column c1 is-2"> <label class="label">Beschreibung</label> </div>
+												<div class="column is-6 c2"> <textarea class="textarea" placeholder="Beschreibung"></textarea> </div>
+												<div class="column c3"> <p class="help is-danger info_text"></p> </div>
+											</div>
+											
+											<div class="columns">
+												<div class="column c1 is-2"> <label class="label"> Sichtbarkeit </label> </div>
+												<div class="column is-6 c2"> <div class="control">
+																								  <label class="radio">
+																									<input type="radio" name="answer">
+																									Öffentlich
+																								  </label>
+																								  <label class="radio">
+																									<input type="radio" name="answer" checked>
+																									Privat
+																								  </label>
+																								</div> 
+												</div>
+												<div class="column c3"> <p class="help is-danger info_text"></p> </div>
+											</div>
+											
+											<div class="columns">
+												<div class="column c1 is-2"> <label class="label"></label> </div>
+												<div class="column is-6 c2"> <a href="l_modkarteikasten2"class="button is-warning btn_registrieren">Speichern und weiter</a></div>
+												<div class="column c3"></div>
+											</div>
+											
+										</div>
+										
+									
+									</div>
+								
+								
+								</div>
+					    </div>
+
+
+{{ end }}

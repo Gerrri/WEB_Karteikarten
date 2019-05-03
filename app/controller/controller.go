@@ -46,3 +46,28 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten.html")
 	t.ExecuteTemplate(w, "layout", "")
 }
+
+func L_meinProfil(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil.html")
+	t.ExecuteTemplate(w, "layout", "")
+}
+
+func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil_popup.html")
+	t.ExecuteTemplate(w, "layout", "")
+}
+
+func L_modkarteikasten1(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_modkarteikasten1.html")
+	t.ExecuteTemplate(w, "layout", "")
+}
+
+func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_modkarteikasten2.html")
+	t.ExecuteTemplate(w, "layout", "")
+}
+
+func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_showKarteikarten.html")
+	t.ExecuteTemplate(w, "layout", "")
+}

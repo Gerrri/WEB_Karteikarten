@@ -7,11 +7,19 @@ import (
 
 func main() {
 
+	//Pages Logged in
 	http.HandleFunc("/l_home", controller.L_Home)
 	http.HandleFunc("/l_aufdecken", controller.L_aufdecken)
 	http.HandleFunc("/l_karteikaesten", controller.L_karteikaesten)
 	http.HandleFunc("/l_lernen", controller.L_lernen)
 	http.HandleFunc("/l_meinekarteikaesten", controller.L_meinekarteikaesten)
+	http.HandleFunc("/l_meinProfil", controller.L_meinProfil)
+	http.HandleFunc("/l_meinProfil_popup", controller.L_meinProfil_popup)
+	http.HandleFunc("/l_modkarteikasten1", controller.L_modkarteikasten1)
+	http.HandleFunc("/l_modkarteikasten2", controller.L_modkarteikasten2)
+	http.HandleFunc("/l_showKarteikarten", controller.L_showKarteikarten)
+
+	//Pages not Logged in
 	http.HandleFunc("/nl_home", controller.NL_Home)
 	http.HandleFunc("/nl_karteikaesten", controller.NL_karteikaesten)
 	http.HandleFunc("/nl_registrieren", controller.NL_registrieren)
