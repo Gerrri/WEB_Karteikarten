@@ -20,6 +20,7 @@ func main() {
 	http.HandleFunc("/l_showKarteikarten", controller.L_showKarteikarten)
 
 	//Pages not Logged in
+	http.HandleFunc("/", controller.NL_Home)
 	http.HandleFunc("/nl_home", controller.NL_Home)
 	http.HandleFunc("/nl_karteikaesten", controller.NL_karteikaesten)
 	http.HandleFunc("/nl_registrieren", controller.NL_registrieren)
@@ -33,7 +34,7 @@ func main() {
 	http.Handle("/logo/", http.StripPrefix("/logo/", http.FileServer(http.Dir("./static/logo"))))
 
 	server := http.Server{
-		Addr: ":8080",
+		Addr: ":80",
 	}
 
 	server.ListenAndServe()
