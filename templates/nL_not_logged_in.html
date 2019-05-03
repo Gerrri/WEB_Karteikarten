@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+{{ define "layout" }}
 <html>
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Hello Bulma!</title>
+		<title>BrainTrain</title>
 		<link rel="stylesheet" 
         href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
 		<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-		<link rel="stylesheet" href="../static/css/styles.css"> <!-- CSS eingebunden-->
+		<link rel="stylesheet" href="/css/styles.css"> <!-- CSS eingebunden-->
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<link rel="shortcut icon" type="image/x-icon" href="favicons/favicon.ico">
 
 
 	</head>
@@ -20,8 +21,8 @@
 			<nav class="navbar is-transparent ">
 				<div class="container has_background_primary_green">
 					<div class="navbar-brand has_background_secondary_green is-marginless" style="width: 20%">
-						<a class="navbar-item" href="../nL_home.html" >
-							<img src="../Logo/Logo.svg"/>
+						<a class="navbar-item" href="../nl_home" >
+							<img src="/logo/Logo.svg"/>
 							<h1 class="text_Logo" ><span>Brain</span>Train</h1>
 						</a>
 					</div>
@@ -37,8 +38,8 @@
 						   <div class="navbar-item">
 						   <input class="input is-primary control head_element" type="text" placeholder="Username">
 						   <input class="input is-primary control head_element" type="password" placeholder="Password">
-						   <a href="../L_home.html" class="button is-warning head_element">Login</a>
-						   <a href="../nL_registrieren.html" class="button is-success head_element">Registrieren</a> 
+						   <a href="../l_meinekarteikaesten" class="button is-warning head_element">Login</a>
+						   <a href="../nl_registrieren" class="button is-success head_element">Registrieren</a> 
 						   </div>
 	 					</div>
 					</div> 
@@ -54,18 +55,18 @@
 						  <aside class="menu">
 						    <ul class="menu-list ">
 								<li>
-									<a href="../nL_home.html" class="menuitem text_color_white">
+									<a href="../nl_home" class="menuitem text_color_white is-active">
 										<div class="columns">
-											<div class="column is-2"><img class="menu_icon" src="../Icons/Home.svg"/></div>
+											<div class="column is-2"><img class="menu_icon" src="/icons/Home.svg"/></div>
 											<div class="column"><p >Home</p></div>
 										</div>
 									</a>
 							    </li>
 								
 								<li>
-									<a href="../nL_karteikaesten.html" class="menuitem text_color_white">
+									<a href="../nl_karteikaesten" class="menuitem text_color_white">
 										<div class="columns">
-											<div class="column is-2"><img class="menu_icon" src="../Icons/Karteikasten.svg"/></div>
+											<div class="column is-2"><img class="menu_icon" src="../icons/Karteikasten.svg"/></div>
 											<div class="column"><p >Karteikasten</p></div>
 											<div class="column is-2"><span class="tag is-success">22</span></div>
 										</div>
@@ -78,22 +79,14 @@
 					</div>
 <!--  /MENU  -->
 					  
-					<div class="column is-marginles has_background_primary_grey text_color_black col_content">
-					<!-- CONTENT START -->
-						<div class="columns">
-								
-							
-						  	<div class="column has-background-light Content_Box is-paddingless">
-								<div class="green_line"></div>
-								<h1 class="text_Willkommen"><nobr>Willkommen bei <h1 class="text_Braintrain"><b>Brain</b>Train</h1></nobr></h1>
-								<h1 class="text_first_info"> <br>Hier haben sich <b>32 Nutzer</b> angemeldet und <br> zusammen <b>124 Lernkarten</b> in <b>22 Karteien</b> <br> erstellt</h1>
-							</div>
-						  </div>
+					  <div class="column is-marginles has_background_primary_grey text_color_black col_content">
+<!-- CONTENT -->
+						
+					{{ template "content" }}
 					
-				
-					<!-- CONTENT ENDS -->
-					</div>
-
+					
+<!-- /CONTENT -->
+						</div>
 				  </div>
 					
 					
@@ -103,3 +96,4 @@
 
 	</body>
 </html>
+{{ end }}

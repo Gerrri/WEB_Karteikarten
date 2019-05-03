@@ -1,0 +1,145 @@
+{{ define "content" }}
+						<h1 class="text_headline">Meine Karteikästen</h1>
+						<h1 class="text_headline_klein">Hier findest du deine Karteien, sowie öffentliche Karteien, die du angefangen hast zu Lernen.</h1>
+						<div class="dropdown_sort">
+							  <!-- SUCHE -->
+								<div class="suche is-pulled-right">
+										<input class="input" type="text" placeholder="Suche ...">
+								</div>
+
+
+							  <!-- DROPDOWN -->
+									<div class="dropdown is-right is-active is-pulled-right">
+									  <div class="dropdown-trigger">
+										<button class="button dropdown_btn" aria-haspopup="true" aria-controls="dropdown-menu6">
+										  <span>sortieren nach ...</span>
+										  <span class="icon is-small">
+											<i class="fas fa-angle-down" aria-hidden="true"></i>
+										  </span>
+										</button>
+									  </div>
+									  <div class="dropdown-menu" id="dropdown-menu6" role="menu">
+								<!--		<div class="dropdown-content">
+
+
+										  <div class="dropdown-item">
+											<p> Kartenanzahl</p>
+										  </div>	
+
+										  <div class="dropdown-item">
+											<p> Kategorien</p>
+										  </div>
+
+										  <div class="dropdown-item">
+											<p> A - Z</p>
+										  </div>
+
+										  <div class="dropdown-item">
+											<p> Z - A</p>
+										  </div>
+
+										</div>
+
+								-->
+									  </div>
+									</div>
+								</div>
+						  
+						  
+						<!-- Karteikästen -->
+						  
+						  <div class="columns is-multiline">
+							<div class="column is-12 kategorie_head">Selbst erstelle Karteikästen</div>
+						  	<div class="column is-one-quarter kartei">
+								<div class="has_background_primary_green kartei_head">NoBrainer</div>
+								<div class="has_background_light kartei">
+									<div class="columns">
+										<div class="column"><h1 class="kartei_content_head"><a class="text_color_black" href="l_showKarteikarten">Flat Earth - der Beweis!</a></h1></div>
+										<div class="column is-5 is-paddingless">
+											
+  												<div id="hex1" class="hexagon-wrapper">
+													<div id="color1" class="hexagon"><h1 id="hex_text">22</h1> </div>
+												</div>
+  
+											
+										</div>
+									</div>
+									
+								</div>
+								
+								<div class="has_background_light kartei">
+									<p class="kartei_content">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
+								</div>
+								
+								<div class="has_background_light kartei">
+									<div class="columns kartei_content" style="margin-top:20px;">
+										<div class="column"><nobr>Sichtbarkeit:</nobr></div>
+										<div class="column"><b>Öffentlich</b></div>
+									</div>
+									<div class="columns kartei_content">
+										<div class="column"><nobr>Fortschritt:</nobr></div>
+										<div class="column"><b>76%</b></div>
+									</div>
+								</div>
+								
+								<div class="has_background_light kartei is-paddingless">
+									<div class="columns kartei_content">
+										<div class="column is-one-third"><a href="l_lernen" 		class="button is-warning is-small">Lernen</a></div>
+										<div class="column is-one-third"><a href="bearbeiten" class="button is-success is-small">Bearbeiten</a></div>
+										<div class="column is-one-third"><a href="loeschen" class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
+									</div>
+									
+								</div>
+							</div>
+
+							  
+						  					  
+							  
+						  	
+							<div class="column is-12 kategorie_head">Gelernte Karteikästen andere Nutzer</div>
+							 <div class="column is-one-quarter kartei">
+								<div class="has_background_primary_green kartei_head">Mathematik</div>
+								<div class="has_background_light kartei">
+									<div class="columns">
+										<div class="column"><h1 class="kartei_content_head"><a class="text_color_black" href="l_showKarteikarten">Geometrische Formen und Körper</a></h1></div>
+										<div class="column is-5 is-paddingless">
+											
+  												<div id="hex1" class="hexagon-wrapper">
+													<div id="color1" class="hexagon"><h1 id="hex_text">22</h1> </div>
+												</div>
+  
+											
+										</div>
+									</div>
+									
+								</div>
+								
+								<div class="has_background_light kartei">
+									<p class="kartei_content">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna</p>
+								</div>
+								
+								<div class="has_background_light kartei">
+									<div class="columns kartei_content" style="margin-top:20px;">
+										<div class="column"><nobr>Sichtbarkeit:</nobr></div>
+										<div class="column"><b>Öffentlich</b></div>
+									</div>
+									<div class="columns kartei_content">
+										<div class="column"><nobr>Fortschritt:</nobr></div>
+										<div class="column"><b>76%</b></div>
+									</div>
+								</div>
+								
+								<div class="has_background_light kartei is-paddingless">
+									<div class="columns kartei_content">
+										<div class="column is-one-third"><a href="l_lernen" 		class="button is-warning is-small">Lernen</a></div>
+										<div class="column is-one-third"><a href="bearbeiten" class="button is-success is-small">Bearbeiten</a></div>
+										<div class="column is-one-third"><a href="loeschen" class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
+									</div>
+									
+								</div>
+							</div>
+						  	
+							  
+						  </div>
+
+{{ end }}

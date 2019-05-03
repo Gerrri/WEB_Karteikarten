@@ -6,12 +6,15 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", controller.Index)
-	http.HandleFunc("/test", controller.Test_site)
-	http.HandleFunc("/login", controller.Login)
-	http.HandleFunc("/nl_home", controller.NL_Home)
 
-	http.HandleFunc("/nL_karteikaesten", controller.NL_karteikaesten)
+	http.HandleFunc("/l_home", controller.L_Home)
+	http.HandleFunc("/l_aufdecken", controller.L_aufdecken)
+	http.HandleFunc("/l_karteikaesten", controller.L_karteikaesten)
+	http.HandleFunc("/l_lernen", controller.L_lernen)
+	http.HandleFunc("/l_meinekarteikaesten", controller.L_meinekarteikaesten)
+	http.HandleFunc("/nl_home", controller.NL_Home)
+	http.HandleFunc("/nl_karteikaesten", controller.NL_karteikaesten)
+	http.HandleFunc("/nl_registrieren", controller.NL_registrieren)
 
 	//bereitstellung der statischen inhalte
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./static/css"))))
