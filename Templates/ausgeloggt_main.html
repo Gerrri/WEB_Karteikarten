@@ -1,13 +1,12 @@
-{{define "layout"}}
+{{ define "layout" }}
 	<html>
 		<head>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<title>BrainTrain Startseite</title>
-			<link rel="stylesheet" 
-			href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
 			<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-			<link rel="stylesheet" href="styles/styles.css"> <!-- CSS eingebunden-->
+			<link rel="stylesheet" href="/css/styles.css"> <!-- CSS eingebunden-->
 			<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 		</head>
@@ -20,7 +19,7 @@
 				<div class="container has_background_primary_green">
 					<div class="navbar-brand has_background_secondary_green is-marginless" style="width: 20%">
 						<a class="navbar-item" href="ausgeloggt_startseite" >
-							<img src="Logo/Logo.svg"/>
+							<img src="/logo/Logo.svg"/>
 							<h1 class="text_Logo" ><span>Brain</span>Train</h1>
 						</a>
 						
@@ -65,7 +64,7 @@
 							<li>
 								<a class="text_color_white">
 									<div class="columns has_background_primary_blue">
-										<div class="column is-2"><img class="menu_icon" src="Icons/Home.svg"/></div>
+										<div class="column is-2"><img class="menu_icon" src="/icons/Home.svg"/></div>
 										<div class="column"><p >Home</p></div>
 									</div>
 								</a>
@@ -74,7 +73,7 @@
 							<li>
 								<a href="ausgeloggt_karteikasten" class="menuitem text_color_white">
 									<div class="columns">
-										<div class="column is-2"><img class="menu_icon" src="Icons/Karteikasten.svg"/></div>
+										<div class="column is-2"><img class="menu_icon" src="/icons/Karteikasten.svg"/></div>
 										<div class="column"><p >Karteikasten</p></div>
 										<div class="column is-2"><span class="tag is-success">22</span></div>
 									</div>
@@ -85,7 +84,7 @@
 						</aside>
 					</div>
 						<div class="column is-four-fifths is-marginles has_background_primary_grey text_color_black col_content">&nbsp;
-							{{template "content"}}
+							{{ template "content" }}
 						</div>
 				</div>
 			</section>
@@ -93,4 +92,4 @@
 
 		</body>
 	</html>
-{{end}}
+{{ end }}
