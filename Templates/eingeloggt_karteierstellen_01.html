@@ -1,0 +1,103 @@
+{{define "content"}}
+    <ul>
+        <li>
+            <p class="text_size_200">
+                <b>Karteikasten erstellen / Karteikasten bearbeiten</b>
+            </p>
+        </li>
+        <li>
+            <p>
+                Hier kannst du eine neue Kartei erstellen oder eine vorhandene nach Bedarf bearbeiten.
+                <br>
+                <br>
+            </p>
+        </li>
+        <li>
+            <div class="columns is-marginless is-centered">
+                <div class="column has-background-white is is-three-fifths is-paddingless">
+                    <ul>
+                        <li>
+                            <div class="has_background_primary_green is-marginless" style="height:5px;">
+                            </div>
+                        </li>
+                        <li>
+                            <p class="text_size_120">&nbsp;<b>Allgemeine Daten</b></p>
+                        </li>
+                        <li>
+                            <div class="columns is-marginless">
+                                <div class="column is-one-fifth">
+                                    <p style="text-align: right;">Titel:</p>
+                                </div>
+                                <div class="column is-two-fifths">
+                                    <input style="width:100%;" type="text">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="columns is-marginless">
+                                <div class="column is-one-fifth">
+                                    <p style="text-align: right;">Kategorie:</p>
+                                </div>
+                                <div class="column is-two-fifths">
+                                    <div class="control">
+                                        <div class="select" style="width:100%">
+                                            <select>
+                                                <option>Naturwissenschaft</option>
+                                                <option>Sprache</option>
+                                                <option>Gesellschaft</option>
+                                                <option>Wirtschaft</option>
+                                                <option>Geisteswissenschaften</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>												
+                                <div class="column is-one-fifth" style="margin-right:2%">
+                                    <p class="has_background_primary_red text_size_80" style="color:white">Pflichfeld!</p>
+                                </div>														
+                            </div>
+                        </li>
+                        <li>
+                            <div class="columns is-marginless">
+                                <div class="column is-one-fifth">
+                                    <p style="text-align: right;">Beschreibung:</p>
+                                </div>
+                                <div class="column is-two-fifths">
+                                        <textarea class="textarea" placeholder=""></textarea>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="columns is-marginless">
+                                <div class="column is-one-fifth">
+                                    <p style="text-align: right;">Sichtbarkeit:</p>
+                                </div>
+                                <div class="column is-two-fifths">
+                                        <div class="control">
+                                                <label class="radio">
+                                                    <input type="radio" name="answer">
+                                                    Öffentlich
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" name="answer">
+                                                    Privat
+                                                </label>
+                                            </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li style="text-align: center;">
+                            <a href="eingeloggt_06_karteikarteerstellen_02.html">
+                                <p class="button" style="background-color: #F7B731; color: white;">Speichern und Weiter</p>
+                            </a>
+                        </li>
+                        <li>
+                            <p>
+                                <br>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+{{end}}
