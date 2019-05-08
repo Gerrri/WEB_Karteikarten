@@ -2,7 +2,7 @@ package main
 
 import(
 	"net/http"
-	"./controller"
+	"./app/controller"
 )
 
 func main(){
