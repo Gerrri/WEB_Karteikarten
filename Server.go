@@ -2,10 +2,13 @@ package main
 
 import (
 	"BrainTrain/app/controller"
+	"fmt"
 	"net/http"
 )
 
 func main() {
+
+	fmt.Println(controller.GetNutzeranz())
 
 	//Pages Logged in
 	http.HandleFunc("/l_home", controller.L_Home)
