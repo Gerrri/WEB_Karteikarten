@@ -4,7 +4,25 @@ import (
 	"couchdb"
 	"encoding/json"
 	"fmt"
+	"strconv" //strconv.Itoa -> int to string
 )
+
+// Structs
+type nutzer struct {
+	ID                    int
+	Vorname               string
+	Name                  string
+	EMail                 string
+	Passwort              string
+	ErstellteKarteikarten []int
+	GelernteKarteikarten  []int
+}
+
+type alleNutzer struct {
+	_id    string
+	_rev   string
+	Nutzer []nutzer
+}
 
 // Gibt die DB zurück (wenn nicht vorhanden = nil)
 func GetDB() (d *couchdb.Database) {
@@ -37,31 +55,54 @@ func GetNutzeranz() (anz int) {
 
 	//Nutzer Wählen
 	var result map[string]interface{}
+
 	var err error
 	//result, err = db.Get("nutzer", nil)
 	result, err = db.Get("nutzer", nil)
 
-	var i int = 0
-
 	if err == nil {
 
-		//enc := json.NewEncoder(os.Stdout)
-		//enc.Encode(result)
+		var n = resToNutzerArr(result)
 
-		var b []byte
-
-		b, err := json.Marshal(result)
-		jsonString := string(b)
-
-		fmt.Println(jsonString)
-		fmt.Println(err)
-
-		i++
+		return len(n)
 
 	} else {
 		fmt.Println(err)
 		return -2
 	}
+}
 
-	return 0
+// Nutzer Methoden //
+func resToNutzerArr(res map[string]interface{}) (n []nutzer) {
+	in := mapToJSON(res)
+
+	an := alleNutzer{}
+	json.Unmarshal([]byte(in), &an)
+
+	return an.Nutzer
+}
+
+func nutzerTerminalOut(n nutzer) {
+	fmt.Println("ID 		: " + strconv.Itoa(n.ID))
+	fmt.Println("Vorname 	: " + n.Vorname)
+	fmt.Println("Name 		: " + n.Name)
+	fmt.Println("Email 		: " + n.EMail)
+	fmt.Println("Passwort 	: " + n.Passwort)
+}
+
+// Nutzer Methoden //
+
+func mapToJSON(inMap map[string]interface{}) (s string) {
+	var b []byte
+
+	b, err := json.Marshal(inMap)
+	jsonString := string(b)
+
+	//Error Output
+	if err != nil {
+		fmt.Print("JSON Convertion Error: ")
+		fmt.Println(err)
+	}
+
+	return jsonString
 }
