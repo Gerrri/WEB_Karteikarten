@@ -1,0 +1,55 @@
+{
+    "_id": "KK_2_das_kleine_1x1",
+    "_rev": "5-17e9a49086010ca8ebf89c543c198655",
+    "TYP": "Karteikasten",
+    "ID": "KK_2_das_kleine_1x1",
+    "NutzerID": 2,
+    "Oeffentlich": true,
+    "Kategorie": "Naturwissenschaften",
+    "Unterkategorie": "Mathematik",
+    "Titel": "das kleine 1x1",
+    "Anzahl": 4,
+    "Beschreibung": "Du kannst garnicht  :)",
+    "Karten": [
+      {
+        "Titel": "1",
+        "Frage": "1x1",
+        "Antwort": "2"
+      },
+      {
+        "Titel": "7",
+        "Frage": "7x7",
+        "Antwort": "ganz feiner Sand"
+      },
+      {
+        "Titel": "6",
+        "Frage": "6x6",
+        "Antwort": "36"
+      },
+      {
+        "Titel": "5",
+        "Frage": "5x5",
+        "Antwort": "25"
+      }
+    ],
+    "Fortschritt": [
+      {
+        "ID": 2,
+        "Wiederholung": [
+          3,
+          4,
+          1,
+          2
+        ]
+      },
+      {
+        "ID": 3,
+        "Wiederholung": [
+          0,
+          0,
+          1,
+          0
+        ]
+      }
+    ]
+  }

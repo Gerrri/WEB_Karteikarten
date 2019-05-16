@@ -1,0 +1,48 @@
+{
+  "_id": "KK_1_chemie_atomeaz",
+  "_rev": "4-35939dbbcd8b6fd8c2aa9ea74ecb7d38",
+  "TYP": "Karteikasten",
+  "ID": "KK_1_chemie_atomeaz",
+  "NutzerID": 1,
+  "Oeffentlich": true,
+  "Kategorie": "Naturwissenschaften",
+  "Unterkategorie": "Chemie",
+  "Titel": "Atome A-Z",
+  "Anzahl": 2,
+  "Beschreibung": "ja moin",
+  "Karten": [
+    {
+      "Titel": "Titel der Kartei",
+      "Frage": "Ja oder Nein",
+      "Antwort": "Falsch"
+    },
+    {
+      "Titel": "Mein Titel",
+      "Frage": "Ja oder Nein",
+      "Antwort": "Richtig"
+    }
+  ],
+  "Fortschritt": [
+    {
+      "ID": 1,
+      "Wiederholung": [
+        1,
+        2
+      ]
+    },
+    {
+      "ID": 2,
+      "Wiederholung": [
+        3,
+        4
+      ]
+    },
+    {
+      "ID": 3,
+      "Wiederholung": [
+        5,
+        6
+      ]
+    }
+  ]
+}

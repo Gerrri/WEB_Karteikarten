@@ -1,0 +1,34 @@
+{
+    "_id": "nutzer",
+    "_rev": "16-f5377e685f4f7faac38e6dfc57295d4c",
+    "TYP": "nutzer",
+    "Nutzer": [
+      {
+        "ID": 1,
+        "Vorname": "Max",
+        "Name": "Mustermann",
+        "EMail": "mm@musteradresse.com",
+        "Passwort": "eva",
+        "ErstellteKarteien": [],
+        "GelernteKarteien": []
+      },
+      {
+        "ID": 2,
+        "Vorname": "Eva",
+        "Name": "Musterfrau",
+        "EMail": "em@musteradresse.com",
+        "Passwort": "max",
+        "ErstellteKarteien": [],
+        "GelernteKarteien": []
+      },
+      {
+        "ID": 3,
+        "Vorname": "Mini",
+        "Name": "Maus",
+        "EMail": "mm@disney.com",
+        "Passwort": "micky",
+        "ErstellteKarteien": [],
+        "GelernteKarteien": []
+      }
+    ]
+  }
