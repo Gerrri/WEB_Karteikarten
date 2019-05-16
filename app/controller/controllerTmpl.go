@@ -1,14 +1,23 @@
 package controller
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 )
 
+type tmp_b_home struct {
+	Nutzer     string
+	Lernkarten string
+	Karteien   string
+}
+
 /* ######################   not logged in Pages   ###################### */
 func NL_Home(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/b_home.html")
-	t.ExecuteTemplate(w, "layout", "")
+	p := tmp_b_home{Nutzer: "asdasd", Lernkarten: "some news", Karteien: "Hannes"}
+	t, err := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/b_home.html")
+	fmt.Println(err)
+	t.ExecuteTemplate(w, "layout", p)
 }
 
 func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {

@@ -60,7 +60,7 @@ func GetDB() (d *couchdb.Database) {
 	} else {
 		err = a.Available()
 		if err == nil {
-			fmt.Println("DB is available")
+			//fmt.Println("DB is available")
 			return a
 		}
 	}
@@ -68,7 +68,58 @@ func GetDB() (d *couchdb.Database) {
 	return nil
 }
 
+// ############################### START Kartei Methoden ############################### //
+func GetKartenAnz() (anz int) {
+	kk := GetAlleKarteikaesten()
+
+	anz = 0
+
+	for _, element := range kk {
+		anz += len(element.Karten)
+	}
+
+	return anz
+}
+
+// ############################### Ende Kartei Methoden ################################ //
+
 // ############################### START Karteikasten Methoden ############################### //
+func GetKarteikastenAnz() (anz int) {
+	return len(GetAlleKarteikaesten())
+}
+
+func GetAlleKarteikaesten() (kk []Karteikasten) {
+	var db *couchdb.Database = GetDB()
+
+	var inmap []map[string]interface{}
+
+	inmap, err := db.QueryJSON(`
+	{
+	  "selector": {
+		"TYP": "Karteikasten"
+	  }
+	}`)
+
+	for _, element := range inmap {
+		var in = mapToJSON(element)
+
+		var temp_kk = Karteikasten{}
+		if err == nil {
+			json.Unmarshal([]byte(in), &temp_kk)
+
+			kk = append(kk, temp_kk)
+		} else {
+			fmt.Println(err)
+		}
+	}
+
+	//for _, element := range kk {
+	//	TerminalOutKarteikasten(element)
+	//}
+
+	return kk
+}
+
 func GetKarteikastenByid(id string) (k Karteikasten) {
 
 	var db *couchdb.Database = GetDB()
@@ -90,6 +141,7 @@ func GetKarteikastenByid(id string) (k Karteikasten) {
 }
 
 func TerminalOutKarteikasten(k Karteikasten) {
+	fmt.Println("############# KARTEIKASTEN ##############")
 	fmt.Println("id : " + k.ID)
 	fmt.Println("NutzerID : " + strconv.Itoa(k.NutzerID))
 	fmt.Println("Oeffentlich : " + strconv.FormatBool(k.Oeffentlich))
@@ -98,7 +150,7 @@ func TerminalOutKarteikasten(k Karteikasten) {
 	fmt.Println("Titel : " + k.Titel)
 	fmt.Println("Anzahl : " + strconv.Itoa(k.Anzahl))
 	fmt.Println("Beschreibung : " + k.Beschreibung)
-
+	fmt.Println("#########################################")
 }
 
 // ############################### ENDE Karteikasten Methoden ############################### //

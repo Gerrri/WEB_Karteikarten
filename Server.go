@@ -2,12 +2,15 @@ package main
 
 import (
 	"BrainTrain/app/controller"
+	"fmt"
 	"net/http"
+	"strconv"
 )
 
 func main() {
 
-	controller.TerminalOutKarteikasten(controller.GetKarteikastenByid("1_chemie_atomeaz"))
+	controller.GetAlleKarteikaesten()
+	fmt.Println(strconv.Itoa(controller.GetKartenAnz()))
 
 	//Pages Logged in
 	http.HandleFunc("/l_home", controller.L_Home)
