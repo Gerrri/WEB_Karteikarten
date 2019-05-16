@@ -3,6 +3,7 @@ package controller
 import (
 	"couchdb"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"strconv" //strconv.Itoa -> int to string
 )
@@ -44,42 +45,43 @@ func GetDB() (d *couchdb.Database) {
 
 // ###############################  ############################### //
 
+// Nutzer Methoden //
+
 //-1 = db not da
 //-2 = abfrage nicht möglich
 func GetNutzeranz() (anz int) {
+	var n, err = getNutzerArr()
+
+	if err == nil {
+		return len(n)
+	} else {
+		fmt.Println(err)
+		return -2
+	}
+
+	return -1
+}
+
+func getNutzerArr() (n []nutzer, err error) {
 	var db *couchdb.Database = GetDB()
 
 	if db == nil {
-		return -1
+		return nil, errors.New("Datenbank Verbindung nicht möglich!")
 	}
 
 	//Nutzer Wählen
 	var result map[string]interface{}
 
-	var err error
 	//result, err = db.Get("nutzer", nil)
 	result, err = db.Get("nutzer", nil)
 
-	if err == nil {
-
-		var n = resToNutzerArr(result)
-
-		return len(n)
-
-	} else {
-		fmt.Println(err)
-		return -2
-	}
-}
-
-// Nutzer Methoden //
-func resToNutzerArr(res map[string]interface{}) (n []nutzer) {
-	in := mapToJSON(res)
+	in := mapToJSON(result)
 
 	an := alleNutzer{}
 	json.Unmarshal([]byte(in), &an)
 
-	return an.Nutzer
+	return an.Nutzer, nil
+
 }
 
 func nutzerTerminalOut(n nutzer) {
