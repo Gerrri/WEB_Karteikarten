@@ -47,7 +47,7 @@
 								</div>
 						  
 						  
-						<!-- Karteikästen -->
+						
 
 
 			
@@ -56,42 +56,215 @@
 
 
 
-						  
+	<!-- Karteikästen -->					  
 		<div class="columns is-multiline">
-							<div class="column is-12 kategorie_head"> Naturwissenschaften</div>
-						  
+	
+	
+			<!-- Naturwissenschaften -->
+			<div class="column is-12 kategorie_head"> Naturwissenschaften</div>
+			{{range .Naturwissenschaften}} 
+			
+										<div class="column is-one-quarter kartei">
+										
+										<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
+										
+										<div class="has_background_light kartei">
+											<div class="columns">
+												<div class="column">
+													<h1 class="kartei_content_head">{{.Titel}}</h1>
+												</div>
+												<div class="column is-5 is-paddingless">
+													
+															<div id="hex1_kk" class="hexagon-wrapper">
+															<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
+														</div>	
+												</div>
+											</div>
+										</div>
+										
+										<div class="has_background_light kartei">
+											<p class="kartei_content">
+													{{.Beschreibung}}
+											</p>
+										
+										</div>
+										
 
-	{{range .Karteikasten}} 
-	<!-- Kartekikasten -->
-						  	<div class="column is-one-quarter kartei">
-								
-								<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
-								
-								<div class="has_background_light kartei">
-								  <div class="columns">
-										<div class="column">
-										  <h1 class="kartei_content_head">{{.Titel}}</h1>
+										
+										<div class="has_background_light kartei"> </div>
+									</div>	
+			{{end}}
+			<!-- /Naturwissenschaften -->
+
+			<!-- Sprachen -->
+			<div class="column is-12 kategorie_head"> Sprachen</div>
+			{{range .Sprachen}} 
+			
+										<div class="column is-one-quarter kartei">
+										
+										<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
+										
+										<div class="has_background_light kartei">
+											<div class="columns">
+												<div class="column">
+													<h1 class="kartei_content_head">{{.Titel}}</h1>
+												</div>
+												<div class="column is-5 is-paddingless">
+													
+															<div id="hex1_kk" class="hexagon-wrapper">
+															<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
+														</div>	
+												</div>
+											</div>
 										</div>
-										<div class="column is-5 is-paddingless">
-											
-  												<div id="hex1_kk" class="hexagon-wrapper">
-													<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
+										
+										<div class="has_background_light kartei">
+											<p class="kartei_content">
+													{{.Beschreibung}}
+											</p>
+										
+										</div>
+										
+										<div class="has_background_light kartei"> </div>
+									</div>	
+			{{end}}
+			<!-- /Sprachen -->
+
+			<!-- Gesellschaft -->
+			<div class="column is-12 kategorie_head"> Gesellschaft</div>
+			{{range .Gesellschaft}} 
+			
+										<div class="column is-one-quarter kartei">
+										
+										<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
+										
+										<div class="has_background_light kartei">
+											<div class="columns">
+												<div class="column">
+													<h1 class="kartei_content_head">{{.Titel}}</h1>
+												</div>
+												<div class="column is-5 is-paddingless">
+													
+															<div id="hex1_kk" class="hexagon-wrapper">
+															<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
+														</div>	
+												</div>
+											</div>
+										</div>
+										
+										<div class="has_background_light kartei">
+											<p class="kartei_content">
+													{{.Beschreibung}}
+											</p>
+										
+										</div>
+										
+										<div class="has_background_light kartei"> </div>
+									</div>	
+			{{end}}
+			<!-- /Gesellschaft -->
+
+			<!-- Wirtschaft -->
+			<div class="column is-12 kategorie_head"> Wirtschaft</div>
+			{{range .Wirtschaft}} 
+			
+										<div class="column is-one-quarter kartei">
+										
+										<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
+										
+										<div class="has_background_light kartei">
+											<div class="columns">
+												<div class="column">
+													<h1 class="kartei_content_head">{{.Titel}}</h1>
+												</div>
+												<div class="column is-5 is-paddingless">
+													
+															<div id="hex1_kk" class="hexagon-wrapper">
+															<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
+														</div>	
+												</div>
+											</div>
+										</div>
+										
+										<div class="has_background_light kartei">
+											<p class="kartei_content">
+													{{.Beschreibung}}
+											</p>
+										
+										</div>
+										
+										<div class="has_background_light kartei"> </div>
+									</div>	
+			{{end}}
+			<!-- /Wirtschaft -->
+
+						<!-- Geisteswissenschaften -->
+						<div class="column is-12 kategorie_head"> Geisteswissenschaften</div>
+						{{range .Geisteswissenschaften}} 
+						
+													<div class="column is-one-quarter kartei">
+													
+													<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
+													
+													<div class="has_background_light kartei">
+														<div class="columns">
+															<div class="column">
+																<h1 class="kartei_content_head">{{.Titel}}</h1>
+															</div>
+															<div class="column is-5 is-paddingless">
+																
+																		<div id="hex1_kk" class="hexagon-wrapper">
+																		<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
+																	</div>	
+															</div>
+														</div>
+													</div>
+													
+													<div class="has_background_light kartei">
+														<p class="kartei_content">
+																{{.Beschreibung}}
+														</p>
+													
+													</div>
+													
+													<div class="has_background_light kartei"> </div>
 												</div>	
-										</div>
-								  </div>
-								</div>
-								
-								<div class="has_background_light kartei">
-									<p class="kartei_content">
-											{{.Beschreibung}}
-									</p>
-								
-								</div>
-								
-								<div class="has_background_light kartei"> </div>
-							</div>	
-	<!-- /Kartekikasten -->
-	{{end}}
+						{{end}}
+						<!-- /Geisteswissenschaften -->
+			
+						<!-- Sonstige -->
+						<div class="column is-12 kategorie_head"> Sonstige</div>
+						{{range .Sonstige}} 
+						
+													<div class="column is-one-quarter kartei">
+													
+													<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
+													
+													<div class="has_background_light kartei">
+														<div class="columns">
+															<div class="column">
+																<h1 class="kartei_content_head">{{.Titel}}</h1>
+															</div>
+															<div class="column is-5 is-paddingless">
+																
+																		<div id="hex1_kk" class="hexagon-wrapper">
+																		<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
+																	</div>	
+															</div>
+														</div>
+													</div>
+													
+													<div class="has_background_light kartei">
+														<p class="kartei_content">
+																{{.Beschreibung}}
+														</p>
+													
+													</div>
+													
+													<div class="has_background_light kartei"> </div>
+												</div>	
+						{{end}}
+						<!-- /Sonstige -->
 
 
 						  	

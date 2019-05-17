@@ -13,8 +13,19 @@ type tmp_b_home struct {
 }
 
 type tmp_nL_Karteikasten struct {
-	Karteien     string
-	Karteikasten []Karteikasten
+	Karteien              string
+	Naturwissenschaften   []Karteikasten
+	Sprachen              []Karteikasten
+	Gesellschaft          []Karteikasten
+	Wirtschaft            []Karteikasten
+	Geisteswissenschaften []Karteikasten
+	Sonstige              []Karteikasten
+}
+
+type tmp_L_MeineKarteikaesten struct {
+	Karteien                  string
+	GespeicherteKarteikaesten []Karteikasten
+	MeineKarteikaesten        []Karteikasten
 }
 
 /* ######################   not logged in Pages   ###################### */
@@ -28,15 +39,32 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 
 func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
 	data := tmp_nL_Karteikasten{
-		Karteien:     strconv.Itoa(GetKarteikastenAnz()),
-		Karteikasten: []Karteikasten{},
+		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
+		Naturwissenschaften:   []Karteikasten{},
+		Sprachen:              []Karteikasten{},
+		Gesellschaft:          []Karteikasten{},
+		Wirtschaft:            []Karteikasten{},
+		Geisteswissenschaften: []Karteikasten{},
+		Sonstige:              []Karteikasten{},
 	}
 
 	kk := []Karteikasten{}
 	kk = GetAlleKarteikaesten()
 
 	for _, element := range kk {
-		data.Karteikasten = append(data.Karteikasten, element)
+		if element.Kategorie == "Naturwissenschaften" {
+			data.Naturwissenschaften = append(data.Naturwissenschaften, element)
+		} else if element.Kategorie == "Sprachen" {
+			data.Sprachen = append(data.Sprachen, element)
+		} else if element.Kategorie == "Gesellschaft" {
+			data.Gesellschaft = append(data.Gesellschaft, element)
+		} else if element.Kategorie == "Wirtschaft" {
+			data.Wirtschaft = append(data.Wirtschaft, element)
+		} else if element.Kategorie == "Geisteswissenschaften" {
+			data.Geisteswissenschaften = append(data.Geisteswissenschaften, element)
+		} else {
+			data.Sonstige = append(data.Sonstige, element)
+		}
 	}
 
 	t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_karteikaesten.html")
@@ -57,8 +85,37 @@ func L_Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
+	data := tmp_nL_Karteikasten{
+		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
+		Naturwissenschaften:   []Karteikasten{},
+		Sprachen:              []Karteikasten{},
+		Gesellschaft:          []Karteikasten{},
+		Wirtschaft:            []Karteikasten{},
+		Geisteswissenschaften: []Karteikasten{},
+		Sonstige:              []Karteikasten{},
+	}
+
+	kk := []Karteikasten{}
+	kk = GetAlleKarteikaesten()
+
+	for _, element := range kk {
+		if element.Kategorie == "Naturwissenschaften" {
+			data.Naturwissenschaften = append(data.Naturwissenschaften, element)
+		} else if element.Kategorie == "Sprachen" {
+			data.Sprachen = append(data.Sprachen, element)
+		} else if element.Kategorie == "Gesellschaft" {
+			data.Gesellschaft = append(data.Gesellschaft, element)
+		} else if element.Kategorie == "Wirtschaft" {
+			data.Wirtschaft = append(data.Wirtschaft, element)
+		} else if element.Kategorie == "Geisteswissenschaften" {
+			data.Geisteswissenschaften = append(data.Geisteswissenschaften, element)
+		} else {
+			data.Sonstige = append(data.Sonstige, element)
+		}
+	}
+
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_karteikaesten.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", data)
 }
 
 func L_aufdecken(w http.ResponseWriter, r *http.Request) {
@@ -72,8 +129,25 @@ func L_lernen(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
+
+	data := tmp_L_MeineKarteikaesten{
+		Karteien:                  strconv.Itoa(GetKarteikastenAnz()),
+		GespeicherteKarteikaesten: []Karteikasten{},
+		MeineKarteikaesten:        []Karteikasten{},
+	}
+
+	nutzer := GetNutzerById(1) //muss noch dynamisch gehlot werden
+
+	for _, element := range nutzer.ErstellteKarteien {
+		data.MeineKarteikaesten = append(data.MeineKarteikaesten, GetKarteikastenByid(element))
+	}
+
+	for _, element := range nutzer.GelernteKarteien {
+		data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, GetKarteikastenByid(element))
+	}
+
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", data)
 }
 
 func L_meinProfil(w http.ResponseWriter, r *http.Request) {

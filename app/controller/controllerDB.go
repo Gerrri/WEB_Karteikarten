@@ -10,13 +10,13 @@ import (
 
 // Structs
 type nutzer struct {
-	ID                    int
-	Vorname               string
-	Name                  string
-	EMail                 string
-	Passwort              string
-	ErstellteKarteikarten []int
-	GelernteKarteikarten  []int
+	ID                int
+	Vorname           string
+	Name              string
+	EMail             string
+	Passwort          string
+	ErstellteKarteien []int
+	GelernteKarteien  []int
 }
 
 type alleNutzer struct {
@@ -37,7 +37,7 @@ type Fortschritt struct {
 }
 
 type Karteikasten struct {
-	ID             string
+	ID             int
 	_rev           string
 	NutzerID       int
 	Oeffentlich    bool
@@ -120,29 +120,22 @@ func GetAlleKarteikaesten() (kk []Karteikasten) {
 	return kk
 }
 
-func GetKarteikastenByid(id string) (k Karteikasten) {
+func GetKarteikastenByid(id int) (k Karteikasten) {
 
-	var db *couchdb.Database = GetDB()
+	kk := GetAlleKarteikaesten()
 
-	//result, err = db.Get("nutzer", nil)
-	var result, err = db.Get(id, nil)
-
-	if err == nil {
-		in := mapToJSON(result)
-
-		kk := Karteikasten{}
-		json.Unmarshal([]byte(in), &kk)
-		return kk
+	for _, element := range kk {
+		if element.ID == id {
+			return element
+		}
 	}
 
-	kk := Karteikasten{}
-	kk.ID = "-1"
-	return kk
+	return k
 }
 
 func TerminalOutKarteikasten(k Karteikasten) {
 	fmt.Println("############# KARTEIKASTEN ##############")
-	fmt.Println("id : " + k.ID)
+	fmt.Println("id : " + strconv.Itoa(k.ID))
 	fmt.Println("NutzerID : " + strconv.Itoa(k.NutzerID))
 	fmt.Println("Oeffentlich : " + strconv.FormatBool(k.Oeffentlich))
 	fmt.Println("Kategorie : " + k.Kategorie)
