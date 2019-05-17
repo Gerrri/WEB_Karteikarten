@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
+	"strconv"
 )
 
 type tmp_b_home struct {
@@ -14,15 +14,17 @@ type tmp_b_home struct {
 
 /* ######################   not logged in Pages   ###################### */
 func NL_Home(w http.ResponseWriter, r *http.Request) {
-	p := tmp_b_home{Nutzer: "asdasd", Lernkarten: "some news", Karteien: "Hannes"}
-	t, err := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/b_home.html")
-	fmt.Println(err)
+
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
+
 	t.ExecuteTemplate(w, "layout", p)
 }
 
 func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_karteikaesten.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", p)
 }
 
 func NL_registrieren(w http.ResponseWriter, r *http.Request) {
@@ -32,8 +34,10 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 
 /* ######################   logged in Pages   ###################### */
 func L_Home(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/b_home.html")
-	t.ExecuteTemplate(w, "layout", "")
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	t, _ := template.ParseFiles("./templates/b_home.html", "./templates/L_logged_in.html")
+
+	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_karteikaesten(w http.ResponseWriter, r *http.Request) {

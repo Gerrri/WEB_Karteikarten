@@ -55,10 +55,10 @@
 						  <aside class="menu">
 						    <ul class="menu-list ">
 								<li>
-									<a href="../nl_home" class="menuitem text_color_white is-active">
+									<a href="../nl_home" class="menuitem text_color_white">
 										<div class="columns">
 											<div class="column is-2"><img class="menu_icon" src="/icons/Home.svg"/></div>
-											<div class="column"><p >Home</p></div>
+											<div class="column"><p>Home</p></div>
 										</div>
 									</a>
 							    </li>
@@ -68,7 +68,7 @@
 										<div class="columns">
 											<div class="column is-2"><img class="menu_icon" src="../icons/Karteikasten.svg"/></div>
 											<div class="column"><p >Karteikasten</p></div>
-											<div class="column is-2"><span class="tag is-success">22</span></div>
+											<div class="column is-2"><span class="tag is-success">{{.Karteien}}</span></div>
 										</div>
 									</a>
 							    </li>
@@ -82,7 +82,7 @@
 					  <div class="column is-marginles has_background_primary_grey text_color_black col_content">
 <!-- CONTENT -->
 						
-					{{ template "content" }}
+					{{template "content" .}}
 					
 					
 <!-- /CONTENT -->
