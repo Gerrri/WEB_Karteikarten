@@ -12,6 +12,11 @@ type tmp_b_home struct {
 	Karteien   string
 }
 
+type tmp_nL_Karteikasten struct {
+	Karteien     string
+	Karteikasten []Karteikasten
+}
+
 /* ######################   not logged in Pages   ###################### */
 func NL_Home(w http.ResponseWriter, r *http.Request) {
 
@@ -22,9 +27,20 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
-	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	data := tmp_nL_Karteikasten{
+		Karteien:     strconv.Itoa(GetKarteikastenAnz()),
+		Karteikasten: []Karteikasten{},
+	}
+
+	kk := []Karteikasten{}
+	kk = GetAlleKarteikaesten()
+
+	for _, element := range kk {
+		data.Karteikasten = append(data.Karteikasten, element)
+	}
+
 	t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_karteikaesten.html")
-	t.ExecuteTemplate(w, "layout", p)
+	t.ExecuteTemplate(w, "layout", data)
 }
 
 func NL_registrieren(w http.ResponseWriter, r *http.Request) {
