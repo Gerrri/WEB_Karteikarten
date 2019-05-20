@@ -9,7 +9,7 @@ import (
 )
 
 // Structs
-type nutzer struct {
+type Nutzer struct {
 	ID                int
 	Vorname           string
 	Name              string
@@ -22,7 +22,7 @@ type nutzer struct {
 type alleNutzer struct {
 	_id    string
 	_rev   string
-	Nutzer []nutzer
+	Nutzer []Nutzer
 }
 
 type Karte struct {
@@ -40,7 +40,7 @@ type Karteikasten struct {
 	ID             int
 	_rev           string
 	NutzerID       int
-	Oeffentlich    bool
+	Sichtbarkeit   string
 	Kategorie      string
 	Unterkategorie string
 	Titel          string
@@ -48,6 +48,7 @@ type Karteikasten struct {
 	Beschreibung   string
 	Karten         []Karte
 	Fortschritt    []Fortschritt
+	FortschrittP   int
 }
 
 // Gibt die DB zurück (wenn nicht vorhanden = nil)
@@ -79,6 +80,32 @@ func GetKartenAnz() (anz int) {
 	}
 
 	return anz
+}
+
+func GetKarteikastenFortschritt(k Karteikasten, nutzer Nutzer) (fortschritt float64) {
+	fortschritt = 0
+	var zaehler = 0
+	xgesamt := len(k.Karten)
+
+	for n := 0; n < 4; n++ {
+		zaehler += n * GetKarteikartenAnzByFach(k, n, nutzer)
+
+	}
+
+	fortschritt = float64(zaehler) / float64(4*float64(xgesamt)) * 100
+
+	return fortschritt
+}
+
+func GetKarteikartenAnzByFach(k Karteikasten, fach int, n Nutzer) (anz int) {
+	var anzahl_fach = 0
+	for index, _ := range k.Karten {
+		if k.Fortschritt[n.ID].Wiederholung[index] == fach {
+			anzahl_fach++
+		}
+	}
+
+	return anzahl_fach
 }
 
 // ############################### Ende Kartei Methoden ################################ //
@@ -137,7 +164,7 @@ func TerminalOutKarteikasten(k Karteikasten) {
 	fmt.Println("############# KARTEIKASTEN ##############")
 	fmt.Println("id : " + strconv.Itoa(k.ID))
 	fmt.Println("NutzerID : " + strconv.Itoa(k.NutzerID))
-	fmt.Println("Oeffentlich : " + strconv.FormatBool(k.Oeffentlich))
+	fmt.Println("Oeffentlich : " + k.Sichtbarkeit)
 	fmt.Println("Kategorie : " + k.Kategorie)
 	fmt.Println("Unterkategorie : " + k.Unterkategorie)
 	fmt.Println("Titel : " + k.Titel)
@@ -151,7 +178,7 @@ func TerminalOutKarteikasten(k Karteikasten) {
 // ############################### START Nutzer Methoden ############################### //
 
 //Wenn nicht vorhanden ID = -1
-func GetNutzerById(id int) (n nutzer) {
+func GetNutzerById(id int) (n Nutzer) {
 
 	var arr, err = getNutzerArr()
 
@@ -163,7 +190,7 @@ func GetNutzerById(id int) (n nutzer) {
 		}
 	}
 
-	n = nutzer{}
+	n = Nutzer{}
 	n.ID = -1
 	return n
 }
@@ -183,7 +210,7 @@ func GetNutzeranz() (anz int) {
 	return -1
 }
 
-func getNutzerArr() (n []nutzer, err error) {
+func getNutzerArr() (n []Nutzer, err error) {
 	var db *couchdb.Database = GetDB()
 
 	if db == nil {
@@ -205,7 +232,7 @@ func getNutzerArr() (n []nutzer, err error) {
 
 }
 
-func TerminalOutNutzer(n nutzer) {
+func TerminalOutNutzer(n Nutzer) {
 	fmt.Println("ID 		: " + strconv.Itoa(n.ID))
 	fmt.Println("Vorname 	: " + n.Vorname)
 	fmt.Println("Name 		: " + n.Name)

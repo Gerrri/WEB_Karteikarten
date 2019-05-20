@@ -139,11 +139,15 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 	nutzer := GetNutzerById(1) //muss noch dynamisch gehlot werden
 
 	for _, element := range nutzer.ErstellteKarteien {
-		data.MeineKarteikaesten = append(data.MeineKarteikaesten, GetKarteikastenByid(element))
+		temp_kk := GetKarteikastenByid(element)
+		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(1)))
+		data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
 	}
 
 	for _, element := range nutzer.GelernteKarteien {
-		data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, GetKarteikastenByid(element))
+		temp_kk := GetKarteikastenByid(element)
+		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(1)))
+		data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
 	}
 
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten.html")
