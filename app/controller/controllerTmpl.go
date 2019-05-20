@@ -28,6 +28,13 @@ type tmp_L_MeineKarteikaesten struct {
 	MeineKarteikaesten        []Karteikasten
 }
 
+type tmp_L_modkarteikasten1 struct {
+	Karteien              string
+	AktuellerKarteikasten []Karteikasten
+	AlleKarten            []Karte
+	AktuelleKarte         []Karte
+}
+
 /* ######################   not logged in Pages   ###################### */
 func NL_Home(w http.ResponseWriter, r *http.Request) {
 
@@ -73,7 +80,7 @@ func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
 
 func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", nil)
 }
 
 /* ######################   logged in Pages   ###################### */
@@ -120,12 +127,12 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 
 func L_aufdecken(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_aufdecken.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", nil)
 }
 
 func L_lernen(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_lernen.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", nil)
 }
 
 func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
@@ -156,25 +163,61 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 
 func L_meinProfil(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", nil)
 }
 
 func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil_popup.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", nil)
 }
 
 func L_modkarteikasten1(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_modkarteikasten1.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", nil)
 }
 
 func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
+	data := tmp_L_modkarteikasten1{
+		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
+		AktuellerKarteikasten: []Karteikasten{},
+		AlleKarten:            []Karte{},
+	}
+
+	temp_kk := GetKarteikastenByid(1)
+	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(1), GetNutzerById(1)))
+
+	data.AktuellerKarteikasten = append(data.AktuellerKarteikasten, temp_kk)
+
+	for i, element := range temp_kk.Karten {
+		data.AlleKarten = append(data.AlleKarten, element)
+		data.AlleKarten[i].Num = i + 1
+	}
+
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_modkarteikasten2.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", data)
 }
 
 func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
+	data := tmp_L_modkarteikasten1{
+		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
+		AktuellerKarteikasten: []Karteikasten{},
+		AlleKarten:            []Karte{},
+		AktuelleKarte:         []Karte{},
+	}
+
+	temp_kk := GetKarteikastenByid(1)
+	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(1), GetNutzerById(1)))
+
+	data.AktuellerKarteikasten = append(data.AktuellerKarteikasten, temp_kk)
+
+	for i, element := range temp_kk.Karten {
+		data.AlleKarten = append(data.AlleKarten, element)
+		data.AlleKarten[i].Num = i + 1
+	}
+
+	data.AktuelleKarte = append(data.AktuelleKarte, data.AlleKarten[0])
+	//fmt.Println(data.AktuelleKarte)
+
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_showKarteikarten.html")
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", data)
 }

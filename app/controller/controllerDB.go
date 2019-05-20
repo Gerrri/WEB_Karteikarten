@@ -26,6 +26,7 @@ type alleNutzer struct {
 }
 
 type Karte struct {
+	Num     int
 	Titel   string
 	Frage   string
 	Antwort string
@@ -89,7 +90,6 @@ func GetKarteikastenFortschritt(k Karteikasten, nutzer Nutzer) (fortschritt floa
 
 	for n := 0; n < 4; n++ {
 		zaehler += n * GetKarteikartenAnzByFach(k, n, nutzer)
-
 	}
 
 	fortschritt = float64(zaehler) / float64(4*float64(xgesamt)) * 100

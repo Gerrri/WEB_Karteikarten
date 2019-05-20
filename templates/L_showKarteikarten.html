@@ -2,67 +2,52 @@
 						<h1 class="text_headline">Karteikasten anschauen</h1>
 					    <p>Hier kannst du dir beliebeige Karteikarten anscheuen ohne Sie zu bearbeiten.</p>
 						  	
+							{{range .AktuellerKarteikasten}}
 						  <div class="has_background_light uebersicht" >
 							  <div class="green_line"></div>
 							  
 							  <div class="columns">
 							  		<div class="column is-2">
 								  		<p  class="card_number">Name</p>
-										<h1 class="card_titel">Geometrie</h1>
+										<h1 class="card_titel"> {{.Titel}} </h1>
 								  	</div>
 								  
 								  	<div class="column">
 								  		<p  class="card_number">Kategorie</p>
-										<h1 class="card_titel">Naturwissenschaft <i class="fas fa-caret-right"></i> Mathematik</h1>					  
+										<h1 class="card_titel">{{.Kategorie}} <i class="fas fa-caret-right"></i> {{.Unterkategorie}}</h1>					  
 								  	</div>
 								  
 								  	<div class="column is-2">
-								  	  <p class="card_number">Erstellt von</p>
-								  	  <h1 class="card_titel">Gunter Müller</h1>
+								  		<p  class="card_number"> Fortschritt</p>
+										<h1 class="card_titel">{{.FortschrittP}}%</h1>
 								  	</div>
 								  	
-								  <div class="column is-2">
-								  	  <p class="card_number">Fortschriit</p>
-								  	  <h1 class="card_titel">12%</h1>
-								  </div>
+								  <div class="column is-2">  <a class="button is-success is-small btm_bearbeiten_head">Bearbeiten</a> </div>
 								  <div class="column is-2 is-paddingless">
 								  				<div id="hex1" class="hexagon-wrapper">
-													<div id="color1" class="hexagon"><h1 id="hex_text">22</h1> </div>
+													<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
 												</div>
 								  </div>
 							  </div>
-						  </div>
+							</div>
+							{{end}}
 						  
 						  <div class="columns is-marginless text_karten">
 							  	<div class="column  is-paddingless is-3 card_container"> 
 							  		<div class="columns is-marginless text_karten is-multiline">
 										<!-- Karteikarten -->
-							  			<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
-											<p  class="card_number">#1</p>
-											<h1 class="card_titel" style="margin-bottom: 10%">Titel der Karte</h1>
-										</div>
-										
+
+										{{range .AlleKarten}}
 										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
-											<p  class="card_number">#2</p>
-											<h1 class="card_titel" style="margin-bottom: 10%">Titel der Karte</h1>
-										</div>
-										
-										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
-											<p  class="card_number">#3</p>
-											<h1 class="card_titel" style="margin-bottom: 10%">Titel der Karte</h1>
-										</div>
-										
-										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
-											<p  class="card_number">#4</p>
-											<h1 class="card_titel" style="margin-bottom: 10%">Titel der Karte</h1>
-										</div>
-										
-										
-										
+											<p  class="card_number"># {{.Num}}</p>
+											<h1 class="card_titel" style="margin-bottom: 10%">{{.Titel}}</h1>
+									  </div>
+					  			  {{end}}
+							  			
 									</div>
 							  	</div>
 							  
-							  
+						{{range .AktuelleKarte}}
 							    <div class="column has_background_light is-paddingless edit_cards"><div class="green_line"> </div> 
 									
 									<div class="field is-horizontal edit_fields">
@@ -107,7 +92,7 @@
 									  <div class="field-body" style="padding-top: 1%;font-weight: bold;">
 										<div class="field">
 										  <p class="control">
-											<p>Titel der Karte</p>
+											<p>{{.Titel}}</p>
 										  </p>
 										</div>
 									  </div>
@@ -120,7 +105,7 @@
 									  <div class="field-body" style="padding-top: 1%;">
 										<div class="field">
 										  <p class="control">
-											Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+												{{.Frage}}
 										  </p>
 										</div>
 									  </div>
@@ -133,20 +118,20 @@
 									  <div class="field-body" style="padding-top: 1%;">
 										<div class="field">
 										  <p class="control">
-											Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+												{{.Antwort}}
 										  </p>
 										</div>
 									  </div>
 									</div>
 										
-							  	 </div>
+									 </div>
+									
 							  
 							  	<script>
 											var simplemde = new SimpleMDE({ element: document.getElementById("textarea_frage") });
 											var simplemde2 = new SimpleMDE({ element: document.getElementById("textarea_antwort") });
 								</script>	
 						  		
-						  </div>
-
-
+							</div>
+							{{end}}
 {{ end }}
