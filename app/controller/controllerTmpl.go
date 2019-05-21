@@ -198,6 +198,7 @@ func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
+
 	data := tmp_L_modkarteikasten1{
 		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
 		AktuellerKarteikasten: []Karteikasten{},
@@ -205,8 +206,15 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 		AktuelleKarte:         []Karte{},
 	}
 
-	temp_kk := GetKarteikastenByid(1)
-	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(1), GetNutzerById(1)))
+	temp_kk := GetKarteikastenByid(2)
+	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(2), GetNutzerById(1)))
+
+	//gewählte Karte
+
+	Num := r.FormValue("Num")
+	if Num == "" {
+		Num = "1"
+	}
 
 	data.AktuellerKarteikasten = append(data.AktuellerKarteikasten, temp_kk)
 
@@ -214,8 +222,12 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 		data.AlleKarten = append(data.AlleKarten, element)
 		data.AlleKarten[i].Num = i + 1
 	}
+	akt, _ := strconv.Atoi(Num)
 
-	data.AktuelleKarte = append(data.AktuelleKarte, data.AlleKarten[0])
+	//fmt.Println("#########################################################################################")
+	//fmt.Println(akt)
+	//fmt.Println("#########################################################################################")
+	data.AktuelleKarte = append(data.AktuelleKarte, data.AlleKarten[akt-1])
 	//fmt.Println(data.AktuelleKarte)
 
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_showKarteikarten.html")
