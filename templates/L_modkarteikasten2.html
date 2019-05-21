@@ -2,35 +2,33 @@
 						  <h1 class="text_headline">Karteikasten erstellen / Karteikasten bearbeiten</h1>
 						  <p>Hier kannst du eine neue Kartei erstellen oder eine vorhandene nach Bedarf bearbeiten.</p>
 							
-							{{range .AktuellerKarteikasten}}
 						  <div class="has_background_light uebersicht" >
 							  <div class="green_line"></div>
 							  
 							  <div class="columns">
 							  		<div class="column is-2">
 								  		<p  class="card_number">Name</p>
-										<h1 class="card_titel"> {{.Titel}} </h1>
+										<h1 class="card_titel"> {{.AktuellerKarteikasten.Titel}} </h1>
 								  	</div>
 								  
 								  	<div class="column">
 								  		<p  class="card_number">Kategorie</p>
-										<h1 class="card_titel">{{.Kategorie}} <i class="fas fa-caret-right"></i> {{.Unterkategorie}}</h1>					  
+										<h1 class="card_titel">{{.AktuellerKarteikasten.Kategorie}} <i class="fas fa-caret-right"></i> {{.AktuellerKarteikasten.Unterkategorie}}</h1>					  
 								  	</div>
 								  
 								  	<div class="column is-2">
 								  		<p  class="card_number"> Fortschritt</p>
-										<h1 class="card_titel">{{.FortschrittP}}%</h1>
+										<h1 class="card_titel">{{.AktuellerKarteikasten.FortschrittP}}%</h1>
 								  	</div>
 								  	
 								  <div class="column is-2">  <a class="button is-success is-small btm_bearbeiten_head">Bearbeiten</a> </div>
 								  <div class="column is-2 is-paddingless">
 								  				<div id="hex1" class="hexagon-wrapper">
-													<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
+													<div id="color1" class="hexagon"><h1 id="hex_text">{{.AktuellerKarteikasten.Anzahl}}</h1> </div>
 												</div>
 								  </div>
 							  </div>
 							</div>
-							{{end}}
 						  
 						  <div class="columns is-marginless text_karten">
 							  	<div class="column  is-paddingless is-3 card_container"> 

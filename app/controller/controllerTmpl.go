@@ -30,9 +30,10 @@ type tmp_L_MeineKarteikaesten struct {
 
 type tmp_L_modkarteikasten1 struct {
 	Karteien              string
-	AktuellerKarteikasten []Karteikasten
 	AlleKarten            []Karte
+	AlleFortschirtte      []int
 	AktuelleKarte         []Karte
+	AktuellerKarteikasten Karteikasten
 }
 
 /* ######################   not logged in Pages   ###################### */
@@ -179,14 +180,14 @@ func L_modkarteikasten1(w http.ResponseWriter, r *http.Request) {
 func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 	data := tmp_L_modkarteikasten1{
 		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
-		AktuellerKarteikasten: []Karteikasten{},
+		AktuellerKarteikasten: Karteikasten{},
 		AlleKarten:            []Karte{},
 	}
 
 	temp_kk := GetKarteikastenByid(1)
 	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(1), GetNutzerById(1)))
 
-	data.AktuellerKarteikasten = append(data.AktuellerKarteikasten, temp_kk)
+	data.AktuellerKarteikasten = temp_kk
 
 	for i, element := range temp_kk.Karten {
 		data.AlleKarten = append(data.AlleKarten, element)
@@ -201,13 +202,14 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 
 	data := tmp_L_modkarteikasten1{
 		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
-		AktuellerKarteikasten: []Karteikasten{},
+		AktuellerKarteikasten: Karteikasten{},
 		AlleKarten:            []Karte{},
+		AlleFortschirtte:      []int{},
 		AktuelleKarte:         []Karte{},
 	}
 
-	temp_kk := GetKarteikastenByid(2)
-	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(2), GetNutzerById(1)))
+	temp_kk := GetKarteikastenByid(1)
+	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(1), GetNutzerById(1)))
 
 	//gewählte Karte
 
@@ -216,12 +218,17 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 		Num = "1"
 	}
 
-	data.AktuellerKarteikasten = append(data.AktuellerKarteikasten, temp_kk)
+	data.AktuellerKarteikasten = temp_kk
 
 	for i, element := range temp_kk.Karten {
 		data.AlleKarten = append(data.AlleKarten, element)
 		data.AlleKarten[i].Num = i + 1
 	}
+
+	for _, element := range GetKarteikastenWiederholungArr(temp_kk, GetNutzerById(1)) {
+		data.AlleFortschirtte = append(data.AlleFortschirtte, element)
+	}
+
 	akt, _ := strconv.Atoi(Num)
 
 	//fmt.Println("#########################################################################################")

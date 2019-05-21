@@ -97,6 +97,22 @@ func GetKarteikastenFortschritt(k Karteikasten, nutzer Nutzer) (fortschritt floa
 	return fortschritt
 }
 
+func GetKarteikastenWiederholungArr(k Karteikasten, nutzer Nutzer) (i []int) {
+
+	for _, element := range k.Fortschritt {
+		if element.ID == nutzer.ID {
+			for _, wd := range element.Wiederholung {
+				i = append(i, wd)
+			}
+			return i
+		} else {
+			return nil
+		}
+	}
+	return nil
+
+}
+
 func GetKarteikartenAnzByFach(k Karteikasten, fach int, n Nutzer) (anz int) {
 	var anzahl_fach = 0
 	for index, _ := range k.Karten {
