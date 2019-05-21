@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -32,7 +33,7 @@ type tmp_L_modkarteikasten1 struct {
 	Karteien              string
 	AlleKarten            []Karte
 	AlleFortschirtte      []int
-	AktuelleKarte         []Karte
+	AktuelleKarte         Karte
 	AktuellerKarteikasten Karteikasten
 }
 
@@ -205,7 +206,7 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 		AktuellerKarteikasten: Karteikasten{},
 		AlleKarten:            []Karte{},
 		AlleFortschirtte:      []int{},
-		AktuelleKarte:         []Karte{},
+		AktuelleKarte:         Karte{},
 	}
 
 	temp_kk := GetKarteikastenByid(1)
@@ -230,12 +231,15 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 	}
 
 	akt, _ := strconv.Atoi(Num)
+	akt = akt - 1
 
 	//fmt.Println("#########################################################################################")
 	//fmt.Println(akt)
 	//fmt.Println("#########################################################################################")
-	data.AktuelleKarte = append(data.AktuelleKarte, data.AlleKarten[akt-1])
-	//fmt.Println(data.AktuelleKarte)
+	data.AktuelleKarte = data.AlleKarten[akt]
+	data.AktuelleKarte.NutzerFach = strconv.Itoa(data.AlleFortschirtte[akt])
+
+	fmt.Println(data.AktuelleKarte.NutzerFach)
 
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_showKarteikarten.html")
 	t.ExecuteTemplate(w, "layout", data)

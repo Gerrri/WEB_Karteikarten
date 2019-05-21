@@ -26,10 +26,11 @@ type alleNutzer struct {
 }
 
 type Karte struct {
-	Num     int
-	Titel   string
-	Frage   string
-	Antwort string
+	Num        int
+	Titel      string
+	Frage      string
+	Antwort    string
+	NutzerFach string
 }
 
 type Fortschritt struct {
