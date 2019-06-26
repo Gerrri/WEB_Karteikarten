@@ -81,8 +81,10 @@ func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
 }
 
 func NL_registrieren(w http.ResponseWriter, r *http.Request) {
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
-	t.ExecuteTemplate(w, "layout", nil)
+
+	t.ExecuteTemplate(w, "layout", p)
 }
 
 /* ######################   logged in Pages   ###################### */
@@ -128,13 +130,17 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_aufdecken(w http.ResponseWriter, r *http.Request) {
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_aufdecken.html")
-	t.ExecuteTemplate(w, "layout", nil)
+
+	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_lernen(w http.ResponseWriter, r *http.Request) {
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_lernen.html")
-	t.ExecuteTemplate(w, "layout", nil)
+
+	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
@@ -164,18 +170,24 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_meinProfil(w http.ResponseWriter, r *http.Request) {
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil.html")
-	t.ExecuteTemplate(w, "layout", nil)
+
+	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil_popup.html")
-	t.ExecuteTemplate(w, "layout", nil)
+
+	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_modkarteikasten1(w http.ResponseWriter, r *http.Request) {
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_modkarteikasten1.html")
-	t.ExecuteTemplate(w, "layout", nil)
+
+	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
