@@ -27,6 +27,7 @@ type alleNutzer struct {
 
 type Karte struct {
 	Num        int
+	Index      int
 	Titel      string
 	Frage      string
 	Antwort    string

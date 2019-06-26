@@ -40,10 +40,10 @@
 											<h1 class="card_titel">{{.Titel}}</h1>
 											
 											<a href="" class="button is-small is-danger is-pulled-right btn_del_bearbeiten" ><img class="menu_icon" src="/icons/Delete.svg"></a>
-											<a href="" class="button is-small is-success is-pulled-right btn_del_bearbeiten">Bearbeiten</a>
+											<a href="l_modkarteikasten2?Kasten={{$.KastenID}}&Karte={{.Index}}" class="button is-small is-success is-pulled-right btn_del_bearbeiten">Bearbeiten</a>
 											
 										</div>
-					  {{end}}
+					    {{end}}
 									</div>
 							  	</div>
 							  
@@ -57,7 +57,7 @@
 									  <div class="field-body">
 										<div class="field">
 										  <p class="control">
-											<input class="input " type="text"  readonly>
+											<input class="input " type="text" value="{{.Titel}}">
 										  </p>
 										</div>
 									  </div>
@@ -70,7 +70,7 @@
 									  <div class="field-body">
 										<div class="field">
 										  <p class="control">
-											<textarea id="textarea_frage" class="textarea" placeholder=""></textarea>
+											<textarea id="textarea_frage" class="textarea" placeholder="">{{.Frage}}</textarea>
 										  </p>
 										</div>
 									  </div>
@@ -83,7 +83,7 @@
 									  <div class="field-body">
 										<div class="field">
 										  <p class="control">
-											<textarea id="textarea_antwort" class="textarea" placeholder=""></textarea>
+											<textarea id="textarea_antwort" class="textarea" placeholder="">{{.Antwort}}</textarea>
 										  </p>
 										</div>
 									  </div>

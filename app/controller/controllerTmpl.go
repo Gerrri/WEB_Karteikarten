@@ -59,6 +59,13 @@ type tmp_L_modkarteikasten1 struct {
 	AlleFortschirtte      []int
 	AktuelleKarte         Karte
 	AktuellerKarteikasten Karteikasten
+	//von aktueller Karte
+	Titel   string
+	Frage   string
+	Antwort string
+
+	//aktueller Kasten
+	KastenID int
 }
 
 /* ######################   not logged in Pages   ###################### */
@@ -287,21 +294,37 @@ func L_modkarteikasten1(w http.ResponseWriter, r *http.Request) {
 	t.ExecuteTemplate(w, "layout", p)
 }
 
+// NutzerID?
 func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
+	var query = r.URL.Query()
+
+	var Kastenid, _ = strconv.Atoi((query["Kasten"])[0])
+	var Kartenid, _ = strconv.Atoi((query["Karte"])[0])
+
+	var kasten = GetKarteikastenByid(Kastenid)
+	var karte = kasten.Karten[Kartenid]
+
 	data := tmp_L_modkarteikasten1{
 		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
 		AktuellerKarteikasten: Karteikasten{},
 		AlleKarten:            []Karte{},
+
+		Titel:   karte.Titel,
+		Frage:   karte.Frage,
+		Antwort: karte.Antwort,
+
+		KastenID: Kastenid,
 	}
 
-	temp_kk := GetKarteikastenByid(1)
-	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(1), GetNutzerById(1)))
+	temp_kk := GetKarteikastenByid(Kastenid)
+	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(Kastenid), GetNutzerById(1)))
 
 	data.AktuellerKarteikasten = temp_kk
 
 	for i, element := range temp_kk.Karten {
 		data.AlleKarten = append(data.AlleKarten, element)
 		data.AlleKarten[i].Num = i + 1
+		data.AlleKarten[i].Index = i
 	}
 
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_modkarteikasten2.html")
