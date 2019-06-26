@@ -8,19 +8,19 @@
 							  <div class="columns">
 							  		<div class="column is-2">
 								  		<p  class="card_number">Name</p>
-										<h1 class="card_titel">Geometrie</h1>
+										<h1 class="card_titel">{{.Name}}</h1>
 								  	</div>
 								  
 								  	<div class="column">
 								  		<p  class="card_number">Kategorie</p>
-										<h1 class="card_titel">Naturwissenschaft <i class="fas fa-caret-right"></i> Mathematik</h1>					  
+										<h1 class="card_titel">{{.Kategorie}} <i class="fas fa-caret-right"></i> {{.UnterKategorie}}</h1>					  
 								  	</div>
-								  
+									  
 								  
 								  	
 								  <div class="column is-1">
 								  	  <p class="card_number">Fortschritt</p>
-								  	  <h1 class="card_titel">12%</h1>
+								  	  <h1 class="card_titel">{{.Fortschritt}}%</h1>
 								  </div>
 								  
 								  	<div class="column is-4" style="padding-left: 5%">
@@ -50,7 +50,7 @@
 								  
 								  <div class="column is-1 is-paddingless">
 								  				<div id="hex3" class="hexagon-wrapper-lernen">
-													<div id="color3" class="hexagon"><h1 id="hex_text3">22</h1> </div>
+													<div id="color3" class="hexagon"><h1 id="hex_text3">{{.Kartenanz}}</h1> </div>
 												</div>
 								  </div>
 							  </div>
@@ -103,7 +103,7 @@
 									  <div class="field-body" style="padding-top: 1%;font-weight: bold;">
 										<div class="field">
 										  <p class="control">
-											<p>Titel der Karte</p>
+											<p>{{.Titel}}</p>
 										  </p>
 										</div>
 									  </div>
@@ -116,7 +116,7 @@
 									  <div class="field-body" style="padding-top: 1%;">
 										<div class="field">
 										  <p class="control">
-											Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+											{{.Frage}}
 										  </p>
 										</div>
 									  </div>

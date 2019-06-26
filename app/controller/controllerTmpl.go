@@ -13,6 +13,24 @@ type tmp_b_home struct {
 	Karteien   string
 }
 
+type tmp_L_lernen struct {
+	Nutzer     string
+	Lernkarten string
+	Karteien   string
+
+	Name           string
+	Kategorie      string
+	UnterKategorie string
+	Fortschritt    int
+	Kartenwd       [5]int
+	Kartenanz      int
+
+	//Karte
+	Titel   string
+	Frage   string
+	Antwort string
+}
+
 type tmp_nL_Karteikasten struct {
 	Karteien              string
 	Naturwissenschaften   []Karteikasten
@@ -130,17 +148,50 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_aufdecken(w http.ResponseWriter, r *http.Request) {
-	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+
+	p := tmp_b_home{
+		Nutzer:     strconv.Itoa(GetNutzeranz()),
+		Lernkarten: strconv.Itoa(GetKartenAnz()),
+		Karteien:   strconv.Itoa(GetKarteikastenAnz())}
+
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_aufdecken.html")
 
 	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_lernen(w http.ResponseWriter, r *http.Request) {
-	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	var query = r.URL.Query()
+
+	var Kastenid, _ = strconv.Atoi((query["Kasten"])[0])
+	var Kartenid, _ = strconv.Atoi((query["Karte"])[0])
+	var kasten = GetKarteikastenByid(Kastenid)
+	var karte = kasten.Karten[Kartenid]
+
+	data := tmp_L_lernen{
+		//Allgemein
+		Nutzer:     strconv.Itoa(GetNutzeranz()),
+		Lernkarten: strconv.Itoa(GetKartenAnz()),
+		Karteien:   strconv.Itoa(GetKarteikastenAnz()),
+
+		//Kasten
+		Name:           kasten.Titel,
+		Kategorie:      kasten.Kategorie,
+		UnterKategorie: kasten.Unterkategorie,
+		Fortschritt:    kasten.FortschrittP,
+		Kartenwd:       [5]int{0, 0, 0, 0, 0},
+		Kartenanz:      len(kasten.Karten),
+
+		//Karte
+		Titel:   karte.Titel,
+		Frage:   karte.Frage,
+		Antwort: karte.Antwort,
+	}
+
+	//fmt.Printf("%vHier: \n", data.Titel)
+
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_lernen.html")
 
-	t.ExecuteTemplate(w, "layout", p)
+	t.ExecuteTemplate(w, "layout", data)
 }
 
 func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
