@@ -14,10 +14,12 @@ type tmp_b_home struct {
 }
 
 type tmp_L_lernen struct {
+	//Menüleiste
 	Nutzer     string
 	Lernkarten string
 	Karteien   string
 
+	//Kasten
 	Name           string
 	Kategorie      string
 	UnterKategorie string
@@ -29,6 +31,10 @@ type tmp_L_lernen struct {
 	Titel   string
 	Frage   string
 	Antwort string
+
+	//nächste Karte
+	KartenID int
+	KastenID int
 }
 
 type tmp_nL_Karteikasten struct {
@@ -148,15 +154,47 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_aufdecken(w http.ResponseWriter, r *http.Request) {
+	var query = r.URL.Query()
 
-	p := tmp_b_home{
+	var Kastenid, _ = strconv.Atoi((query["Kasten"])[0])
+	var Kartenid, _ = strconv.Atoi((query["Karte"])[0])
+	var kasten = GetKarteikastenByid(Kastenid)
+	var karte = kasten.Karten[Kartenid]
+
+	data := tmp_L_lernen{
+		//Allgemein
 		Nutzer:     strconv.Itoa(GetNutzeranz()),
 		Lernkarten: strconv.Itoa(GetKartenAnz()),
-		Karteien:   strconv.Itoa(GetKarteikastenAnz())}
+		Karteien:   strconv.Itoa(GetKarteikastenAnz()),
+
+		//Kasten
+		Name:           kasten.Titel,
+		Kategorie:      kasten.Kategorie,
+		UnterKategorie: kasten.Unterkategorie,
+		Fortschritt:    kasten.FortschrittP,
+		Kartenwd:       [5]int{0, 0, 0, 0, 0},
+		Kartenanz:      len(kasten.Karten),
+
+		//Karte
+		Titel:   karte.Titel,
+		Frage:   karte.Frage,
+		Antwort: karte.Antwort,
+
+		//nächste karte
+		KartenID: Kartenid + 1,
+		KastenID: Kastenid,
+	}
+
+	//fmt.Printf("KartenID: %v\n", data.KartenID)
+	//fmt.Printf("größe: %v\n", (len(kasten.Karten) - 1))
+
+	if data.KartenID >= (len(kasten.Karten)) {
+		data.KartenID = 0
+	}
 
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_aufdecken.html")
 
-	t.ExecuteTemplate(w, "layout", p)
+	t.ExecuteTemplate(w, "layout", data)
 }
 
 func L_lernen(w http.ResponseWriter, r *http.Request) {
@@ -185,6 +223,14 @@ func L_lernen(w http.ResponseWriter, r *http.Request) {
 		Titel:   karte.Titel,
 		Frage:   karte.Frage,
 		Antwort: karte.Antwort,
+
+		//nächste karte
+		KartenID: Kartenid,
+		KastenID: Kastenid,
+	}
+
+	if data.KartenID >= (len(kasten.Karten)) {
+		data.KartenID = 0
 	}
 
 	//fmt.Printf("%vHier: \n", data.Titel)
