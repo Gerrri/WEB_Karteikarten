@@ -20,9 +20,10 @@ type Nutzer struct {
 }
 
 type alleNutzer struct {
-	_id    string
-	_rev   string
+	_id    string `json:"_id"`
+	_rev   string `json:"_rev"`
 	Nutzer []Nutzer
+	TYP    string
 }
 
 type Karte struct {
@@ -41,8 +42,9 @@ type Fortschritt struct {
 
 type Karteikasten struct {
 	ID             int
-	_id            string
-	_rev           string
+	DocID          string `json:"_id"`
+	DocRev         string `json:"_rev"`
+	TYP            string
 	NutzerID       int
 	Sichtbarkeit   string
 	Kategorie      string
@@ -157,16 +159,25 @@ func UpdateKarteikastenKarte(KastenID int, KartenID int, NutzerID int, Richtig b
 
 	if Richtig == false {
 		//nur wenn Fortschritt grüßer 0 --
+
+		//damit es beim zurückspringen nicht zu "out of bounce" kommt
+		if KartenID == -1 {
+			KartenID = len(kk.Karten) - 1
+		}
+
 		if kk.Fortschritt[NutzerID].Wiederholung[KartenID] > 0 {
 			kk.Fortschritt[NutzerID].Wiederholung[KartenID]--
 		}
 	}
 
+	fmt.Println("")
+
+	fmt.Println("id: ", kk.DocID)
+	fmt.Println("Rev: ", kk.DocRev)
+
 	//altes Löschen & neues rein
-	kk._id = "KK_2_das_kleine_1x1"
-	kk._rev = "19-0e9dadc6109851185f21730706bbfe0b"
-	db.DeleteDoc(kk2Map(kk))
-	db.Save(kk2Map(kk), nil)
+	db.Set(kk.DocID, kk2Map(kk))
+
 }
 
 func GetKarteikastenAnz() (anz int) {
