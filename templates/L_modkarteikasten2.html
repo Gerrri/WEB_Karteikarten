@@ -1,4 +1,5 @@
 {{ define "content" }}
+
 						  <h1 class="text_headline">Karteikasten erstellen / Karteikasten bearbeiten</h1>
 						  <p>Hier kannst du eine neue Kartei erstellen oder eine vorhandene nach Bedarf bearbeiten.</p>
 							
@@ -63,6 +64,8 @@
 									  </div>
 									</div>
 
+										
+
 									<div class="field is-horizontal edit_fields">
 									  <div class="field-label is-normal">
 										<label class="label">Frage</label>
@@ -90,12 +93,14 @@
 									</div>
 											<a href="#" class="button is-warning is-center" style="margin-left: 40%; margin-bottom: 5%">Speichern</a>
 											<a href="#" class="button is-danger is-center" style="margin-left: 2%">Abbrechen</a>
-							  	 </div>
+								   </div>
+								   
+								   <script>
+									var simplemde = new SimpleMDE({ element: document.getElementById("textarea_frage") });
+									var simplemde2 = new SimpleMDE({ element: document.getElementById("textarea_antwort") });
+								 </script>
 							  
-							  	<script>
-											var simplemde = new SimpleMDE({ element: document.getElementById("textarea_frage") });
-											var simplemde2 = new SimpleMDE({ element: document.getElementById("textarea_antwort") });
-								</script>	
+							 
 						  		
 						  </div>
 
