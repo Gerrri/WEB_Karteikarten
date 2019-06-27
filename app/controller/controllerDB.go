@@ -41,6 +41,7 @@ type Fortschritt struct {
 
 type Karteikasten struct {
 	ID             int
+	_id            string
 	_rev           string
 	NutzerID       int
 	Sichtbarkeit   string
@@ -129,8 +130,71 @@ func GetKarteikartenAnzByFach(k Karteikasten, fach int, n Nutzer) (anz int) {
 // ############################### Ende Kartei Methoden ################################ //
 
 // ############################### START Karteikasten Methoden ############################### //
+
+func UpdateKarteikastenKarte(KastenID int, KartenID int, NutzerID int, Richtig bool) {
+	var db *couchdb.Database = GetDB()
+
+	//func (db *Database) Save(doc interface{}, id string, rev string) (string, error)
+
+	kk := GetKarteikastenByid(KastenID)
+	//k := kk.Karten[KartenID]
+	NutzerID = 1
+	NutzerID--
+
+	//Richtig
+	if Richtig == true {
+		//nur wenn Fortschritt kleriner 4 ++
+
+		//damit es beim zurückspringen nicht zu "out of bounce" kommt
+		if KartenID == -1 {
+			KartenID = len(kk.Karten) - 1
+		}
+
+		if kk.Fortschritt[NutzerID].Wiederholung[KartenID] < 4 {
+			kk.Fortschritt[NutzerID].Wiederholung[KartenID]++
+		}
+	}
+
+	if Richtig == false {
+		//nur wenn Fortschritt grüßer 0 --
+		if kk.Fortschritt[NutzerID].Wiederholung[KartenID] > 0 {
+			kk.Fortschritt[NutzerID].Wiederholung[KartenID]--
+		}
+	}
+
+	//altes Löschen & neues rein
+	kk._id = "KK_2_das_kleine_1x1"
+	kk._rev = "19-0e9dadc6109851185f21730706bbfe0b"
+	db.DeleteDoc(kk2Map(kk))
+	db.Save(kk2Map(kk), nil)
+}
+
 func GetKarteikastenAnz() (anz int) {
 	return len(GetAlleKarteikaesten())
+}
+
+func GetAlleKarteikaestenPrivat(NutzerID int) (kk []Karteikasten) {
+	allekk := GetAlleKarteikaesten()
+
+	for _, element := range allekk {
+		if element.Sichtbarkeit == "Privat" && element.NutzerID == NutzerID {
+			kk = append(kk, element)
+		}
+	}
+
+	return kk
+}
+
+func GetAlleKarteikaestenOeffentlich() (kk []Karteikasten) {
+	allekk := GetAlleKarteikaesten()
+
+	for _, element := range allekk {
+		if element.Sichtbarkeit == "Öffentlich" {
+			kk = append(kk, element)
+		}
+	}
+
+	return kk
 }
 
 func GetAlleKarteikaesten() (kk []Karteikasten) {
@@ -273,4 +337,12 @@ func mapToJSON(inMap map[string]interface{}) (s string) {
 	}
 
 	return jsonString
+}
+
+func kk2Map(kk Karteikasten) map[string]interface{} {
+	var doc map[string]interface{}
+	tJSON, _ := json.Marshal(kk)
+	json.Unmarshal(tJSON, &doc)
+
+	return doc
 }

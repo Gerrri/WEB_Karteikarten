@@ -89,7 +89,7 @@ func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
 	}
 
 	kk := []Karteikasten{}
-	kk = GetAlleKarteikaesten()
+	kk = GetAlleKarteikaestenOeffentlich()
 
 	for _, element := range kk {
 		if element.Kategorie == "Naturwissenschaften" {
@@ -124,6 +124,7 @@ func L_Home(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("./templates/b_home.html", "./templates/L_logged_in.html")
 
 	t.ExecuteTemplate(w, "layout", p)
+
 }
 
 func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
@@ -138,7 +139,7 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 	}
 
 	kk := []Karteikasten{}
-	kk = GetAlleKarteikaesten()
+	kk = GetAlleKarteikaestenOeffentlich()
 
 	for _, element := range kk {
 		if element.Kategorie == "Naturwissenschaften" {
@@ -207,11 +208,45 @@ func L_aufdecken(w http.ResponseWriter, r *http.Request) {
 func L_lernen(w http.ResponseWriter, r *http.Request) {
 	var query = r.URL.Query()
 
+	//Kastenid und Kartenid auslesen
 	var Kastenid, _ = strconv.Atoi((query["Kasten"])[0])
 	var Kartenid, _ = strconv.Atoi((query["Karte"])[0])
+
 	var kasten = GetKarteikastenByid(Kastenid)
 	var karte = kasten.Karten[Kartenid]
 
+	//Ergebnis auswerten
+	var erg = query["Ergebnis"]
+
+	if erg != nil {
+		var Ergebnis, err = strconv.Atoi(erg[0])
+		if err == nil {
+			//Richtig
+			if Ergebnis == 1 {
+				//Update Lernstatus
+				fmt.Println("Richtig")
+
+				UpdateKarteikastenKarte(Kastenid, Kartenid-1, 1, true)
+
+				//fmt.Println("KastenID: %v", Kastenid)
+				//fmt.Println("KartenID: %v", Kartenid-1)
+				//fmt.Println("NutzerID: %v", 1)
+
+			}
+
+			//Falsch
+			if Ergebnis == 2 {
+				//Update Lernstatus
+				fmt.Println("Falsch")
+
+				UpdateKarteikastenKarte(Kastenid, Kartenid-1, 1, false)
+				//fmt.Println("KastenID: ", Kastenid)
+				//fmt.Println("KartenID: ", Kartenid-1)
+				//fmt.Println("NutzerID: ", 1)
+			}
+		}
+	}
+	//Data für Template
 	data := tmp_L_lernen{
 		//Allgemein
 		Nutzer:     strconv.Itoa(GetNutzeranz()),
