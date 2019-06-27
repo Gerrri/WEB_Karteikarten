@@ -66,6 +66,7 @@ type tmp_L_modkarteikasten1 struct {
 
 	//aktueller Kasten
 	KastenID int
+	KartenID int
 }
 
 /* ######################   not logged in Pages   ###################### */
@@ -336,6 +337,24 @@ func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 	var Kastenid, _ = strconv.Atoi((query["Kasten"])[0])
 	var Kartenid, _ = strconv.Atoi((query["Karte"])[0])
 
+	//Post auswertung
+	if r.Method == "POST" {
+		r.ParseForm()
+		titel := r.FormValue("titel")
+		fmt.Println(titel)
+
+		r.ParseForm()
+		frage := r.FormValue("frage")
+		fmt.Println(frage)
+
+		r.ParseForm()
+		antwort := r.FormValue("antwort")
+		fmt.Println(antwort)
+
+		UpdateKarteikarte(Kastenid, Kartenid, titel, frage, antwort)
+
+	}
+
 	var kasten = GetKarteikastenByid(Kastenid)
 	var karte = kasten.Karten[Kartenid]
 
@@ -349,6 +368,7 @@ func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 		Antwort: karte.Antwort,
 
 		KastenID: Kastenid,
+		KartenID: Kartenid,
 	}
 
 	temp_kk := GetKarteikastenByid(Kastenid)

@@ -180,6 +180,19 @@ func UpdateKarteikastenKarte(KastenID int, KartenID int, NutzerID int, Richtig b
 
 }
 
+func UpdateKarteikarte(KastenID int, KartenID int, titel string, frage string, antwort string) {
+
+	var db *couchdb.Database = GetDB()
+	kk := GetKarteikastenByid(KastenID)
+
+	kk.Karten[KartenID].Titel = titel
+	kk.Karten[KartenID].Frage = frage
+	kk.Karten[KartenID].Antwort = antwort
+
+	db.Set(kk.DocID, kk2Map(kk))
+
+}
+
 func GetKarteikastenAnz() (anz int) {
 	return len(GetAlleKarteikaesten())
 }

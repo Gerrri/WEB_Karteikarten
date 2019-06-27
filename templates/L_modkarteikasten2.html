@@ -50,7 +50,7 @@
 							  
 							  
 							    <div class="column has_background_light is-paddingless edit_cards"><div class="green_line"> </div> 
-									
+								<form method="POST" action="/l_modkarteikasten2?Kasten={{$.KastenID}}&Karte={{.KartenID}}">	
 							  		<div class="field is-horizontal edit_fields">
 									  <div class="field-label is-normal">
 										<label class="label">Titel</label>
@@ -58,7 +58,7 @@
 									  <div class="field-body">
 										<div class="field">
 										  <p class="control">
-											<input class="input " type="text" value="{{.Titel}}">
+											<input class="input" name="titel" type="text" value="{{.Titel}}">
 										  </p>
 										</div>
 									  </div>
@@ -73,7 +73,7 @@
 									  <div class="field-body">
 										<div class="field">
 										  <p class="control">
-											<textarea id="textarea_frage" class="textarea" placeholder="">{{.Frage}}</textarea>
+											<textarea id="textarea_frage"  name="frage" class="textarea" placeholder="">{{.Frage}}</textarea>
 										  </p>
 										</div>
 									  </div>
@@ -86,15 +86,19 @@
 									  <div class="field-body">
 										<div class="field">
 										  <p class="control">
-											<textarea id="textarea_antwort" class="textarea" placeholder="">{{.Antwort}}</textarea>
+											<textarea id="textarea_antwort" name="antwort" class="textarea" placeholder="">{{.Antwort}}</textarea>
 										  </p>
 										</div>
 									  </div>
 									</div>
-											<a href="#" class="button is-warning is-center" style="margin-left: 40%; margin-bottom: 5%">Speichern</a>
-											<a href="#" class="button is-danger is-center" style="margin-left: 2%">Abbrechen</a>
+											
+											 
+												<button type="submit" class="button is-warning text_white" style="margin-left: 40%; margin-bottom: 5%">Speichern</button>
+												<a href="#" class="button is-danger is-center" style="margin-left: 2%">Abbrechen</a>
 								   </div>
 								   
+								</form>
+								
 								   <script>
 									var simplemde = new SimpleMDE({ element: document.getElementById("textarea_frage") });
 									var simplemde2 = new SimpleMDE({ element: document.getElementById("textarea_antwort") });
