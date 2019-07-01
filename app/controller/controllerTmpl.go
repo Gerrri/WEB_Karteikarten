@@ -339,19 +339,31 @@ func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 
 	//Post auswertung
 	if r.Method == "POST" {
+
+		r.ParseForm()
+		add := r.FormValue("add")
+		//fmt.Println("checked: ", add )
+
 		r.ParseForm()
 		titel := r.FormValue("titel")
-		fmt.Println(titel)
+		//fmt.Println(titel)
 
 		r.ParseForm()
 		frage := r.FormValue("frage")
-		fmt.Println(frage)
+		//fmt.Println(frage)
 
 		r.ParseForm()
 		antwort := r.FormValue("antwort")
-		fmt.Println(antwort)
+		//fmt.Println(antwort)
 
-		UpdateKarteikarte(Kastenid, Kartenid, titel, frage, antwort)
+		//Save option bei "+"
+		if add == "on" {
+			fmt.Println("Add:", titel, frage, antwort)
+			AddKarteikarte(Kastenid, titel, frage, antwort)
+		} else {
+			fmt.Println("Update:", titel, frage, antwort)
+			UpdateKarteikarte(Kastenid, Kartenid, titel, frage, antwort)
+		}
 
 	}
 
@@ -386,7 +398,16 @@ func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 	t.ExecuteTemplate(w, "layout", data)
 }
 
+//NutzerID austauschen
 func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
+	var query = r.URL.Query()
+
+	//Kastenid und Kartenid auslesen
+	var Kastenid, _ = strconv.Atoi((query["Kasten"])[0])
+	var Kartenid, _ = strconv.Atoi((query["Karte"])[0])
+
+	var kasten = GetKarteikastenByid(Kastenid)
+	var karte = kasten.Karten[Kartenid]
 
 	data := tmp_L_modkarteikasten1{
 		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
@@ -394,10 +415,11 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 		AlleKarten:            []Karte{},
 		AlleFortschirtte:      []int{},
 		AktuelleKarte:         Karte{},
+		KastenID:              Kastenid,
+		KartenID:              Kartenid,
 	}
 
-	temp_kk := GetKarteikastenByid(1)
-	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(1), GetNutzerById(1)))
+	kasten.FortschrittP = int(GetKarteikastenFortschritt(kasten, GetNutzerById(1)))
 
 	//gewählte Karte
 
@@ -406,27 +428,23 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 		Num = "1"
 	}
 
-	data.AktuellerKarteikasten = temp_kk
+	data.AktuellerKarteikasten = kasten
 
-	for i, element := range temp_kk.Karten {
+	for i, element := range kasten.Karten {
 		data.AlleKarten = append(data.AlleKarten, element)
+		data.AlleKarten[i].Index = i
 		data.AlleKarten[i].Num = i + 1
 	}
 
-	for _, element := range GetKarteikastenWiederholungArr(temp_kk, GetNutzerById(1)) {
+	for _, element := range GetKarteikastenWiederholungArr(kasten, GetNutzerById(1)) {
 		data.AlleFortschirtte = append(data.AlleFortschirtte, element)
 	}
 
 	akt, _ := strconv.Atoi(Num)
 	akt = akt - 1
 
-	//fmt.Println("#########################################################################################")
-	//fmt.Println(akt)
-	//fmt.Println("#########################################################################################")
-	data.AktuelleKarte = data.AlleKarten[akt]
+	data.AktuelleKarte = karte
 	data.AktuelleKarte.NutzerFach = strconv.Itoa(data.AlleFortschirtte[akt])
-
-	fmt.Println(data.AktuelleKarte.NutzerFach)
 
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_showKarteikarten.html")
 	t.ExecuteTemplate(w, "layout", data)

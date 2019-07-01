@@ -39,10 +39,12 @@
 
 										{{range .AlleKarten}}
 										<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
-											 <a class="text_color_black" href="l_showKarteikarten?Num={{.Num}}"><p class="card_number"># {{.Num}}</p></a>
+											 <a class="text_color_black" href="l_showKarteikarten?Kasten={{$.KastenID}}&Karte={{.Index}}"><p class="card_number"># {{.Num}}</p></a>
+
+											 
 											<h1 class="card_titel" style="margin-bottom: 10%">{{.Titel}}</h1>
-									  </div>
-					  			  {{end}}
+									    </div>
+					  			  		{{end}}
 							  			
 									</div>
 							  	</div>

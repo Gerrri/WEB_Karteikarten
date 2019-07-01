@@ -266,6 +266,26 @@ func GetKarteikastenByid(id int) (k Karteikasten) {
 	return k
 }
 
+func AddKarteikarte(KastenID int, titel string, frage string, antwort string) {
+	var db *couchdb.Database = GetDB()
+
+	k := Karte{}
+	k.Titel = titel
+	k.Frage = frage
+	k.Antwort = antwort
+
+	kk := GetKarteikastenByid(KastenID)
+	for i := 0; i < len(kk.Fortschritt); i++ {
+		kk.Fortschritt[i].Wiederholung = append(kk.Fortschritt[i].Wiederholung, 0)
+	}
+
+	kk.Karten = append(kk.Karten, k)
+
+	fmt.Println("Neue Karte hinzufügen ...")
+
+	db.Set(kk.DocID, kk2Map(kk))
+}
+
 func TerminalOutKarteikasten(k Karteikasten) {
 	fmt.Println("############# KARTEIKASTEN ##############")
 	fmt.Println("id : " + strconv.Itoa(k.ID))
@@ -366,6 +386,14 @@ func mapToJSON(inMap map[string]interface{}) (s string) {
 func kk2Map(kk Karteikasten) map[string]interface{} {
 	var doc map[string]interface{}
 	tJSON, _ := json.Marshal(kk)
+	json.Unmarshal(tJSON, &doc)
+
+	return doc
+}
+
+func k2Map(k Karteikasten) map[string]interface{} {
+	var doc map[string]interface{}
+	tJSON, _ := json.Marshal(k)
 	json.Unmarshal(tJSON, &doc)
 
 	return doc
