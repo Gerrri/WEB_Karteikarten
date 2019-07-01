@@ -33,8 +33,9 @@ type tmp_L_lernen struct {
 	Antwort string
 
 	//nächste Karte
-	KartenID int
-	KastenID int
+	KartenID     int
+	KastenID     int
+	NextKartenID int
 }
 
 type tmp_nL_Karteikasten struct {
@@ -270,12 +271,17 @@ func L_lernen(w http.ResponseWriter, r *http.Request) {
 		Antwort: karte.Antwort,
 
 		//nächste karte
-		KartenID: Kartenid,
-		KastenID: Kastenid,
+		KartenID:     Kartenid,
+		KastenID:     Kastenid,
+		NextKartenID: Kartenid + 1,
 	}
 
 	if data.KartenID >= (len(kasten.Karten)) {
 		data.KartenID = 0
+	}
+
+	if data.NextKartenID >= (len(kasten.Karten)) {
+		data.NextKartenID = 0
 	}
 
 	//fmt.Printf("%vHier: \n", data.Titel)
