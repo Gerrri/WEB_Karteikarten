@@ -3,27 +3,20 @@ package controller
 import (
 	"couchdb"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"strconv" //strconv.Itoa -> int to string
 )
 
 // Structs
 type Nutzer struct {
-	ID                int
-	Vorname           string
+	DocID             string `json:"_id"`
+	DocRev            string `json:"_rev"`
+	TYP               string
 	Name              string
 	EMail             string
 	Passwort          string
 	ErstellteKarteien []string
 	GelernteKarteien  []string
-}
-
-type alleNutzer struct {
-	_id    string `json:"_id"`
-	_rev   string `json:"_rev"`
-	Nutzer []Nutzer
-	TYP    string
 }
 
 type Karte struct {
@@ -36,7 +29,7 @@ type Karte struct {
 }
 
 type Fortschritt struct {
-	ID           int
+	ID           string
 	Wiederholung []int
 }
 
@@ -44,7 +37,7 @@ type Karteikasten struct {
 	DocID          string `json:"_id"`
 	DocRev         string `json:"_rev"`
 	TYP            string
-	NutzerID       int
+	NutzerID       string
 	Sichtbarkeit   string
 	Kategorie      string
 	Unterkategorie string
@@ -108,7 +101,7 @@ func GetKarteikastenFortschritt(k Karteikasten, nutzer Nutzer) (fortschritt floa
 func GetKarteikastenWiederholungArr(k Karteikasten, nutzer Nutzer) (i []int) {
 
 	for _, element := range k.Fortschritt {
-		if element.ID == nutzer.ID {
+		if element.ID == nutzer.DocID {
 			for _, wd := range element.Wiederholung {
 				i = append(i, wd)
 			}
@@ -123,8 +116,14 @@ func GetKarteikastenWiederholungArr(k Karteikasten, nutzer Nutzer) (i []int) {
 
 func GetKarteikartenAnzByFach(k Karteikasten, fach int, n Nutzer) (anz int) {
 	var anzahl_fach = 0
-	for index, _ := range k.Karten {
-		if k.Fortschritt[n.ID].Wiederholung[index] == fach {
+	var wd = []int{}
+
+	// Wiederholung im Fortschritt von Nutzer raussuchen
+	wd = GetKKWiederholungenByNutzer(k, n)
+
+	//Fachnummeranzahl entsprechend fach hochzählen
+	for _, fachNr := range wd {
+		if fachNr == fach {
 			anzahl_fach++
 		}
 	}
@@ -134,17 +133,35 @@ func GetKarteikartenAnzByFach(k Karteikasten, fach int, n Nutzer) (anz int) {
 
 // ############################### Ende Kartei Methoden ################################ //
 
+func GetKKWiederholungenByNutzer(k Karteikasten, n Nutzer) (wd []int) {
+	var Wiederholungen = []int{}
+
+	//fmt.Println("NutzerID: ", n.DocID)
+	for _, fort := range k.Fortschritt {
+
+		//fmt.Println("FortID: ", fort.ID)
+		if fort.ID == n.DocID {
+
+			for _, aktwd := range fort.Wiederholung {
+				Wiederholungen = append(Wiederholungen, aktwd)
+			}
+
+		}
+	}
+
+	return Wiederholungen
+}
+
 // ############################### START Karteikasten Methoden ############################### //
 
-func UpdateKarteikastenKarte(KastenID string, KartenID int, NutzerID int, Richtig bool) {
+func UpdateKarteikastenKarte(KastenID string, KartenID int, n Nutzer, Richtig bool) {
 	var db *couchdb.Database = GetDB()
 
 	//func (db *Database) Save(doc interface{}, id string, rev string) (string, error)
 
 	kk := GetKarteikastenByid(KastenID)
+	wd := GetKKWiederholungenByNutzer(kk, n)
 	//k := kk.Karten[KartenID]
-	NutzerID = 1
-	NutzerID--
 
 	//Richtig
 	if Richtig == true {
@@ -155,8 +172,8 @@ func UpdateKarteikastenKarte(KastenID string, KartenID int, NutzerID int, Richti
 			KartenID = len(kk.Karten) - 1
 		}
 
-		if kk.Fortschritt[NutzerID].Wiederholung[KartenID] < 4 {
-			kk.Fortschritt[NutzerID].Wiederholung[KartenID]++
+		if wd[KartenID] < 4 {
+			wd[KartenID]++
 		}
 	}
 
@@ -168,15 +185,15 @@ func UpdateKarteikastenKarte(KastenID string, KartenID int, NutzerID int, Richti
 			KartenID = len(kk.Karten) - 1
 		}
 
-		if kk.Fortschritt[NutzerID].Wiederholung[KartenID] > 0 {
-			kk.Fortschritt[NutzerID].Wiederholung[KartenID]--
+		if wd[KartenID] > 0 {
+			wd[KartenID]--
 		}
 	}
 
-	fmt.Println("")
+	//fmt.Println("")
 
-	fmt.Println("id: ", kk.DocID)
-	fmt.Println("Rev: ", kk.DocRev)
+	//fmt.Println("id: ", kk.DocID)
+	//fmt.Println("Rev: ", kk.DocRev)
 
 	//altes Löschen & neues rein
 	db.Set(kk.DocID, kk2Map(kk))
@@ -200,11 +217,11 @@ func GetKarteikastenAnz() (anz int) {
 	return len(GetAlleKarteikaesten())
 }
 
-func GetAlleKarteikaestenPrivat(NutzerID int) (kk []Karteikasten) {
+func GetAlleKarteikaestenPrivat(nutzer Nutzer) (kk []Karteikasten) {
 	allekk := GetAlleKarteikaesten()
 
 	for _, element := range allekk {
-		if element.Sichtbarkeit == "Privat" && element.NutzerID == NutzerID {
+		if element.Sichtbarkeit == "Privat" && element.NutzerID == nutzer.DocID {
 			kk = append(kk, element)
 		}
 	}
@@ -271,6 +288,12 @@ func GetKarteikastenByid(id string) (k Karteikasten) {
 
 func AddKarteikasten(kk Karteikasten, nutzer Nutzer) error {
 	var db *couchdb.Database = GetDB()
+
+	f := Fortschritt{}
+	f.ID = nutzer.DocID
+	kk.NutzerID = nutzer.DocID
+
+	kk.Fortschritt = append(kk.Fortschritt, f)
 	// Convert Todo suct to map[string]interface as required by Save() method
 	KarteiK := kk2Map(kk)
 
@@ -286,8 +309,13 @@ func AddKarteikasten(kk Karteikasten, nutzer Nutzer) error {
 		fmt.Printf("[Add] error: %s", err)
 	}
 
+	//Karte hinzufügen
+	AddKarteikarte(id, "Meine Erste Karteikarte", "Schreibe hier deine Frage", "...und hier die Antwort :)")
+
 	//Update Nutzer
-	nutzer.ErstellteKarteien = append(nutzer.ErstellteKarteien, id)
+
+	AddKKtoNutzer(nutzer, GetKarteikastenByid(id))
+	//db.Save(KarteiK, nil)
 
 	return err
 }
@@ -309,7 +337,13 @@ func AddKarteikarte(KastenID string, titel string, frage string, antwort string)
 
 	fmt.Println("Neue Karte hinzufügen ...")
 
-	db.Set(kk.DocID, kk2Map(kk))
+	kkmap := kk2Map(kk)
+
+	delete(kkmap, "NutzerFach")
+	delete(kkmap, "Num")
+	delete(kkmap, "Index")
+
+	db.Set(kk.DocID, kkmap)
 }
 
 func DelKarteikarteByID(KastenID string, KartenID int) {
@@ -349,7 +383,7 @@ func DelKarteikarteByID(KastenID string, KartenID int) {
 func TerminalOutKarteikasten(k Karteikasten) {
 	fmt.Println("############# KARTEIKASTEN ##############")
 	fmt.Println("id : " + k.DocID)
-	fmt.Println("NutzerID : " + strconv.Itoa(k.NutzerID))
+	fmt.Println("NutzerID : " + k.NutzerID)
 	fmt.Println("Oeffentlich : " + k.Sichtbarkeit)
 	fmt.Println("Kategorie : " + k.Kategorie)
 	fmt.Println("Unterkategorie : " + k.Unterkategorie)
@@ -364,63 +398,69 @@ func TerminalOutKarteikasten(k Karteikasten) {
 // ############################### START Nutzer Methoden ############################### //
 
 //Wenn nicht vorhanden ID = -1
-func GetNutzerById(id int) (n Nutzer) {
+func GetNutzerById(id string) (n Nutzer) {
 
-	var arr, err = getNutzerArr()
+	var arr = GetAlleNutzer()
 
-	if err == nil {
-		for _, n := range arr {
-			if n.ID == id {
-				return n
-			}
+	for _, nutzer := range arr {
+		if nutzer.DocID == id {
+			return nutzer
 		}
 	}
 
 	n = Nutzer{}
-	n.ID = -1
+	n.DocID = "null"
 	return n
 }
 
 //-1 = db not da
 //-2 = abfrage nicht möglich
 func GetNutzeranz() (anz int) {
-	var n, err = getNutzerArr()
+	var n = GetAlleNutzer()
 
-	if err == nil {
-		return len(n)
-	} else {
-		fmt.Println(err)
-		return -2
-	}
+	return len(n)
 
 	return -1
 }
 
-func getNutzerArr() (n []Nutzer, err error) {
+func AddKKtoNutzer(n Nutzer, kk Karteikasten) {
 	var db *couchdb.Database = GetDB()
 
-	if db == nil {
-		return nil, errors.New("Datenbank Verbindung nicht möglich!")
+	n.ErstellteKarteien = append(n.ErstellteKarteien, kk.DocID)
+
+	db.Set(n.DocID, nutzer2Map(n))
+}
+
+func GetAlleNutzer() (n []Nutzer) {
+	var db *couchdb.Database = GetDB()
+
+	inmap, err := db.QueryJSON(`
+	{
+		"selector": {
+		"TYP": "nutzer"
+		}
+	}`)
+
+	for _, element := range inmap {
+
+		var in = mapToJSON(element)
+
+		var temp_an = Nutzer{}
+		if err == nil {
+			json.Unmarshal([]byte(in), &temp_an)
+
+			n = append(n, temp_an)
+
+		} else {
+			fmt.Println(err)
+		}
 	}
 
-	//Nutzer Wählen
-	var result map[string]interface{}
-
-	//result, err = db.Get("nutzer", nil)
-	result, err = db.Get("nutzer", nil)
-
-	in := mapToJSON(result)
-
-	an := alleNutzer{}
-	json.Unmarshal([]byte(in), &an)
-
-	return an.Nutzer, nil
-
+	return n
 }
 
 func TerminalOutNutzer(n Nutzer) {
-	fmt.Println("ID 		: " + strconv.Itoa(n.ID))
-	fmt.Println("Vorname 	: " + n.Vorname)
+	fmt.Println("ID 		: " + n.DocID)
 	fmt.Println("Name 		: " + n.Name)
 	fmt.Println("Email 		: " + n.EMail)
 	fmt.Println("Passwort 	: " + n.Passwort)
@@ -446,6 +486,14 @@ func mapToJSON(inMap map[string]interface{}) (s string) {
 func kk2Map(kk Karteikasten) map[string]interface{} {
 	var doc map[string]interface{}
 	tJSON, _ := json.Marshal(kk)
+	json.Unmarshal(tJSON, &doc)
+
+	return doc
+}
+
+func nutzer2Map(n Nutzer) map[string]interface{} {
+	var doc map[string]interface{}
+	tJSON, _ := json.Marshal(n)
 	json.Unmarshal(tJSON, &doc)
 
 	return doc

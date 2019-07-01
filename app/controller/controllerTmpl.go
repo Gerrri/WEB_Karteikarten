@@ -7,6 +7,8 @@ import (
 	"strconv"
 )
 
+var SessionNutzerID = "34f921501a6813b6b8ac8e7e7a04143b"
+
 type tmp_b_home struct {
 	Nutzer     string
 	Lernkarten string
@@ -59,7 +61,7 @@ type tmp_L_MeineKarteikaesten struct {
 type tmp_L_modkarteikasten1 struct {
 	Karteien              string
 	AlleKarten            []Karte
-	AlleFortschirtte      []int
+	Wiederholungen        []int
 	AktuelleKarte         Karte
 	AktuellerKarteikasten Karteikasten
 	//von aktueller Karte
@@ -145,7 +147,7 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 	kk := []Karteikasten{}
 	kk = GetAlleKarteikaestenOeffentlich()
 
-	fmt.Println("kk[]:", kk)
+	//fmt.Println("kk[]:", kk)
 
 	for _, element := range kk {
 		if element.Kategorie == "Naturwissenschaften" {
@@ -232,7 +234,7 @@ func L_lernen(w http.ResponseWriter, r *http.Request) {
 				//Update Lernstatus
 				fmt.Println("Richtig")
 
-				UpdateKarteikastenKarte(Kastenid, Kartenid-1, 1, true)
+				UpdateKarteikastenKarte(Kastenid, Kartenid-1, GetNutzerById(SessionNutzerID), true)
 
 				//fmt.Println("KastenID: %v", Kastenid)
 				//fmt.Println("KartenID: %v", Kartenid-1)
@@ -245,7 +247,7 @@ func L_lernen(w http.ResponseWriter, r *http.Request) {
 				//Update Lernstatus
 				fmt.Println("Falsch")
 
-				UpdateKarteikastenKarte(Kastenid, Kartenid-1, 1, false)
+				UpdateKarteikastenKarte(Kastenid, Kartenid-1, GetNutzerById(SessionNutzerID), false)
 				//fmt.Println("KastenID: ", Kastenid)
 				//fmt.Println("KartenID: ", Kartenid-1)
 				//fmt.Println("NutzerID: ", 1)
@@ -301,7 +303,7 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 		MeineKarteikaesten:        []Karteikasten{},
 	}
 
-	nutzer := GetNutzerById(1) //muss noch dynamisch gehlot werden
+	nutzer := GetNutzerById(SessionNutzerID) //muss noch dynamisch gehlot werden
 
 	titel := ""
 	beschreibung := ""
@@ -342,7 +344,7 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 
 		kk := Karteikasten{}
 		kk.TYP = "Karteikasten"
-		kk.NutzerID = nutzer.ID
+		kk.NutzerID = nutzer.DocID
 		kk.Sichtbarkeit = radio
 		kk.Kategorie = OberKategorie
 		kk.Unterkategorie = kategorie
@@ -356,14 +358,14 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 
 	for _, element := range nutzer.ErstellteKarteien {
 		temp_kk := GetKarteikastenByid(element)
-		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(1)))
+		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionNutzerID)))
 		data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
 
 	}
 
 	for _, element := range nutzer.GelernteKarteien {
 		temp_kk := GetKarteikastenByid(element)
-		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(1)))
+		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionNutzerID)))
 		data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
 
 	}
@@ -457,7 +459,7 @@ func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 	}
 
 	temp_kk := GetKarteikastenByid(Kastenid)
-	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(Kastenid), GetNutzerById(1)))
+	temp_kk.FortschrittP = int(GetKarteikastenFortschritt(GetKarteikastenByid(Kastenid), GetNutzerById(SessionNutzerID)))
 
 	data.AktuellerKarteikasten = temp_kk
 
@@ -486,13 +488,13 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
 		AktuellerKarteikasten: Karteikasten{},
 		AlleKarten:            []Karte{},
-		AlleFortschirtte:      []int{},
+		Wiederholungen:        []int{},
 		AktuelleKarte:         Karte{},
 		KastenID:              Kastenid,
 		KartenID:              Kartenid,
 	}
 
-	kasten.FortschrittP = int(GetKarteikastenFortschritt(kasten, GetNutzerById(1)))
+	kasten.FortschrittP = int(GetKarteikastenFortschritt(kasten, GetNutzerById(SessionNutzerID)))
 
 	//gewählte Karte
 
@@ -509,15 +511,20 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 		data.AlleKarten[i].Num = i + 1
 	}
 
-	for _, element := range GetKarteikastenWiederholungArr(kasten, GetNutzerById(1)) {
-		data.AlleFortschirtte = append(data.AlleFortschirtte, element)
+	//fmt.Println("kk: ", kasten)
+
+	for _, element := range GetKKWiederholungenByNutzer(kasten, GetNutzerById(SessionNutzerID)) {
+		data.Wiederholungen = append(data.Wiederholungen, element)
 	}
 
 	akt, _ := strconv.Atoi(Num)
 	akt = akt - 1
 
+	//fmt.Println("AlleFortschritte: ", data.Wiederholungen)
+	//fmt.Println("akt: ", akt)
+
 	data.AktuelleKarte = karte
-	data.AktuelleKarte.NutzerFach = strconv.Itoa(data.AlleFortschirtte[akt])
+	data.AktuelleKarte.NutzerFach = strconv.Itoa(data.Wiederholungen[akt])
 
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_showKarteikarten.html")
 	t.ExecuteTemplate(w, "layout", data)
