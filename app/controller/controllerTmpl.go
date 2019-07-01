@@ -299,12 +299,14 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 		temp_kk := GetKarteikastenByid(element)
 		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(1)))
 		data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
+
 	}
 
 	for _, element := range nutzer.GelernteKarteien {
 		temp_kk := GetKarteikastenByid(element)
 		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(1)))
 		data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
+
 	}
 
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten.html")
@@ -343,8 +345,8 @@ func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 
 		r.ParseForm()
-		add := r.FormValue("add")
-		//fmt.Println("checked: ", add )
+		typ := r.FormValue("type")
+		fmt.Println("type: ", typ)
 
 		r.ParseForm()
 		titel := r.FormValue("titel")
@@ -359,12 +361,22 @@ func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 		//fmt.Println(antwort)
 
 		//Save option bei "+"
-		if add == "on" {
-			fmt.Println("Add:", titel, frage, antwort)
-			AddKarteikarte(Kastenid, titel, frage, antwort)
-		} else {
+
+		if typ == "mod" {
 			fmt.Println("Update:", titel, frage, antwort)
 			UpdateKarteikarte(Kastenid, Kartenid, titel, frage, antwort)
+		}
+
+		if typ == "add" {
+			fmt.Println("Add:", titel, frage, antwort)
+			AddKarteikarte(Kastenid, titel, frage, antwort)
+		}
+
+		if typ == "del" {
+			fmt.Println("Delete:", titel, frage, antwort)
+			DelKarteikarteByID(Kastenid, Kartenid)
+
+			Kartenid = 0
 		}
 
 	}

@@ -93,6 +93,10 @@ func GetKarteikastenFortschritt(k Karteikasten, nutzer Nutzer) (fortschritt floa
 	var zaehler = 0
 	xgesamt := len(k.Karten)
 
+	if xgesamt == 0 {
+		return 0
+	}
+
 	for n := 0; n < 4; n++ {
 		zaehler += n * GetKarteikartenAnzByFach(k, n, nutzer)
 	}
@@ -282,6 +286,40 @@ func AddKarteikarte(KastenID int, titel string, frage string, antwort string) {
 	kk.Karten = append(kk.Karten, k)
 
 	fmt.Println("Neue Karte hinzufügen ...")
+
+	db.Set(kk.DocID, kk2Map(kk))
+}
+
+func DelKarteikarteByID(KastenID int, KartenID int) {
+	var db *couchdb.Database = GetDB()
+
+	kk := GetKarteikastenByid(KastenID)
+
+	//Karten werden neu befüllt
+	newKarten := []Karte{}
+	for i, Karte := range kk.Karten {
+		if i != KartenID {
+			newKarten = append(newKarten, Karte)
+		}
+	}
+
+	//Wiederholungen werden neu befüllt
+	newWiederholung := []int{}
+
+	for i, _ := range kk.Fortschritt {
+		for j, Wiederholung := range kk.Fortschritt[i].Wiederholung {
+			if j != KartenID {
+				newWiederholung = append(newWiederholung, Wiederholung)
+			}
+		}
+
+		kk.Fortschritt[i].Wiederholung = newWiederholung
+		newWiederholung = []int{}
+	}
+
+	kk.Karten = newKarten
+
+	//fmt.Println("kk: ", kk)
 
 	db.Set(kk.DocID, kk2Map(kk))
 }

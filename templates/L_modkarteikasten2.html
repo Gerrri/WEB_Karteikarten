@@ -22,7 +22,7 @@
 										<h1 class="card_titel">{{.AktuellerKarteikasten.FortschrittP}}%</h1>
 								  	</div>
 								  	
-								  <div class="column is-2">  <a class="button is-success is-small btm_bearbeiten_head">Bearbeiten</a> </div>
+								  
 								  <div class="column is-2 is-paddingless">
 								  				<div id="hex1" class="hexagon-wrapper">
 													<div id="color1" class="hexagon"><h1 id="hex_text">{{.AktuellerKarteikasten.Anzahl}}</h1> </div>
@@ -36,12 +36,14 @@
 							  		<div class="columns is-marginless text_karten is-multiline">
 										<!-- Karteikarten -->
 						{{range .AlleKarten}}
-							  		<div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
+									  <div class="column has_background_light is-paddingless is-12 card"> 		<div class="green_line"> </div>
 											<p  class="card_number"># {{.Num}}</p>
 											<h1 class="card_titel">{{.Titel}}</h1>
 											
-											<a href="" class="button is-small is-danger is-pulled-right btn_del_bearbeiten" ><img class="menu_icon" src="/icons/Delete.svg"></a>
+											<!--<a href="" class="button is-small is-danger is-pulled-right btn_del_bearbeiten" ><img class="menu_icon" src="/icons/Delete.svg"></a>-->
 											<a href="l_modkarteikasten2?Kasten={{$.KastenID}}&Karte={{.Index}}" class="button is-small is-success is-pulled-right btn_del_bearbeiten">Bearbeiten</a>
+
+											
 											
 										</div>
 					    {{end}}
@@ -99,7 +101,23 @@
 										<div class="field-body">
 										  <div class="field">
 											<p class="control">
-												<label class="checkbox"><input type="checkbox" name="add">   Als neue Karte anlegen!</label>
+
+
+													<div class="control" name="RadioBox">
+															<label class="radio">
+															  <input type="radio" name="type" checked value="mod" >
+															  Ändern
+															</label>
+															<label class="radio">
+															  <input type="radio" name="type" value="add">
+															  Hinzufügen
+															</label>
+															<label class="radio">
+															  <input type="radio" name="type" value="del">
+															  Löschen
+															</label>
+												    </div>
+												
 											</p>
 										  </div>
 										</div>
