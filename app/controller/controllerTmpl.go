@@ -51,6 +51,8 @@ type tmp_L_MeineKarteikaesten struct {
 	Karteien                  string
 	GespeicherteKarteikaesten []Karteikasten
 	MeineKarteikaesten        []Karteikasten
+	KastenID                  int
+	KartenID                  int
 }
 
 type tmp_L_modkarteikasten1 struct {
