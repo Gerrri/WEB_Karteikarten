@@ -15,8 +15,8 @@ type Nutzer struct {
 	Name              string
 	EMail             string
 	Passwort          string
-	ErstellteKarteien []int
-	GelernteKarteien  []int
+	ErstellteKarteien []string
+	GelernteKarteien  []string
 }
 
 type alleNutzer struct {
@@ -41,7 +41,6 @@ type Fortschritt struct {
 }
 
 type Karteikasten struct {
-	ID             int
 	DocID          string `json:"_id"`
 	DocRev         string `json:"_rev"`
 	TYP            string
@@ -137,7 +136,7 @@ func GetKarteikartenAnzByFach(k Karteikasten, fach int, n Nutzer) (anz int) {
 
 // ############################### START Karteikasten Methoden ############################### //
 
-func UpdateKarteikastenKarte(KastenID int, KartenID int, NutzerID int, Richtig bool) {
+func UpdateKarteikastenKarte(KastenID string, KartenID int, NutzerID int, Richtig bool) {
 	var db *couchdb.Database = GetDB()
 
 	//func (db *Database) Save(doc interface{}, id string, rev string) (string, error)
@@ -184,7 +183,7 @@ func UpdateKarteikastenKarte(KastenID int, KartenID int, NutzerID int, Richtig b
 
 }
 
-func UpdateKarteikarte(KastenID int, KartenID int, titel string, frage string, antwort string) {
+func UpdateKarteikarte(KastenID string, KartenID int, titel string, frage string, antwort string) {
 
 	var db *couchdb.Database = GetDB()
 	kk := GetKarteikastenByid(KastenID)
@@ -257,12 +256,12 @@ func GetAlleKarteikaesten() (kk []Karteikasten) {
 	return kk
 }
 
-func GetKarteikastenByid(id int) (k Karteikasten) {
+func GetKarteikastenByid(id string) (k Karteikasten) {
 
 	kk := GetAlleKarteikaesten()
 
 	for _, element := range kk {
-		if element.ID == id {
+		if element.DocID == id {
 			return element
 		}
 	}
@@ -270,7 +269,30 @@ func GetKarteikastenByid(id int) (k Karteikasten) {
 	return k
 }
 
-func AddKarteikarte(KastenID int, titel string, frage string, antwort string) {
+func AddKarteikasten(kk Karteikasten, nutzer Nutzer) error {
+	var db *couchdb.Database = GetDB()
+	// Convert Todo suct to map[string]interface as required by Save() method
+	KarteiK := kk2Map(kk)
+
+	// Delete _id and _rev from map, otherwise DB access will be denied (unauthorized)
+	delete(KarteiK, "_id")
+	delete(KarteiK, "_rev")
+	delete(KarteiK, "FortschrittP")
+
+	// Add todo to DB
+	id, _, err := db.Save(KarteiK, nil)
+
+	if err != nil {
+		fmt.Printf("[Add] error: %s", err)
+	}
+
+	//Update Nutzer
+	nutzer.ErstellteKarteien = append(nutzer.ErstellteKarteien, id)
+
+	return err
+}
+
+func AddKarteikarte(KastenID string, titel string, frage string, antwort string) {
 	var db *couchdb.Database = GetDB()
 
 	k := Karte{}
@@ -290,7 +312,7 @@ func AddKarteikarte(KastenID int, titel string, frage string, antwort string) {
 	db.Set(kk.DocID, kk2Map(kk))
 }
 
-func DelKarteikarteByID(KastenID int, KartenID int) {
+func DelKarteikarteByID(KastenID string, KartenID int) {
 	var db *couchdb.Database = GetDB()
 
 	kk := GetKarteikastenByid(KastenID)
@@ -326,7 +348,7 @@ func DelKarteikarteByID(KastenID int, KartenID int) {
 
 func TerminalOutKarteikasten(k Karteikasten) {
 	fmt.Println("############# KARTEIKASTEN ##############")
-	fmt.Println("id : " + strconv.Itoa(k.ID))
+	fmt.Println("id : " + k.DocID)
 	fmt.Println("NutzerID : " + strconv.Itoa(k.NutzerID))
 	fmt.Println("Oeffentlich : " + k.Sichtbarkeit)
 	fmt.Println("Kategorie : " + k.Kategorie)

@@ -34,7 +34,7 @@ type tmp_L_lernen struct {
 
 	//nächste Karte
 	KartenID     int
-	KastenID     int
+	KastenID     string
 	NextKartenID int
 }
 
@@ -52,7 +52,7 @@ type tmp_L_MeineKarteikaesten struct {
 	Karteien                  string
 	GespeicherteKarteikaesten []Karteikasten
 	MeineKarteikaesten        []Karteikasten
-	KastenID                  int
+	KastenID                  string
 	KartenID                  int
 }
 
@@ -68,7 +68,7 @@ type tmp_L_modkarteikasten1 struct {
 	Antwort string
 
 	//aktueller Kasten
-	KastenID int
+	KastenID string
 	KartenID int
 }
 
@@ -145,6 +145,8 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 	kk := []Karteikasten{}
 	kk = GetAlleKarteikaestenOeffentlich()
 
+	fmt.Println("kk[]:", kk)
+
 	for _, element := range kk {
 		if element.Kategorie == "Naturwissenschaften" {
 			data.Naturwissenschaften = append(data.Naturwissenschaften, element)
@@ -168,7 +170,7 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 func L_aufdecken(w http.ResponseWriter, r *http.Request) {
 	var query = r.URL.Query()
 
-	var Kastenid, _ = strconv.Atoi((query["Kasten"])[0])
+	var Kastenid = (query["Kasten"])[0]
 	var Kartenid, _ = strconv.Atoi((query["Karte"])[0])
 	var kasten = GetKarteikastenByid(Kastenid)
 	var karte = kasten.Karten[Kartenid]
@@ -213,7 +215,7 @@ func L_lernen(w http.ResponseWriter, r *http.Request) {
 	var query = r.URL.Query()
 
 	//Kastenid und Kartenid auslesen
-	var Kastenid, _ = strconv.Atoi((query["Kasten"])[0])
+	var Kastenid = (query["Kasten"])[0]
 	var Kartenid, _ = strconv.Atoi((query["Karte"])[0])
 
 	var kasten = GetKarteikastenByid(Kastenid)
@@ -301,6 +303,57 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 
 	nutzer := GetNutzerById(1) //muss noch dynamisch gehlot werden
 
+	titel := ""
+	beschreibung := ""
+	kategorie := ""
+	radio := ""
+	if r.Method == "POST" {
+
+		r.ParseForm()
+		titel = r.FormValue("titel")
+		fmt.Println(titel)
+		beschreibung = r.FormValue("beschreibung")
+		fmt.Println(beschreibung)
+		kategorie = r.FormValue("kategorie")
+		fmt.Println(kategorie)
+		radio = r.FormValue("answer")
+		fmt.Println(radio)
+
+		OberKategorie := ""
+
+		if kategorie == "Biologie" || kategorie == "Chemie" || kategorie == "Elektrotechnik" || kategorie == "Informatik" || kategorie == "Mathematik" || kategorie == "Medizin" || kategorie == "Naturkunde" || kategorie == "Physik" {
+			OberKategorie = "Naturwissenschaften"
+		}
+		if kategorie == "Chinesisch" || kategorie == "Deutsch" || kategorie == "Englisch" || kategorie == "Französisch" || kategorie == "Griechisch" || kategorie == "Italienisch" || kategorie == "Latein" || kategorie == "Russisch" {
+			OberKategorie = "Sprachen"
+		}
+		if kategorie == "Ethik" || kategorie == "Geschichte" || kategorie == "Literatur" || kategorie == "Musik" || kategorie == "Politik" || kategorie == "Recht" || kategorie == "Soziales" || kategorie == "Sport" || kategorie == "Verkehrskunde" {
+			OberKategorie = "Gesellschaft"
+		}
+		if kategorie == "BWL" || kategorie == "Finanzen" || kategorie == "Landwirtschaft" || kategorie == "Marketing" || kategorie == "VWL" {
+			OberKategorie = "Wirtschaft"
+		}
+		if kategorie == "Kriminologie" || kategorie == "Philosophie" || kategorie == "Psychologie" || kategorie == "Pädagogik" || kategorie == "Theologie" {
+			OberKategorie = "Geisteswissenschaften"
+		}
+		if kategorie == "Sonstige" {
+			OberKategorie = "Sonstige"
+		}
+
+		kk := Karteikasten{}
+		kk.TYP = "Karteikasten"
+		kk.NutzerID = nutzer.ID
+		kk.Sichtbarkeit = radio
+		kk.Kategorie = OberKategorie
+		kk.Unterkategorie = kategorie
+		kk.Titel = titel
+		kk.Anzahl = 0
+		kk.Beschreibung = beschreibung
+
+		AddKarteikasten(kk, nutzer)
+		//FUNKTIONIERT noch nicht
+	}
+
 	for _, element := range nutzer.ErstellteKarteien {
 		temp_kk := GetKarteikastenByid(element)
 		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(1)))
@@ -344,7 +397,7 @@ func L_modkarteikasten1(w http.ResponseWriter, r *http.Request) {
 func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 	var query = r.URL.Query()
 
-	var Kastenid, _ = strconv.Atoi((query["Kasten"])[0])
+	var Kastenid = (query["Kasten"])[0]
 	var Kartenid, _ = strconv.Atoi((query["Karte"])[0])
 
 	//Post auswertung
@@ -423,7 +476,7 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 	var query = r.URL.Query()
 
 	//Kastenid und Kartenid auslesen
-	var Kastenid, _ = strconv.Atoi((query["Kasten"])[0])
+	var Kastenid = (query["Kasten"])[0]
 	var Kartenid, _ = strconv.Atoi((query["Karte"])[0])
 
 	var kasten = GetKarteikastenByid(Kastenid)
