@@ -160,12 +160,12 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 			NL_Home(w, r)
 		}
 
+	} else {
+		p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+		t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
+
+		t.ExecuteTemplate(w, "layout", p)
 	}
-	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
-	t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
-
-	t.ExecuteTemplate(w, "layout", p)
-
 }
 
 /* ######################   logged in Pages   ###################### */
