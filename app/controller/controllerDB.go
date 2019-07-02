@@ -475,6 +475,16 @@ func AddKKtoNutzer(n Nutzer, kk Karteikasten) {
 	db.Set(n.DocID, nutzer2Map(n))
 }
 
+func AddNutzer(n Nutzer) {
+	var db *couchdb.Database = GetDB()
+	var nutzermap = nutzer2Map(n)
+	delete(nutzermap, "_id")
+	delete(nutzermap, "_rev")
+
+	id, _, err := db.Save(nutzermap, nil)
+	fmt.Println(id, err)
+}
+
 func GetAlleNutzer() (n []Nutzer) {
 	var db *couchdb.Database = GetDB()
 
