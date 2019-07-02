@@ -10,11 +10,19 @@ import (
 var SessionNutzerID = ""
 
 type tmp_b_home struct {
-	Nutzername    string
-	Nutzer        string
-	Lernkarten    string
-	Karteien      string
-	MeineKarteien string
+	Nutzername        string
+	Nutzer            string
+	NutzerEmail       string
+	Lernkarten        string
+	Karteien          string
+	MeineKarteien     string
+	NameVergeben      string
+	EmailVergeben     string
+	PasswortFalsch    string
+	DatenschutzFalsch string
+	ErstellteKarten   string
+	ErstellteKarteien string
+	MitgliedSeit      string
 }
 
 type tmp_L_lernen struct {
@@ -87,7 +95,9 @@ type tmp_L_modkarteikasten1 struct {
 }
 
 /* ######################   not logged in Pages   ###################### */
+
 func NL_Home(w http.ResponseWriter, r *http.Request) {
+
 	if r.Method == "POST" {
 
 		r.ParseForm()
@@ -101,7 +111,7 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 			if arr.Name == nutzername && arr.Name != "" {
 				if arr.Passwort == passwort {
 					SessionNutzerID = arr.DocID
-					fmt.Println(SessionNutzerID)
+					//fmt.Println(SessionNutzerID)
 					r.Method = ""
 					isExecuted = true
 					//http.Post("http://localhost/l_meinekarteikaesten", "", nil)
@@ -114,17 +124,26 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 
 		if !isExecuted {
 			p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
-			t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
+			t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in_popup.html")
 
 			t.ExecuteTemplate(w, "layout", p)
 		}
 	} else {
-		fmt.Println("Joooo Broo")
+		//fmt.Println("Joooo Broo")
 		p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 		t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
 
 		t.ExecuteTemplate(w, "layout", p)
 	}
+}
+
+func NL_Home_popup(w http.ResponseWriter, r *http.Request) {
+
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in_popup.html")
+
+	t.ExecuteTemplate(w, "layout", p)
+
 }
 
 func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
@@ -177,7 +196,7 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 		var vorhanden_mail bool = false
 		var vorhanden_benutzer bool = false
 		var passwortUngleich bool = false
-
+		var geladen bool = true
 		for _, arr := range nutzer {
 			if arr.EMail == email {
 				vorhanden_mail = true
@@ -203,14 +222,35 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 			hinzufuegen.ErstellteKarteien = []string{}
 			hinzufuegen.GelernteKarteien = []string{}
 			SessionNutzerID = AddNutzer(hinzufuegen)
+			geladen = false
 			http.Redirect(w, r, "http://localhost/l_meinekarteikaesten", http.StatusSeeOther)
 		}
 
-	}
-	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
-	t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
+		if geladen {
+			p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz()), NameVergeben: "false", EmailVergeben: "false", PasswortFalsch: "false", DatenschutzFalsch: "false"}
+			if vorhanden_benutzer {
+				p.NameVergeben = "true"
+			}
+			if vorhanden_mail {
+				p.EmailVergeben = "true"
+			}
+			if passwortUngleich {
+				p.PasswortFalsch = "true"
+			}
+			if datenschutz != "on" {
+				p.DatenschutzFalsch = "true"
+			}
+			t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
 
-	t.ExecuteTemplate(w, "layout", p)
+			t.ExecuteTemplate(w, "layout", p)
+		}
+
+	} else {
+		p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz()), NameVergeben: "false", EmailVergeben: "false", PasswortFalsch: "false", DatenschutzFalsch: "false"}
+		t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
+
+		t.ExecuteTemplate(w, "layout", p)
+	}
 
 }
 
@@ -236,10 +276,26 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 		Sonstige:              []Karteikasten{},
 	}
 
-	kk := []Karteikasten{}
-	kk = GetAlleKarteikaestenOeffentlich()
+	kategorie := ""
 
-	//fmt.Println("kk[]:", kk)
+	//POST Dropdown
+	//Post auswertung
+	if r.Method == "POST" {
+
+		r.ParseForm()
+		kategorie = r.FormValue("kategorie")
+		fmt.Println("kategorie: ", kategorie)
+		//Karteikästen nach Kategorien Laden
+
+	}
+
+	kk := []Karteikasten{}
+
+	if kategorie == "" {
+		kk = GetAlleKarteikaestenOeffentlich()
+	} else {
+		kk = SelectKarteikaestenByKategorie(GetAlleKarteikaestenOeffentlich(), kategorie)
+	}
 
 	for _, element := range kk {
 		if element.Kategorie == "Naturwissenschaften" {
@@ -448,7 +504,16 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 	radio := ""
 	if r.Method == "POST" {
 
-		if r.FormValue("answer") == "" {
+		//POST Dropdown
+		//Post auswertung
+		if r.FormValue("kategorie") != "" {
+			r.ParseForm()
+			kategorie := r.FormValue("kategorie")
+			fmt.Println("kategorie: ", kategorie)
+
+			//Karteikästen nach Kategorien Laden
+
+		} else if r.FormValue("answer") == "" {
 			fmt.Println("Löschen")
 
 			var query = r.URL.Query()
@@ -569,13 +634,19 @@ func L_meinProfil(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, MitgliedSeit: GetNutzerById(SessionNutzerID).MitgliedSeit, ErstellteKarteien: strconv.Itoa(len(GetNutzerById(SessionNutzerID).ErstellteKarteien)), NutzerEmail: GetNutzerById(SessionNutzerID).EMail, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil.html")
 
 	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		DeleteNutzer(SessionNutzerID)
+		r.Method = ""
+		http.Redirect(w, r, "http://localhost/nl_home", http.StatusSeeOther)
+	}
+
 	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil_popup.html")
 

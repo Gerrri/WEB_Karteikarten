@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv" //strconv.Itoa -> int to string
+	"time"
 )
 
 // Structs
@@ -17,6 +18,7 @@ type Nutzer struct {
 	Passwort          string
 	ErstellteKarteien []string
 	GelernteKarteien  []string
+	MitgliedSeit      string
 }
 
 type Karte struct {
@@ -536,7 +538,7 @@ func GetNutzerById(id string) (n Nutzer) {
 
 	n = Nutzer{}
 	n.DocID = "null"
-	fmt.Println("N: ", n)
+	//fmt.Println("N: ", n)
 	return n
 }
 
@@ -550,6 +552,12 @@ func GetNutzeranz() (anz int) {
 	return -1
 }
 
+func DeleteNutzer(id string) {
+	var db *couchdb.Database = GetDB()
+	db.Delete(id)
+
+}
+
 func AddKKtoNutzer(n Nutzer, kk Karteikasten) {
 	var db *couchdb.Database = GetDB()
 
@@ -560,6 +568,8 @@ func AddKKtoNutzer(n Nutzer, kk Karteikasten) {
 
 func AddNutzer(n Nutzer) (id string) {
 	var db *couchdb.Database = GetDB()
+	dt := time.Now()
+	n.MitgliedSeit = dt.Format("01-02-2006")
 	var nutzermap = nutzer2Map(n)
 	delete(nutzermap, "_id")
 	delete(nutzermap, "_rev")
@@ -575,6 +585,17 @@ func UpdateNutzer(n Nutzer) {
 	var nutzermap = nutzer2Map(n)
 
 	db.Set(n.DocID, nutzermap)
+}
+
+func SelectKarteikaestenByKategorie(allekk []Karteikasten, Kategorie string) (Selectkk []Karteikasten) {
+
+	for _, kk := range allekk {
+		if kk.Kategorie == Kategorie || kk.Unterkategorie == Kategorie {
+			Selectkk = append(Selectkk, kk)
+		}
+	}
+
+	return Selectkk
 }
 
 func GetAlleNutzer() (n []Nutzer) {
