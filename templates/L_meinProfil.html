@@ -47,7 +47,7 @@
 									</div>
 							  	</div>
 							  
-							  
+								<form method="POST" action="/l_meinProfil">	
 							    <div class="column has_background_light is-paddingless edit_cards"><div class="green_line"> </div> 
 									
 							  		<div class="input_fields" style="padding: 4%">
@@ -56,26 +56,26 @@
 										
 											<div class="columns" style="margin-bottom: 8%">
 												<div class="column c1 is-2"> <label class="label"><nobr>Neue Email</nobr></label> </div>
-												<div class="column is-6 c2"> <input class="input input_field" type="email" placeholder="muster@example.com"> </div>
+												<div class="column is-6 c2"> <input name="email" class="input input_field" type="email" placeholder="muster@example.com"> </div>
 												<div class="column c3"> <p class="help is-danger info_text">Diese E-mail ist bereits vergeben!</p> </div>
 											</div>
 											
 										
 											<div class="columns">
 												<div class="column c1 is-2"> <label class="label">Altes Password</label> </div>
-												<div class="column is-6 c2"> <input class="input input_field" type="email" placeholder=""> </div>
+												<div class="column is-6 c2"> <input name="passwort" class="input input_field" type="password" placeholder=""> </div>
 												<div class="column c3"></div>
 											</div>
 										
 											<div class="columns">
 												<div class="column c1 is-2"> <label class="label">Neues Password</label> </div>
-												<div class="column is-6 c2"> <input class="input input_field" type="email" placeholder=""> </div>
+												<div class="column is-6 c2"> <input name="passwort_neu" class="input input_field" type="password" placeholder=""> </div>
 												<div class="column c3"><p class="help is-danger info_text"> Altes Password darf nicht mit neuem übereinstimmen</p></div>
 											</div>
 											
 											<div class="columns">
 												<div class="column c1 is-2"> <label class="label">Password wiederholen</label> </div>
-												<div class="column is-6 c2"> <input class="input input_field" type="email" placeholder=""> </div>
+												<div class="column is-6 c2"> <input name="passwort_neuWdhl" class="input input_field" type="password" placeholder=""> </div>
 												<div class="column c3">  </div>
 											</div>
 											
@@ -83,7 +83,7 @@
 											
 											<div class="columns">
 												<div class="column c1 is-2"> <label class="label"></label> </div>
-												<div class="column is-6 c2" style="margin-top: 5%">	<a href="" class="button is-warning is-center" style=" margin-bottom: 5%">Speichern</a>
+												<div class="column is-6 c2" style="margin-top: 5%">	<button type="submit" class="button is-warning is-center" style=" margin-bottom: 5%">Speichern</button>
 													
 													<!-- POPUP -->
 													<div class="modal">
@@ -113,7 +113,7 @@
 										</div>
 										
 							  	 </div>
-							  
+								</form>
 							  		
 						  		
 						  </div>
