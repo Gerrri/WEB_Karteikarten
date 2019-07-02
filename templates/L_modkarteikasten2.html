@@ -17,17 +17,20 @@
 										<h1 class="card_titel">{{.AktuellerKarteikasten.Kategorie}} <i class="fas fa-caret-right"></i> {{.AktuellerKarteikasten.Unterkategorie}}</h1>					  
 								  	</div>
 								  
-								  	<div class="column is-2">
-								  		<p  class="card_number"> Fortschritt</p>
+									<div class="column is-2">
+										<p  class="card_number"> Fortschritt</p>
 										<h1 class="card_titel">{{.AktuellerKarteikasten.FortschrittP}}%</h1>
-								  	</div>
-								  	
+									</div>
+									
+									<div class="column is-2">
+										<a href="l_modkarteikasten2?Kasten={{$.KastenID}}&Karte=0&Switch=1" class="button is-small is-success is-pulled-right btn_del_bearbeiten" style="margin-top: 15%">{{.SwitchName}}</a>
+									</div>
 								  
-								  <div class="column is-2 is-paddingless">
-								  				<div id="hex1" class="hexagon-wrapper">
-													<div id="color1" class="hexagon"><h1 id="hex_text">{{.AktuellerKarteikasten.Anzahl}}</h1> </div>
-												</div>
-								  </div>
+								    <div class="column is-2 is-paddingless">
+										<div id="hex1" class="hexagon-wrapper">
+											<div id="color1" class="hexagon"><h1 id="hex_text">{{.AktuellerKarteikasten.Anzahl}}</h1> </div>
+										</div>
+								    </div>
 							  </div>
 							</div>
 						  
