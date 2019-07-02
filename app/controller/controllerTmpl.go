@@ -7,9 +7,7 @@ import (
 	"strconv"
 )
 
-
 var SessionNutzerID = ""
-
 
 type tmp_b_home struct {
 	Nutzername    string
@@ -103,7 +101,8 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 					SessionNutzerID = arr.DocID
 					fmt.Println(SessionNutzerID)
 					r.Method = ""
-					L_meinekarteikaesten(w, r)
+					http.Redirect(w, r, "http://localhost/l_meinekarteikaesten", http.StatusSeeOther)
+
 				} else {
 					p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 					t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
@@ -121,6 +120,7 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 		}
 
 	} else {
+		fmt.Println("Joooo Broo")
 		p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 		t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
 
@@ -203,8 +203,8 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 			hinzufuegen.TYP = "nutzer"
 			hinzufuegen.ErstellteKarteien = []string{}
 			hinzufuegen.GelernteKarteien = []string{}
-			AddNutzer(hinzufuegen)
-			NL_Home(w, r)
+			SessionNutzerID = AddNutzer(hinzufuegen)
+			http.Redirect(w, r, "http://localhost/l_meinekarteikaesten", http.StatusSeeOther)
 		}
 
 	}
@@ -397,7 +397,7 @@ func L_lernen(w http.ResponseWriter, r *http.Request) {
 
 func L_meinekarteikaesten_popup(w http.ResponseWriter, r *http.Request) {
 	data := tmp_L_MeineKarteikaesten{
-		Nutzername:    			   GetNutzerById(SessionNutzerID).Name,
+		Nutzername:                GetNutzerById(SessionNutzerID).Name,
 		Karteien:                  strconv.Itoa(GetKarteikastenAnz()),
 		MeineKarteien:             strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)),
 		DelKastenID:               "",
@@ -434,7 +434,7 @@ func L_meinekarteikaesten_popup(w http.ResponseWriter, r *http.Request) {
 func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 
 	data := tmp_L_MeineKarteikaesten{
-		Nutzername:    			   GetNutzerById(SessionNutzerID).Name,
+		Nutzername:                GetNutzerById(SessionNutzerID).Name,
 		Karteien:                  strconv.Itoa(GetKarteikastenAnz()),
 		MeineKarteien:             strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)),
 		GespeicherteKarteikaesten: []Karteikasten{},
@@ -525,21 +525,21 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_meinProfil(w http.ResponseWriter, r *http.Request) {
-	p := tmp_b_home{Nutzername:    GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil.html")
 
 	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
-	p := tmp_b_home{Nutzername:    GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil_popup.html")
 
 	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_modkarteikasten1(w http.ResponseWriter, r *http.Request) {
-	p := tmp_b_home{Nutzername:    GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_modkarteikasten1.html")
 
 	t.ExecuteTemplate(w, "layout", p)
@@ -599,7 +599,7 @@ func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 	var karte = GetKarteikastenByid(Kastenid).Karten[Kartenid]
 
 	data := tmp_L_modkarteikasten1{
-		Nutzername:    		   GetNutzerById(SessionNutzerID).Name,
+		Nutzername:            GetNutzerById(SessionNutzerID).Name,
 		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
 		MeineKarteien:         strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)),
 		AktuellerKarteikasten: Karteikasten{},
@@ -645,7 +645,7 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 	var karte = kasten.Karten[Kartenid]
 
 	data := tmp_L_modkarteikasten1{
-		Nutzername:    		   GetNutzerById(SessionNutzerID).Name,
+		Nutzername:            GetNutzerById(SessionNutzerID).Name,
 		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
 		MeineKarteien:         strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)),
 		AktuellerKarteikasten: Karteikasten{},

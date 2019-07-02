@@ -472,6 +472,32 @@ func AddKK2NutzerGespeichert(kk Karteikasten, n Nutzer) {
 	var db *couchdb.Database = GetDB()
 	var vorhanden = false
 
+	// #######  Start Update KK Fortschitt
+	//Add Fortschritt to Nutzer
+
+	for _, fort := range kk.Fortschritt {
+		if fort.ID == n.DocID {
+			vorhanden = true
+		}
+	}
+
+	if vorhanden == false {
+		f := Fortschritt{}
+		f.ID = n.DocID
+
+		for i := 0; i < len(kk.Karten); i++ {
+			f.Wiederholung = append(f.Wiederholung, 0)
+		}
+
+		//Fortschritt f KK hinzufügen
+		kk.Fortschritt = append(kk.Fortschritt, f)
+	}
+
+	db.Set(kk.DocID, kk2Map(kk))
+	// #######  Ende Update KK Fortschitt
+
+	vorhanden = false
+
 	for _, id := range n.GelernteKarteien {
 		if id == kk.DocID {
 			vorhanden = true
@@ -520,7 +546,7 @@ func AddKKtoNutzer(n Nutzer, kk Karteikasten) {
 	db.Set(n.DocID, nutzer2Map(n))
 }
 
-func AddNutzer(n Nutzer) {
+func AddNutzer(n Nutzer) (id string) {
 	var db *couchdb.Database = GetDB()
 	var nutzermap = nutzer2Map(n)
 	delete(nutzermap, "_id")
@@ -528,6 +554,8 @@ func AddNutzer(n Nutzer) {
 
 	id, _, err := db.Save(nutzermap, nil)
 	fmt.Println(id, err)
+
+	return id
 }
 
 func GetAlleNutzer() (n []Nutzer) {
