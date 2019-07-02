@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-var SessionNutzerID = "40f1fb410da2014ab08e8a9b9200235a"
+var SessionNutzerID = "34f921501a6813b6b8ac8e7e7a04143b"
 
 type tmp_b_home struct {
 	Nutzer        string
@@ -60,6 +60,7 @@ type tmp_L_MeineKarteikaesten struct {
 	MeineKarteikaesten        []Karteikasten
 	KastenID                  string
 	KartenID                  int
+	DelKastenID               string
 }
 
 type tmp_L_modkarteikasten1 struct {
@@ -356,9 +357,15 @@ func L_meinekarteikaesten_popup(w http.ResponseWriter, r *http.Request) {
 	data := tmp_L_MeineKarteikaesten{
 		Karteien:                  strconv.Itoa(GetKarteikastenAnz()),
 		MeineKarteien:             strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)),
+		DelKastenID:               "",
 		GespeicherteKarteikaesten: []Karteikasten{},
 		MeineKarteikaesten:        []Karteikasten{},
 	}
+
+	var query = r.URL.Query()
+
+	//Kastenid auslesen
+	data.DelKastenID = (query["Kasten"])[0]
 
 	nutzer := GetNutzerById(SessionNutzerID) //muss noch dynamisch gehlot werden
 
@@ -398,49 +405,61 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 	radio := ""
 	if r.Method == "POST" {
 
-		r.ParseForm()
-		titel = r.FormValue("titel")
-		fmt.Println(titel)
-		beschreibung = r.FormValue("beschreibung")
-		fmt.Println(beschreibung)
-		kategorie = r.FormValue("kategorie")
-		fmt.Println(kategorie)
-		radio = r.FormValue("answer")
-		fmt.Println(radio)
+		if r.FormValue("answer") == "" {
+			fmt.Println("Löschen")
 
-		OberKategorie := ""
+			var query = r.URL.Query()
 
-		if kategorie == "Biologie" || kategorie == "Chemie" || kategorie == "Elektrotechnik" || kategorie == "Informatik" || kategorie == "Mathematik" || kategorie == "Medizin" || kategorie == "Naturkunde" || kategorie == "Physik" {
-			OberKategorie = "Naturwissenschaften"
-		}
-		if kategorie == "Chinesisch" || kategorie == "Deutsch" || kategorie == "Englisch" || kategorie == "Französisch" || kategorie == "Griechisch" || kategorie == "Italienisch" || kategorie == "Latein" || kategorie == "Russisch" {
-			OberKategorie = "Sprachen"
-		}
-		if kategorie == "Ethik" || kategorie == "Geschichte" || kategorie == "Literatur" || kategorie == "Musik" || kategorie == "Politik" || kategorie == "Recht" || kategorie == "Soziales" || kategorie == "Sport" || kategorie == "Verkehrskunde" {
-			OberKategorie = "Gesellschaft"
-		}
-		if kategorie == "BWL" || kategorie == "Finanzen" || kategorie == "Landwirtschaft" || kategorie == "Marketing" || kategorie == "VWL" {
-			OberKategorie = "Wirtschaft"
-		}
-		if kategorie == "Kriminologie" || kategorie == "Philosophie" || kategorie == "Psychologie" || kategorie == "Pädagogik" || kategorie == "Theologie" {
-			OberKategorie = "Geisteswissenschaften"
-		}
-		if kategorie == "Sonstige" {
-			OberKategorie = "Sonstige"
-		}
+			//Kastenid auslesen
+			kID := (query["KastenID"])[0]
 
-		kk := Karteikasten{}
-		kk.TYP = "Karteikasten"
-		kk.NutzerID = nutzer.DocID
-		kk.Sichtbarkeit = radio
-		kk.Kategorie = OberKategorie
-		kk.Unterkategorie = kategorie
-		kk.Titel = titel
-		kk.Anzahl = 0
-		kk.Beschreibung = beschreibung
+			//Löschen kk
+			DeleteKarteikastenByID(kID)
 
-		AddKarteikasten(kk, nutzer)
-		//FUNKTIONIERT noch nicht
+		} else {
+
+			titel = r.FormValue("titel")
+			fmt.Println(titel)
+			beschreibung = r.FormValue("beschreibung")
+			fmt.Println(beschreibung)
+			kategorie = r.FormValue("kategorie")
+			fmt.Println(kategorie)
+			radio = r.FormValue("answer")
+			fmt.Println(radio)
+
+			OberKategorie := ""
+
+			if kategorie == "Biologie" || kategorie == "Chemie" || kategorie == "Elektrotechnik" || kategorie == "Informatik" || kategorie == "Mathematik" || kategorie == "Medizin" || kategorie == "Naturkunde" || kategorie == "Physik" {
+				OberKategorie = "Naturwissenschaften"
+			}
+			if kategorie == "Chinesisch" || kategorie == "Deutsch" || kategorie == "Englisch" || kategorie == "Französisch" || kategorie == "Griechisch" || kategorie == "Italienisch" || kategorie == "Latein" || kategorie == "Russisch" {
+				OberKategorie = "Sprachen"
+			}
+			if kategorie == "Ethik" || kategorie == "Geschichte" || kategorie == "Literatur" || kategorie == "Musik" || kategorie == "Politik" || kategorie == "Recht" || kategorie == "Soziales" || kategorie == "Sport" || kategorie == "Verkehrskunde" {
+				OberKategorie = "Gesellschaft"
+			}
+			if kategorie == "BWL" || kategorie == "Finanzen" || kategorie == "Landwirtschaft" || kategorie == "Marketing" || kategorie == "VWL" {
+				OberKategorie = "Wirtschaft"
+			}
+			if kategorie == "Kriminologie" || kategorie == "Philosophie" || kategorie == "Psychologie" || kategorie == "Pädagogik" || kategorie == "Theologie" {
+				OberKategorie = "Geisteswissenschaften"
+			}
+			if kategorie == "Sonstige" {
+				OberKategorie = "Sonstige"
+			}
+
+			kk := Karteikasten{}
+			kk.TYP = "Karteikasten"
+			kk.NutzerID = nutzer.DocID
+			kk.Sichtbarkeit = radio
+			kk.Kategorie = OberKategorie
+			kk.Unterkategorie = kategorie
+			kk.Titel = titel
+			kk.Anzahl = 0
+			kk.Beschreibung = beschreibung
+
+			AddKarteikasten(kk, nutzer)
+		}
 	}
 
 	for _, element := range nutzer.ErstellteKarteien {
