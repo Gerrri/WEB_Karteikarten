@@ -8,7 +8,8 @@ import (
 )
 
 var SessionNutzerID = ""
-//var EinlogName = 
+
+//var EinlogName =
 
 type tmp_b_home struct {
 	Nutzer     string
@@ -77,37 +78,37 @@ type tmp_L_modkarteikasten1 struct {
 
 /* ######################   not logged in Pages   ###################### */
 func NL_Home(w http.ResponseWriter, r *http.Request) {
-	if r.Method=="POST" {
+	if r.Method == "POST" {
 
 		r.ParseForm()
-		var nutzername=r.FormValue("nutzername")
-		var passwort=r.FormValue("passwort")
-		var nutzer=GetAlleNutzer()
+		var nutzername = r.FormValue("nutzername")
+		var passwort = r.FormValue("passwort")
+		var nutzer = GetAlleNutzer()
 
-		for _, arr:=range nutzer{
-			if arr.Name==nutzername && arr.Name!=""{
-				if arr.Passwort==passwort{
-					SessionNutzerID=arr.DocID
+		for _, arr := range nutzer {
+			if arr.Name == nutzername && arr.Name != "" {
+				if arr.Passwort == passwort {
+					SessionNutzerID = arr.DocID
 					fmt.Println(SessionNutzerID)
-					r.Method=""
+					r.Method = ""
 					L_meinekarteikaesten(w, r)
-				}else{
+				} else {
 					p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 					t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
 
 					t.ExecuteTemplate(w, "layout", p)
 				}
-				
-			}else{
+
+			} else {
 				p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 				t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
 
 				t.ExecuteTemplate(w, "layout", p)
 			}
-		
+
 		}
-		
-	}else{
+
+	} else {
 		p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 		t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
 
@@ -150,8 +151,6 @@ func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
 }
 
 func NL_registrieren(w http.ResponseWriter, r *http.Request) {
-<<<<<<< HEAD
-=======
 	if r.Method == "POST" {
 		r.ParseForm()
 		var benutzername = r.FormValue("benutzername")
@@ -197,7 +196,6 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
->>>>>>> master
 	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
 
@@ -206,7 +204,7 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 
 /* ######################   logged in Pages   ###################### */
 func L_Home(w http.ResponseWriter, r *http.Request) {
-	
+
 	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID), Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/b_home.html", "./templates/L_logged_in.html")
 
@@ -216,7 +214,7 @@ func L_Home(w http.ResponseWriter, r *http.Request) {
 
 func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 	data := tmp_nL_Karteikasten{
-		Nutzername: GetNutzerById(SessionNutzerID),
+		Nutzername:            GetNutzerById(SessionNutzerID),
 		Karteien:              strconv.Itoa(GetKarteikastenAnz()),
 		Naturwissenschaften:   []Karteikasten{},
 		Sprachen:              []Karteikasten{},
@@ -464,7 +462,6 @@ func L_meinProfil(w http.ResponseWriter, r *http.Request) {
 
 	t.ExecuteTemplate(w, "layout", p)
 }
-
 
 func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
 	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
