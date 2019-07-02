@@ -610,6 +610,12 @@ func L_meinProfil(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		DeleteNutzer(SessionNutzerID)
+		r.Method = ""
+		http.Redirect(w, r, "http://localhost/nl_home", http.StatusSeeOther)
+	}
+
 	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil_popup.html")
 

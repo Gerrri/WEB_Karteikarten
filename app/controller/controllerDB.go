@@ -550,6 +550,12 @@ func GetNutzeranz() (anz int) {
 	return -1
 }
 
+func DeleteNutzer(id string) {
+	var db *couchdb.Database = GetDB()
+	db.Delete(id)
+
+}
+
 func AddKKtoNutzer(n Nutzer, kk Karteikasten) {
 	var db *couchdb.Database = GetDB()
 
