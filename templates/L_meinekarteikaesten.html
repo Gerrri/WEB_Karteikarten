@@ -2,11 +2,11 @@
 						<h1 class="text_headline">Meine Karteikästen</h1>
 						<h1 class="text_headline_klein">Hier findest du deine Karteien, sowie öffentliche Karteien, die du angefangen hast zu Lernen.</h1>
 						<div class="dropdown_sort">
-							  <!-- SUCHE -->
+							  <!-- SUCHE 
 								<div class="suche is-pulled-right">
 										<input class="input" type="text" placeholder="Suche ...">
 								</div>
-
+-->
 
 							  <!-- DROPDOWN -->
 									<div class="dropdown is-right is-active is-pulled-right">
@@ -93,7 +93,7 @@
 															<div class="columns kartei_content">
 																<div class="column is-one-third"><a href="l_lernen?Kasten={{.DocID}}&Karte=0" 		class="button is-warning is-small">Lernen</a></div>
 																<div class="column is-one-third"><a href="l_modkarteikasten2?Kasten={{.DocID}}&Karte=0"   class="button is-success is-small">Bearbeiten</a></div>
-																<div class="column is-one-third"><a href="l_meinekarteikaesten_popup"     class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
+																<div class="column is-one-third"><a href="l_meinekarteikaesten_popup?Kasten={{.DocID}}"     class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
 													</div>
 															
 														</div>
@@ -145,7 +145,7 @@
 													<div class="has_background_light kartei is-paddingless">
 															<div class="columns kartei_content">
 																<div class="column is-one-third"><a href="l_lernen?Kasten={{.DocID}}&Karte=0" 		class="button is-warning is-small">Lernen</a></div>
-																<div class="column is-one-third"><a href="l_meinekarteikaesten_popup"     class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
+																<div class="column is-one-third"><a href="l_meinekarteikaesten_popup?Kasten={{.DocID}}"     class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
 													</div>
 															
 														</div>

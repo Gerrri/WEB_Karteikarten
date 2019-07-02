@@ -143,9 +143,9 @@
 								<p> Bist du dir sicher, dass du diesen Karteikasten Löschen möchtest?</p>
 							</section>
 							<footer class="modal-card-foot">
-								<form method="POST" action="/l_meinekarteikaesten">
-									<a href="l_meinekarteikaesten" class="button is-success">Nein Doch Nicht!"</a>
-									<a href="l_meinekarteikaesten?del:{{.DocID}}" class="button is-success">Nein Doch Nicht!"</a>
+								<form method="POST" action="/l_meinekarteikaesten?KastenID={{.DelKastenID}}">
+									<a href="l_meinekarteikaesten" class="button is-success">Nein Doch Nicht!</a>
+									<button type="submit" class="button is-danger">Ja Löschen!</b>
 								</form>
 							</footer>
 							</div>
