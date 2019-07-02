@@ -12,14 +12,83 @@
 							  <!-- DROPDOWN -->
 									<div class="dropdown is-right is-active is-pulled-right">
 									  <div class="dropdown-trigger">
-										<button class="button dropdown_btn" aria-haspopup="true" aria-controls="dropdown-menu6">
-										  <span>sortieren nach ...</span>
-										  <span class="icon is-small">
-											<i class="fas fa-angle-down" aria-hidden="true"></i>
-										  </span>
-										</button>
 	 								  </div>
 									  <div class="dropdown-menu" id="dropdown-menu6" role="menu">
+
+											<form class="is-pulled-right" method="POST" action="/l_karteikaesten">
+													<div class="control is-pulled-right">
+													  <div class="select" style="width:100%;">
+															<select name="kategorie" onchange="this.form.submit()">
+																	  <option value="Alle">Filtern nach ...</option>
+																	<optgroup label="Hauptkategorien">
+																	  <option value="Naturwissenschaften">Naturwissenschaften</option>
+																	  <option value="Sprachen">Sprachen</option>
+																	  <option value="Gesellschaft">Gesellschaft</option>
+																	  <option value="Wirtschaft">Wirtschaft</option>
+																	  <option value="Geisteswissenschaften">Geisteswissenschaften</option>
+																	  <option value="Sonstige">Sonstige</option>
+																		  
+																	<optgroup label="Naturwissenschaften">
+																	  <option value="Biologie">Biologie</option>
+																	  <option value="Chemie">Chemie</option>
+																	  <option value="Elektrotechnik">Elektrotechnik</option>
+																	  <option value="Informatik">Informatik</option>
+																	  <option value="Mathematik">Mathematik</option>
+																	  <option value="Medizin">Medizin</option>
+																	  <option value="Naturkunde">Naturkunde</option>
+																	  <option value="Physik">Physik</option>
+											  
+																	</optgroup>
+																	<optgroup label="Sprachen">
+																	  <option value="Chinesisch">Chinesisch</option>
+																	  <option value="Deutsch">Deutsch</option>
+																	  <option value="Englisch">Englisch</option>
+																	  <option value="Französisch">Französisch</option>
+																	  <option value="Griechisch">Griechisch</option>
+																	  <option value="Italienisch">Italienisch</option>
+																	  <option value="Latein">Latein</option>
+																	  <option value="Russisch">Russisch</option>
+											  
+																	</optgroup>
+																	<optgroup label="Gesellschaft">
+																	  <option value="Ethik">Ethik</option>
+																	  <option value="Geschichte">Geschichte</option>
+																	  <option value="Literatur">Literatur</option>
+																	  <option value="Musik">Musik</option>
+																	  <option value="Politik">Politik</option>
+																	  <option value="Recht">Recht</option>
+																	  <option value="Soziales">Soziales</option>
+																	  <option value="Sport">Sport</option>
+																	  <option value="Verkehrskunde">Verkehrskunde</option>
+											  
+																	</optgroup>
+																	<optgroup label="Wirtschaft">
+																	  <option value="BWL">BWL</option>
+																	  <option value="Finanzen">Finanzen</option>
+																	  <option value="Landwirtschaft">Landwirtschaft</option>
+																	  <option value="Marketing">Marketing</option>
+																	  <option value="VWL">VWL</option>
+											  
+																	</optgroup>
+																	<optgroup label="Geisteswissenschaften">
+																	  <option value="Kriminilogie">Kriminilogie</option>
+																	  <option value="Philosophie">Philosophie</option>
+																	  <option value="Psychologie">Psychologie</option>
+																	  <option value="Pädagogik">Pädagogik</option>
+																	  <option value="Theologie">Theologie</option>
+											  
+																	</optgroup>
+																	<optgroup label="Sonstige">
+																	  <option value="Sonstige">Sonstige</option>
+																	</optgroup>
+											  
+											  
+																  </select>
+													  </div>
+											
+													</div>
+													
+											</form>
 								<!--		<div class="dropdown-content">
 
 

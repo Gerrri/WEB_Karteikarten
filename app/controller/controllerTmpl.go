@@ -87,7 +87,9 @@ type tmp_L_modkarteikasten1 struct {
 }
 
 /* ######################   not logged in Pages   ###################### */
+
 func NL_Home(w http.ResponseWriter, r *http.Request) {
+
 	if r.Method == "POST" {
 
 		r.ParseForm()
@@ -101,7 +103,7 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 			if arr.Name == nutzername && arr.Name != "" {
 				if arr.Passwort == passwort {
 					SessionNutzerID = arr.DocID
-					fmt.Println(SessionNutzerID)
+					//fmt.Println(SessionNutzerID)
 					r.Method = ""
 					isExecuted = true
 					//http.Post("http://localhost/l_meinekarteikaesten", "", nil)
@@ -119,7 +121,7 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 			t.ExecuteTemplate(w, "layout", p)
 		}
 	} else {
-		fmt.Println("Joooo Broo")
+		//fmt.Println("Joooo Broo")
 		p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 		t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
 
@@ -236,10 +238,26 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 		Sonstige:              []Karteikasten{},
 	}
 
-	kk := []Karteikasten{}
-	kk = GetAlleKarteikaestenOeffentlich()
+	kategorie := ""
 
-	//fmt.Println("kk[]:", kk)
+	//POST Dropdown
+	//Post auswertung
+	if r.Method == "POST" {
+
+		r.ParseForm()
+		kategorie = r.FormValue("kategorie")
+		fmt.Println("kategorie: ", kategorie)
+		//Karteikästen nach Kategorien Laden
+
+	}
+
+	kk := []Karteikasten{}
+
+	if kategorie == "" {
+		kk = GetAlleKarteikaestenOeffentlich()
+	} else {
+		kk = SelectKarteikaestenByKategorie(GetAlleKarteikaestenOeffentlich(), kategorie)
+	}
 
 	for _, element := range kk {
 		if element.Kategorie == "Naturwissenschaften" {
@@ -448,7 +466,16 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 	radio := ""
 	if r.Method == "POST" {
 
-		if r.FormValue("answer") == "" {
+		//POST Dropdown
+		//Post auswertung
+		if r.FormValue("kategorie") != "" {
+			r.ParseForm()
+			kategorie := r.FormValue("kategorie")
+			fmt.Println("kategorie: ", kategorie)
+
+			//Karteikästen nach Kategorien Laden
+
+		} else if r.FormValue("answer") == "" {
 			fmt.Println("Löschen")
 
 			var query = r.URL.Query()
