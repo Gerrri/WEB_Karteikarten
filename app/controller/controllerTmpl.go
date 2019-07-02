@@ -12,6 +12,7 @@ var SessionNutzerID = ""
 type tmp_b_home struct {
 	Nutzername        string
 	Nutzer            string
+	NutzerEmail       string
 	Lernkarten        string
 	Karteien          string
 	MeineKarteien     string
@@ -19,6 +20,9 @@ type tmp_b_home struct {
 	EmailVergeben     string
 	PasswortFalsch    string
 	DatenschutzFalsch string
+	ErstellteKarten   string
+	ErstellteKarteien string
+	MitgliedSeit      string
 }
 
 type tmp_L_lernen struct {
@@ -630,13 +634,19 @@ func L_meinProfil(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, MitgliedSeit: GetNutzerById(SessionNutzerID).MitgliedSeit, ErstellteKarteien: strconv.Itoa(len(GetNutzerById(SessionNutzerID).ErstellteKarteien)), NutzerEmail: GetNutzerById(SessionNutzerID).EMail, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil.html")
 
 	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		DeleteNutzer(SessionNutzerID)
+		r.Method = ""
+		http.Redirect(w, r, "http://localhost/nl_home", http.StatusSeeOther)
+	}
+
 	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil_popup.html")
 
