@@ -530,6 +530,13 @@ func AddNutzer(n Nutzer) {
 	fmt.Println(id, err)
 }
 
+func UpdateNutzer(n Nutzer) {
+	var db *couchdb.Database = GetDB()
+	var nutzermap = nutzer2Map(n)
+
+	db.Set(n.DocID, nutzermap)
+}
+
 func GetAlleNutzer() (n []Nutzer) {
 	var db *couchdb.Database = GetDB()
 
