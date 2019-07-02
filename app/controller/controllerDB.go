@@ -540,20 +540,6 @@ func GetNutzerById(id string) (n Nutzer) {
 	return n
 }
 
-func GetNutzerByUsername(name string) (n Nutzer) {
-
-	for _, nutzer := range GetAlleNutzer() {
-		if nutzer.Name == name {
-			return nutzer
-		}
-	}
-
-	n = Nutzer{}
-	n.DocID = "-1"
-
-	return n
-}
-
 //-1 = db not da
 //-2 = abfrage nicht möglich
 func GetNutzeranz() (anz int) {
