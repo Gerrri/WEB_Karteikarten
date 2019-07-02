@@ -13,6 +13,7 @@ func main() {
 	http.HandleFunc("/l_karteikaesten", controller.L_karteikaesten)
 	http.HandleFunc("/l_lernen", controller.L_lernen)
 	http.HandleFunc("/l_meinekarteikaesten", controller.L_meinekarteikaesten)
+	http.HandleFunc("/l_meinekarteikaesten_popup", controller.L_meinekarteikaesten_popup)
 	http.HandleFunc("/l_meinProfil", controller.L_meinProfil)
 
 	http.HandleFunc("/l_meinProfil_popup", controller.L_meinProfil_popup)
