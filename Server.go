@@ -14,6 +14,7 @@ func main() {
 	http.HandleFunc("/l_lernen", controller.L_lernen)
 	http.HandleFunc("/l_meinekarteikaesten", controller.L_meinekarteikaesten)
 	http.HandleFunc("/l_meinProfil", controller.L_meinProfil)
+
 	http.HandleFunc("/l_meinProfil_popup", controller.L_meinProfil_popup)
 	http.HandleFunc("/l_modkarteikasten1", controller.L_modkarteikasten1)
 	http.HandleFunc("/l_modkarteikasten2", controller.L_modkarteikasten2)
