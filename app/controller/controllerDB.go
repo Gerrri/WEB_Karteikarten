@@ -410,7 +410,6 @@ func GetNutzerById(id string) (n Nutzer) {
 
 	n = Nutzer{}
 	n.DocID = "null"
-	fmt.Println("N: ", n)
 	return n
 }
 
@@ -430,16 +429,6 @@ func AddKKtoNutzer(n Nutzer, kk Karteikasten) {
 	n.ErstellteKarteien = append(n.ErstellteKarteien, kk.DocID)
 
 	db.Set(n.DocID, nutzer2Map(n))
-}
-
-func AddNutzer(n Nutzer) {
-	var db *couchdb.Database = GetDB()
-	var nutzermap = nutzer2Map(n)
-	delete(nutzermap, "_id")
-	delete(nutzermap, "_rev")
-
-	id, _, err := db.Save(nutzermap, nil)
-	fmt.Println(id, err)
 }
 
 func GetAlleNutzer() (n []Nutzer) {
