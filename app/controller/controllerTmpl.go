@@ -1,10 +1,13 @@
 package controller
 
 import (
+	"crypto/rand"
 	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/sessions"
 )
 
 var SessionNutzerID = ""
@@ -87,6 +90,7 @@ type tmp_L_modkarteikasten1 struct {
 }
 
 /* ######################   not logged in Pages   ###################### */
+var store *sessions.CookieStore
 
 func NL_Home(w http.ResponseWriter, r *http.Request) {
 
@@ -102,14 +106,25 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 		for _, arr := range nutzer {
 			if arr.Name == nutzername && arr.Name != "" {
 				if arr.Passwort == passwort {
-					SessionNutzerID = arr.DocID
+					key := make([]byte, 32)
+					rand.Read(key)
+					store = sessions.NewCookieStore(key)
+
+					fmt.Println("store: ", store)
+					session, _ := store.Get(r, "session")
+
+					// Set user as authenticated
+					session.Values["authenticated"] = true
+					session.Values["username"] = nutzername
+					session.Save(r, w)
+
+					//SessionNutzerID = arr.DocID
 					//fmt.Println(SessionNutzerID)
 					r.Method = ""
 					isExecuted = true
 					//http.Post("http://localhost/l_meinekarteikaesten", "", nil)
 					http.Redirect(w, r, "http://localhost/l_meinekarteikaesten", http.StatusSeeOther)
 					break
-
 				}
 			}
 		}
@@ -413,141 +428,174 @@ func L_lernen(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_meinekarteikaesten_popup(w http.ResponseWriter, r *http.Request) {
-	data := tmp_L_MeineKarteikaesten{
-		Nutzername:                GetNutzerById(SessionNutzerID).Name,
-		Karteien:                  strconv.Itoa(GetKarteikastenAnz()),
-		MeineKarteien:             strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)),
-		DelKastenID:               "",
-		GespeicherteKarteikaesten: []Karteikasten{},
-		MeineKarteikaesten:        []Karteikasten{},
+
+	session, _ := store.Get(r, "session")
+	auth, ok := session.Values["authenticated"].(bool)
+
+	SessionID := ""
+	n := GetNutzerByUsername(session.Values["username"].(string))
+
+	if ok && auth && n.DocID != "-1" {
+
+		SessionID = n.DocID
+
+		data := tmp_L_MeineKarteikaesten{
+			Nutzername:                GetNutzerById(SessionID).Name,
+			Karteien:                  strconv.Itoa(GetKarteikastenAnz()),
+			MeineKarteien:             strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionID)),
+			DelKastenID:               "",
+			GespeicherteKarteikaesten: []Karteikasten{},
+			MeineKarteikaesten:        []Karteikasten{},
+		}
+
+		var query = r.URL.Query()
+
+		//Kastenid auslesen
+		data.DelKastenID = (query["Kasten"])[0]
+
+		nutzer := GetNutzerById(SessionID) //muss noch dynamisch gehlot werden
+
+		for _, element := range nutzer.ErstellteKarteien {
+			temp_kk := GetKarteikastenByid(element)
+			temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionID)))
+			data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
+
+		}
+
+		for _, element := range nutzer.GelernteKarteien {
+			temp_kk := GetKarteikastenByid(element)
+			temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionID)))
+			data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
+
+		}
+
+		t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten_popup.html")
+		t.ExecuteTemplate(w, "layout", data)
+	} else {
+		r.Method = ""
+		http.Redirect(w, r, "http://localhost/nl_home", http.StatusSeeOther)
 	}
-
-	var query = r.URL.Query()
-
-	//Kastenid auslesen
-	data.DelKastenID = (query["Kasten"])[0]
-
-	nutzer := GetNutzerById(SessionNutzerID) //muss noch dynamisch gehlot werden
-
-	for _, element := range nutzer.ErstellteKarteien {
-		temp_kk := GetKarteikastenByid(element)
-		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionNutzerID)))
-		data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
-
-	}
-
-	for _, element := range nutzer.GelernteKarteien {
-		temp_kk := GetKarteikastenByid(element)
-		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionNutzerID)))
-		data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
-
-	}
-
-	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten_popup.html")
-	t.ExecuteTemplate(w, "layout", data)
 
 }
 
 func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 
-	data := tmp_L_MeineKarteikaesten{
-		Nutzername:                GetNutzerById(SessionNutzerID).Name,
-		Karteien:                  strconv.Itoa(GetKarteikastenAnz()),
-		MeineKarteien:             strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)),
-		GespeicherteKarteikaesten: []Karteikasten{},
-		MeineKarteikaesten:        []Karteikasten{},
-	}
+	session, _ := store.Get(r, "session")
+	auth, ok := session.Values["authenticated"].(bool)
 
-	nutzer := GetNutzerById(SessionNutzerID) //muss noch dynamisch gehlot werden
+	SessionID := ""
+	n := GetNutzerByUsername(session.Values["username"].(string))
 
-	titel := ""
-	beschreibung := ""
-	kategorie := ""
-	radio := ""
-	if r.Method == "POST" {
+	if ok && auth && n.DocID != "-1" {
 
-		//POST Dropdown
-		//Post auswertung
-		if r.FormValue("kategorie") != "" {
-			r.ParseForm()
-			kategorie := r.FormValue("kategorie")
-			fmt.Println("kategorie: ", kategorie)
+		SessionID = n.DocID
 
-			//Karteikästen nach Kategorien Laden
+		fmt.Println("SessionID:", SessionID)
+		fmt.Println("SessionNutzerID:", SessionNutzerID)
 
-		} else if r.FormValue("answer") == "" {
-			fmt.Println("Löschen")
-
-			var query = r.URL.Query()
-
-			//Kastenid auslesen
-			kID := (query["KastenID"])[0]
-
-			//Löschen kk
-			DeleteKarteikastenByID(kID)
-
-		} else {
-
-			titel = r.FormValue("titel")
-			fmt.Println(titel)
-			beschreibung = r.FormValue("beschreibung")
-			fmt.Println(beschreibung)
-			kategorie = r.FormValue("kategorie")
-			fmt.Println(kategorie)
-			radio = r.FormValue("answer")
-			fmt.Println(radio)
-
-			OberKategorie := ""
-
-			if kategorie == "Biologie" || kategorie == "Chemie" || kategorie == "Elektrotechnik" || kategorie == "Informatik" || kategorie == "Mathematik" || kategorie == "Medizin" || kategorie == "Naturkunde" || kategorie == "Physik" {
-				OberKategorie = "Naturwissenschaften"
-			}
-			if kategorie == "Chinesisch" || kategorie == "Deutsch" || kategorie == "Englisch" || kategorie == "Französisch" || kategorie == "Griechisch" || kategorie == "Italienisch" || kategorie == "Latein" || kategorie == "Russisch" {
-				OberKategorie = "Sprachen"
-			}
-			if kategorie == "Ethik" || kategorie == "Geschichte" || kategorie == "Literatur" || kategorie == "Musik" || kategorie == "Politik" || kategorie == "Recht" || kategorie == "Soziales" || kategorie == "Sport" || kategorie == "Verkehrskunde" {
-				OberKategorie = "Gesellschaft"
-			}
-			if kategorie == "BWL" || kategorie == "Finanzen" || kategorie == "Landwirtschaft" || kategorie == "Marketing" || kategorie == "VWL" {
-				OberKategorie = "Wirtschaft"
-			}
-			if kategorie == "Kriminologie" || kategorie == "Philosophie" || kategorie == "Psychologie" || kategorie == "Pädagogik" || kategorie == "Theologie" {
-				OberKategorie = "Geisteswissenschaften"
-			}
-			if kategorie == "Sonstige" {
-				OberKategorie = "Sonstige"
-			}
-
-			kk := Karteikasten{}
-			kk.TYP = "Karteikasten"
-			kk.NutzerID = nutzer.DocID
-			kk.Sichtbarkeit = radio
-			kk.Kategorie = OberKategorie
-			kk.Unterkategorie = kategorie
-			kk.Titel = titel
-			kk.Anzahl = 0
-			kk.Beschreibung = beschreibung
-
-			AddKarteikasten(kk, nutzer)
+		data := tmp_L_MeineKarteikaesten{
+			Nutzername:                GetNutzerById(SessionID).Name,
+			Karteien:                  strconv.Itoa(GetKarteikastenAnz()),
+			MeineKarteien:             strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionID)),
+			GespeicherteKarteikaesten: []Karteikasten{},
+			MeineKarteikaesten:        []Karteikasten{},
 		}
+
+		nutzer := GetNutzerById(SessionID) //muss noch dynamisch gehlot werden
+
+		titel := ""
+		beschreibung := ""
+		kategorie := ""
+		radio := ""
+		if r.Method == "POST" {
+
+			//POST Dropdown
+			//Post auswertung
+			if r.FormValue("kategorie") != "" {
+				r.ParseForm()
+				kategorie := r.FormValue("kategorie")
+				fmt.Println("kategorie: ", kategorie)
+
+				//Karteikästen nach Kategorien Laden
+
+			} else if r.FormValue("answer") == "" {
+				fmt.Println("Löschen")
+
+				var query = r.URL.Query()
+
+				//Kastenid auslesen
+				kID := (query["KastenID"])[0]
+
+				//Löschen kk
+				DeleteKarteikastenByID(kID)
+
+			} else {
+
+				titel = r.FormValue("titel")
+				fmt.Println(titel)
+				beschreibung = r.FormValue("beschreibung")
+				fmt.Println(beschreibung)
+				kategorie = r.FormValue("kategorie")
+				fmt.Println(kategorie)
+				radio = r.FormValue("answer")
+				fmt.Println(radio)
+
+				OberKategorie := ""
+
+				if kategorie == "Biologie" || kategorie == "Chemie" || kategorie == "Elektrotechnik" || kategorie == "Informatik" || kategorie == "Mathematik" || kategorie == "Medizin" || kategorie == "Naturkunde" || kategorie == "Physik" {
+					OberKategorie = "Naturwissenschaften"
+				}
+				if kategorie == "Chinesisch" || kategorie == "Deutsch" || kategorie == "Englisch" || kategorie == "Französisch" || kategorie == "Griechisch" || kategorie == "Italienisch" || kategorie == "Latein" || kategorie == "Russisch" {
+					OberKategorie = "Sprachen"
+				}
+				if kategorie == "Ethik" || kategorie == "Geschichte" || kategorie == "Literatur" || kategorie == "Musik" || kategorie == "Politik" || kategorie == "Recht" || kategorie == "Soziales" || kategorie == "Sport" || kategorie == "Verkehrskunde" {
+					OberKategorie = "Gesellschaft"
+				}
+				if kategorie == "BWL" || kategorie == "Finanzen" || kategorie == "Landwirtschaft" || kategorie == "Marketing" || kategorie == "VWL" {
+					OberKategorie = "Wirtschaft"
+				}
+				if kategorie == "Kriminologie" || kategorie == "Philosophie" || kategorie == "Psychologie" || kategorie == "Pädagogik" || kategorie == "Theologie" {
+					OberKategorie = "Geisteswissenschaften"
+				}
+				if kategorie == "Sonstige" {
+					OberKategorie = "Sonstige"
+				}
+
+				kk := Karteikasten{}
+				kk.TYP = "Karteikasten"
+				kk.NutzerID = nutzer.DocID
+				kk.Sichtbarkeit = radio
+				kk.Kategorie = OberKategorie
+				kk.Unterkategorie = kategorie
+				kk.Titel = titel
+				kk.Anzahl = 0
+				kk.Beschreibung = beschreibung
+
+				AddKarteikasten(kk, nutzer)
+			}
+		}
+
+		for _, element := range nutzer.ErstellteKarteien {
+			temp_kk := GetKarteikastenByid(element)
+			temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionID)))
+			data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
+
+		}
+
+		for _, element := range nutzer.GelernteKarteien {
+			temp_kk := GetKarteikastenByid(element)
+			temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionID)))
+			data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
+
+		}
+
+		t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten.html")
+		t.ExecuteTemplate(w, "layout", data)
+
+	} else {
+		r.Method = ""
+		http.Redirect(w, r, "http://localhost/nl_home", http.StatusSeeOther)
 	}
-
-	for _, element := range nutzer.ErstellteKarteien {
-		temp_kk := GetKarteikastenByid(element)
-		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionNutzerID)))
-		data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
-
-	}
-
-	for _, element := range nutzer.GelernteKarteien {
-		temp_kk := GetKarteikastenByid(element)
-		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionNutzerID)))
-		data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
-
-	}
-
-	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten.html")
-	t.ExecuteTemplate(w, "layout", data)
 }
 
 func L_meinProfil(w http.ResponseWriter, r *http.Request) {
