@@ -508,7 +508,7 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 		//Post auswertung
 		if r.FormValue("kategorie") != "" {
 			r.ParseForm()
-			kategorie := r.FormValue("kategorie")
+			kategorie = r.FormValue("kategorie")
 			fmt.Println("kategorie: ", kategorie)
 
 			//Karteikästen nach Kategorien Laden
@@ -573,15 +573,24 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 	for _, element := range nutzer.ErstellteKarteien {
 		temp_kk := GetKarteikastenByid(element)
 		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionNutzerID)))
-		data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
+
+		if temp_kk.Kategorie == kategorie || temp_kk.Unterkategorie == kategorie {
+			data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
+		} else if kategorie == "" {
+			data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
+		}
 
 	}
 
 	for _, element := range nutzer.GelernteKarteien {
 		temp_kk := GetKarteikastenByid(element)
 		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionNutzerID)))
-		data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
 
+		if temp_kk.Kategorie == kategorie || temp_kk.Unterkategorie == kategorie {
+			data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
+		} else if kategorie == "" {
+			data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
+		}
 	}
 
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten.html")
