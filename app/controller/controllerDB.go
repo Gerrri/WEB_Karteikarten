@@ -307,6 +307,17 @@ func GetKarteikastenByid(id string) (k Karteikasten) {
 	return k
 }
 
+func GetErstellteKartenAnz(n Nutzer) (anzahl int) {
+	anzahl = 0
+	for _, kk := range GetAlleKarteikaesten() {
+		if kk.NutzerID == n.DocID {
+			anzahl += len(kk.Karten)
+		}
+	}
+
+	return anzahl
+}
+
 func DeleteKarteikastenByID(id string) {
 	var db *couchdb.Database = GetDB()
 	change := false
