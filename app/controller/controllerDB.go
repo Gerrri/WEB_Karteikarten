@@ -454,6 +454,7 @@ func GetNutzerById(id string) (n Nutzer) {
 
 	n = Nutzer{}
 	n.DocID = "null"
+	fmt.Println("N: ", n)
 	return n
 }
 
