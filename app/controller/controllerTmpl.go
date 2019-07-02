@@ -10,11 +10,15 @@ import (
 var SessionNutzerID = ""
 
 type tmp_b_home struct {
-	Nutzername    string
-	Nutzer        string
-	Lernkarten    string
-	Karteien      string
-	MeineKarteien string
+	Nutzername        string
+	Nutzer            string
+	Lernkarten        string
+	Karteien          string
+	MeineKarteien     string
+	NameVergeben      string
+	EmailVergeben     string
+	PasswortFalsch    string
+	DatenschutzFalsch string
 }
 
 type tmp_L_lernen struct {
@@ -177,7 +181,7 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 		var vorhanden_mail bool = false
 		var vorhanden_benutzer bool = false
 		var passwortUngleich bool = false
-
+		var geladen bool = true
 		for _, arr := range nutzer {
 			if arr.EMail == email {
 				vorhanden_mail = true
@@ -203,14 +207,35 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 			hinzufuegen.ErstellteKarteien = []string{}
 			hinzufuegen.GelernteKarteien = []string{}
 			SessionNutzerID = AddNutzer(hinzufuegen)
+			geladen = false
 			http.Redirect(w, r, "http://localhost/l_meinekarteikaesten", http.StatusSeeOther)
 		}
 
-	}
-	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
-	t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
+		if geladen {
+			p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz()), NameVergeben: "false", EmailVergeben: "false", PasswortFalsch: "false", DatenschutzFalsch: "false"}
+			if vorhanden_benutzer {
+				p.NameVergeben = "true"
+			}
+			if vorhanden_mail {
+				p.EmailVergeben = "true"
+			}
+			if passwortUngleich {
+				p.PasswortFalsch = "true"
+			}
+			if datenschutz != "on" {
+				p.DatenschutzFalsch = "true"
+			}
+			t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
 
-	t.ExecuteTemplate(w, "layout", p)
+			t.ExecuteTemplate(w, "layout", p)
+		}
+
+	} else {
+		p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz()), NameVergeben: "false", EmailVergeben: "false", PasswortFalsch: "false", DatenschutzFalsch: "false"}
+		t, _ := template.ParseFiles("./templates/nL_not_logged_in.html", "./templates/nL_registrieren.html")
+
+		t.ExecuteTemplate(w, "layout", p)
+	}
 
 }
 
