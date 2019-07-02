@@ -19,6 +19,7 @@ type Nutzer struct {
 	ErstellteKarteien []string
 	GelernteKarteien  []string
 	MitgliedSeit      string
+	Bild              string
 }
 
 type Karte struct {
@@ -570,6 +571,7 @@ func AddNutzer(n Nutzer) (id string) {
 	var db *couchdb.Database = GetDB()
 	dt := time.Now()
 	n.MitgliedSeit = dt.Format("01-02-2006")
+	n.Bild = "/icons/Mein-Profil_black.svg"
 	var nutzermap = nutzer2Map(n)
 	delete(nutzermap, "_id")
 	delete(nutzermap, "_rev")
