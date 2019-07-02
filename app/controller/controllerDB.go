@@ -538,7 +538,7 @@ func GetNutzerById(id string) (n Nutzer) {
 
 	n = Nutzer{}
 	n.DocID = "null"
-	fmt.Println("N: ", n)
+	//fmt.Println("N: ", n)
 	return n
 }
 
@@ -585,6 +585,17 @@ func UpdateNutzer(n Nutzer) {
 	var nutzermap = nutzer2Map(n)
 
 	db.Set(n.DocID, nutzermap)
+}
+
+func SelectKarteikaestenByKategorie(allekk []Karteikasten, Kategorie string) (Selectkk []Karteikasten) {
+
+	for _, kk := range allekk {
+		if kk.Kategorie == Kategorie || kk.Unterkategorie == Kategorie {
+			Selectkk = append(Selectkk, kk)
+		}
+	}
+
+	return Selectkk
 }
 
 func GetAlleNutzer() (n []Nutzer) {
