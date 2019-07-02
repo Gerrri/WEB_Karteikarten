@@ -115,7 +115,7 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 					r.Method = ""
 					isExecuted = true
 					//http.Post("http://localhost/l_meinekarteikaesten", "", nil)
-					http.Redirect(w, r, "http://localhost/l_meinekarteikaesten", http.StatusSeeOther)
+					http.Redirect(w, r, "./l_meinekarteikaesten", http.StatusSeeOther)
 					break
 
 				}
@@ -223,7 +223,7 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 			hinzufuegen.GelernteKarteien = []string{}
 			SessionNutzerID = AddNutzer(hinzufuegen)
 			geladen = false
-			http.Redirect(w, r, "http://localhost/l_meinekarteikaesten", http.StatusSeeOther)
+			http.Redirect(w, r, "./l_meinekarteikaesten", http.StatusSeeOther)
 		}
 
 		if geladen {
@@ -654,7 +654,7 @@ func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		DeleteNutzer(SessionNutzerID)
 		r.Method = ""
-		http.Redirect(w, r, "http://localhost/nl_home", http.StatusSeeOther)
+		http.Redirect(w, r, "./nl_home", http.StatusSeeOther)
 	}
 
 	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
