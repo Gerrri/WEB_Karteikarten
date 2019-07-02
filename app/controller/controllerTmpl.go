@@ -501,15 +501,16 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 	titel := ""
 	beschreibung := ""
 	kategorie := ""
+	kategorieFilter := ""
 	radio := ""
 	if r.Method == "POST" {
 
 		//POST Dropdown
 		//Post auswertung
-		if r.FormValue("kategorie") != "" {
+		if r.FormValue("kategorieFilter") != "" {
 			r.ParseForm()
-			kategorie = r.FormValue("kategorie")
-			fmt.Println("kategorie: ", kategorie)
+			kategorieFilter = r.FormValue("kategorieFilter")
+			fmt.Println("kategorieFilter: ", kategorieFilter)
 
 			//Karteikästen nach Kategorien Laden
 
@@ -574,9 +575,9 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 		temp_kk := GetKarteikastenByid(element)
 		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionNutzerID)))
 
-		if temp_kk.Kategorie == kategorie || temp_kk.Unterkategorie == kategorie {
+		if temp_kk.Kategorie == kategorieFilter || temp_kk.Unterkategorie == kategorieFilter {
 			data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
-		} else if kategorie == "" {
+		} else if kategorieFilter == "" {
 			data.MeineKarteikaesten = append(data.MeineKarteikaesten, temp_kk)
 		}
 
@@ -586,9 +587,9 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 		temp_kk := GetKarteikastenByid(element)
 		temp_kk.FortschrittP = int(GetKarteikastenFortschritt(temp_kk, GetNutzerById(SessionNutzerID)))
 
-		if temp_kk.Kategorie == kategorie || temp_kk.Unterkategorie == kategorie {
+		if temp_kk.Kategorie == kategorieFilter || temp_kk.Unterkategorie == kategorieFilter {
 			data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
-		} else if kategorie == "" {
+		} else if kategorieFilter == "" {
 			data.GespeicherteKarteikaesten = append(data.GespeicherteKarteikaesten, temp_kk)
 		}
 	}
