@@ -217,6 +217,12 @@ func GetKarteikastenAnz() (anz int) {
 	return len(GetAlleKarteikaesten())
 }
 
+func GetKarteikastenAnzGespeicherte(NutzerID string) (anz int) {
+
+	return len(GetNutzerById(NutzerID).GelernteKarteien)
+
+}
+
 func GetAlleKarteikaestenPrivat(nutzer Nutzer) (kk []Karteikasten) {
 	allekk := GetAlleKarteikaesten()
 
@@ -284,6 +290,26 @@ func GetKarteikastenByid(id string) (k Karteikasten) {
 	}
 
 	return k
+}
+
+func ToggleKarteikastenSichtbarkeit(KastenID string) (Sichrbarkeit string) {
+	var db *couchdb.Database = GetDB()
+
+	kk := GetKarteikastenByid(KastenID)
+
+	//fmt.Println("Sichtbarket: ", kk.Sichtbarkeit)
+
+	if kk.Sichtbarkeit == "Öffentlich" {
+		kk.Sichtbarkeit = "Privat"
+	} else {
+		kk.Sichtbarkeit = "Öffentlich"
+	}
+
+	//fmt.Println("Sichtbarket: ", kk.Sichtbarkeit)
+
+	db.Set(kk.DocID, kk2Map(kk))
+
+	return kk.Sichtbarkeit
 }
 
 func AddKarteikasten(kk Karteikasten, nutzer Nutzer) error {
@@ -396,6 +422,24 @@ func TerminalOutKarteikasten(k Karteikasten) {
 // ############################### ENDE Karteikasten Methoden ############################### //
 
 // ############################### START Nutzer Methoden ############################### //
+
+//Wenn nicht bereits vorhanden
+func AddKK2NutzerGespeichert(kk Karteikasten, n Nutzer) {
+	var db *couchdb.Database = GetDB()
+	var vorhanden = false
+
+	for _, id := range n.GelernteKarteien {
+		if id == kk.DocID {
+			vorhanden = true
+		}
+	}
+
+	if vorhanden == false {
+		n.GelernteKarteien = append(n.GelernteKarteien, kk.DocID)
+	}
+
+	db.Set(n.DocID, nutzer2Map(n))
+}
 
 //Wenn nicht vorhanden ID = -1
 func GetNutzerById(id string) (n Nutzer) {

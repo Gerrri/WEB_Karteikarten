@@ -19,28 +19,6 @@
 										</button>
 									  </div>
 									  <div class="dropdown-menu" id="dropdown-menu6" role="menu">
-								<!--		<div class="dropdown-content">
-
-
-										  <div class="dropdown-item">
-											<p> Kartenanzahl</p>
-										  </div>	
-
-										  <div class="dropdown-item">
-											<p> Kategorien</p>
-										  </div>
-
-										  <div class="dropdown-item">
-											<p> A - Z</p>
-										  </div>
-
-										  <div class="dropdown-item">
-											<p> Z - A</p>
-										  </div>
-
-										</div>
-
-								-->
 									  </div>
 									</div>
 								</div>
@@ -93,7 +71,7 @@
 															<div class="columns kartei_content">
 																<div class="column is-one-third"><a href="l_lernen?Kasten={{.DocID}}&Karte=0" 		class="button is-warning is-small">Lernen</a></div>
 																<div class="column is-one-third"><a href="l_modkarteikasten2?Kasten={{.DocID}}&Karte=0"   class="button is-success is-small">Bearbeiten</a></div>
-																<div class="column is-one-third"><a href="l_meinekarteikaesten_popup"     class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
+																<div class="column is-one-third"><a href="loeschen"     class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
 													</div>
 															
 														</div>
@@ -145,7 +123,7 @@
 													<div class="has_background_light kartei is-paddingless">
 															<div class="columns kartei_content">
 																<div class="column is-one-third"><a href="l_lernen?Kasten={{.DocID}}&Karte=0" 		class="button is-warning is-small">Lernen</a></div>
-																<div class="column is-one-third"><a href="l_meinekarteikaesten_popup"     class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
+																<div class="column is-one-third"><a href="loeschen"     class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
 													</div>
 															
 														</div>
@@ -153,10 +131,25 @@
 						{{end}}
 						<!-- /MeineKarteikaesten -->
 
-
-						
-
-						
+						<!-- POPUP -->
+						<div class="modal is-active">
+							<div class="modal-background"></div>
+							<div class="modal-card">
+							<header class="modal-card-head">
+								<p class="modal-card-title">Karteikasten Löschen?</p>
+								<button class="delete" aria-label="close"></button>
+							</header>
+							<section class="modal-card-body">
+								<p> Bist du dir sicher, dass du diesen Karteikasten Löschen möchtest?</p>
+							</section>
+							<footer class="modal-card-foot">
+								<form method="POST" action="/l_meinekarteikaesten">
+									<a href="l_meinekarteikaesten" class="button is-success">Nein Doch Nicht!"</a>
+									<a href="l_meinekarteikaesten?del:{{.DocID}}" class="button is-success">Nein Doch Nicht!"</a>
+								</form>
+							</footer>
+							</div>
+						</div>	
 		</div>
 				  
 						  	
