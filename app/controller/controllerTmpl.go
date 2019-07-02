@@ -118,7 +118,7 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 
 		if !isExecuted {
 			p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
-			t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
+			t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in_popup.html")
 
 			t.ExecuteTemplate(w, "layout", p)
 		}
@@ -129,6 +129,15 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 
 		t.ExecuteTemplate(w, "layout", p)
 	}
+}
+
+func NL_Home_popup(w http.ResponseWriter, r *http.Request) {
+
+	p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in_popup.html")
+
+	t.ExecuteTemplate(w, "layout", p)
+
 }
 
 func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
