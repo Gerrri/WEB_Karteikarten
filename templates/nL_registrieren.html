@@ -1,57 +1,57 @@
 
 {{ define "content" }}
 <h1 class="text_headline">Registrieren</h1>
-							<div class="columns">
-								
-								<div class="column has-background-light Content_Box is-paddingless">
-									<div class="green_line"></div>
-									
-									<h1 class="text_registrieren">Wir freuen un, dass du dich bei BrainTrain anmelden möchtest. Bitte beachte, dass <strong>pro E-Mail Adresse nur ein Nutzer</strong> erstellt werdenn kann und jeder <strong>Nutzername nur einmal vergeben</strong> wird.</h1>
-									
-									
-										
-									
-										<div class="input_fields">
-											
-											<div class="columns">
-												<div class="column c1 is-2"> <label class="label">Nutzername</label> </div>
-												<div class="column is-6 c2"> <input class="input input_field" type="text" placeholder="MeinBenutzername"> </div>
-												<div class="column c3"> <p class="help is-danger info_text">Dieser Nutzername ist bereits vergeben!</p> </div>
-											</div>
-											
-											<div class="columns">
-												<div class="column c1 is-2"> <label class="label">E-Mail</label> </div>
-												<div class="column is-6 c2"> <input class="input input_field" type="email" placeholder="example@email.com"> </div>
-												<div class="column c3"> <p class="help is-danger info_text">Diese E-Mail ist bereits vergeben!</p> </div>
-											</div>
-											
-											<div class="columns">
-												<div class="column c1 is-2"> <label class="label">Password</label> </div>
-												<div class="column is-6 c2"> <input class="input input_field" type="password" placeholder=""> </div>
-												<div class="column c3"></div>
-											</div>
-											
-											<div class="columns">
-												<div class="column c1 is-2"> <label class="label">Password wiederholen</label> </div>
-												<div class="column is-6 c2"> <input class="input input_field" type="password" placeholder=""> </div>
-												<div class="column c3"> <p class="help is-danger info_text">Die Passwörter stimmen nicht überein!</p> </div>
-											</div>
-											
-											<div class="columns">
-												<div class="column c1 is-2"> <label class="label"></label> </div>
-												<div class="column is-6 c2"> <input type="checkbox">Ich habe die nicht vorhandene Datenschutz- <br>erklärung zur Kenntnis genommen. </div>
-												<div class="column c3"> <p class="help is-danger info_text">Bitte setzen Sie hier einen Hacken!</p> </div>
-											</div>
-											
-											<div class="columns">
-												<div class="column c1 is-2"> <label class="label"></label> </div>
-												<div class="column is-6 c2"> <a href ="l_meinekarteikaesten" class="button is-warning btn_registrieren">Registrieren</a></div>
-												<div class="column c3"></div>
-											</div>
-											
-										</div>
-										
-									</div>
-								</div>
-						    </div>
+	<div class="columns">
+		
+		<div class="column has-background-light Content_Box is-paddingless">
+			<div class="green_line"></div>
+			
+			<h1 class="text_registrieren">Wir freuen un, dass du dich bei BrainTrain anmelden möchtest. Bitte beachte, dass <strong>pro E-Mail Adresse nur ein Nutzer</strong> erstellt werdenn kann und jeder <strong>Nutzername nur einmal vergeben</strong> wird.</h1>
+			
+			
+			<form method="POST" action="/nl_registrieren">	
+			
+				<div class="input_fields">
+					
+					<div class="columns">
+						<div class="column c1 is-2"> <label class="label">Nutzername</label> </div>
+						<div class="column is-6 c2"> <input name="benutzername" class="input input_field" type="text" placeholder="MeinBenutzername"> </div>
+						<div class="column c3"> <p id="benutzername_info" class="help is-danger info_text">Dieser Nutzername ist bereits vergeben!</p> </div>
+					</div>
+					
+					<div class="columns">
+						<div class="column c1 is-2"> <label class="label">E-Mail</label> </div>
+						<div class="column is-6 c2"> <input name="email" class="input input_field" type="email" placeholder="example@email.com"> </div>
+						<div class="column c3"> <p id="email_info" class="help is-danger info_text">Diese E-Mail ist bereits vergeben!</p> </div>
+					</div>
+					
+					<div class="columns">
+						<div class="column c1 is-2"> <label class="label">Password</label> </div>
+						<div class="column is-6 c2"> <input name="passwort" class="input input_field" type="password" placeholder=""> </div>
+						<div class="column c3"></div>
+					</div>
+					
+					<div class="columns">
+						<div class="column c1 is-2"> <label class="label">Password wiederholen</label> </div>
+						<div class="column is-6 c2"> <input name="passwortWdhl" class="input input_field" type="password" placeholder=""> </div>
+						<div class="column c3"> <p id="passwort_info" class="help is-danger info_text">Die Passwörter stimmen nicht überein!</p> </div>
+					</div>
+					
+					<div class="columns">
+						<div class="column c1 is-2"> <label class="label"></label> </div>
+						<div class="column is-6 c2"> <input name="datenschutz" type="checkbox">Ich habe die nicht vorhandene Datenschutz- <br>erklärung zur Kenntnis genommen. </div>
+						<div class="column c3"> <p id="datenschutz_info" class="help is-danger info_text">Bitte setzen Sie hier einen Hacken!</p> </div>
+					</div>
+					
+					<div class="columns">
+						<div class="column c1 is-2"> <label class="label"></label> </div>
+						<div class="column is-6 c2"> <button type="submit" class="button is-warning btn_registrieren">Registrieren</a></div>
+						<div class="column c3"></div>
+					</div>
+					
+				</div>
+			</form>	
+			</div>
+		</div>
+	</div>
 {{ end }}

@@ -1,0 +1,40 @@
+{
+    "_id": "34f921501a6813b6b8ac8e7e7a03f018",
+    "_rev": "16-00cc53c24728714b7e8205f23213e7cf",
+    "Anzahl": 0,
+    "Beschreibung": "qweqweqweqweqwe",
+    "Fortschritt": [
+      {
+        "ID": "34f921501a6813b6b8ac8e7e7a04143b",
+        "Wiederholung": [
+          2,
+          2
+        ]
+      }
+    ],
+    "FortschrittP": 0,
+    "Karten": [
+      {
+        "Antwort": "...und hier die Antwort :)",
+        "Frage": "Schreibe hier deine Frage",
+        "Index": 0,
+        "Num": 0,
+        "NutzerFach": "",
+        "Titel": "Meine Erste Karteikarte"
+      },
+      {
+        "Antwort": "...und hier die Antwort :)",
+        "Frage": "Schreibe hier deine Frage",
+        "Index": 0,
+        "Num": 0,
+        "NutzerFach": "",
+        "Titel": "Meine 2te Karteikarte"
+      }
+    ],
+    "Kategorie": "Naturwissenschaften",
+    "NutzerID": "34f921501a6813b6b8ac8e7e7a04143b",
+    "Sichtbarkeit": "Öffentlich",
+    "TYP": "Karteikasten",
+    "Titel": "qweqweqweqwe",
+    "Unterkategorie": "Biologie"
+  }

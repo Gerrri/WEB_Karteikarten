@@ -1,53 +1,13 @@
 {
-  "_id": "nutzer",
-  "_rev": "19-6983354f6a9bae0367732ba50dee876c",
-  "TYP": "nutzer",
-  "Nutzer": [
-    {
-      "ID": 1,
-      "Vorname": "Max",
-      "Name": "Mustermann",
-      "EMail": "mm@musteradresse.com",
-      "Passwort": "eva",
-      "ErstellteKarteien": [
-        1,
-        4,
-        8,
-        12
-      ],
-      "GelernteKarteien": [
-        1,
-        4,
-        8,
-        12,
-        7
-      ]
-    },
-    {
-      "ID": 2,
-      "Vorname": "Eva",
-      "Name": "Musterfrau",
-      "EMail": "em@musteradresse.com",
-      "Passwort": "max",
-      "ErstellteKarteien": [
-        1
-      ],
-      "GelernteKarteien": [
-        2
-      ]
-    },
-    {
-      "ID": 3,
-      "Vorname": "Mini",
-      "Name": "Maus",
-      "EMail": "mm@disney.com",
-      "Passwort": "micky",
-      "ErstellteKarteien": [
-        3
-      ],
-      "GelernteKarteien": [
-        4
-      ]
-    }
-  ]
-}
+    "_id": "34f921501a6813b6b8ac8e7e7a04143b",
+    "_rev": "4-d39573d35fe7c499dfd9ee5a749dcfa3",
+    "TYP": "nutzer",
+    "EMail": "em@musteradresse.com",
+    "ErstellteKarteien": [
+      "34f921501a6813b6b8ac8e7e7a03f018",
+      "34f921501a6813b6b8ac8e7e7a059a2f"
+    ],
+    "GelernteKarteien": [],
+    "Name": "Musterfrau",
+    "Passwort": "max"
+  }
