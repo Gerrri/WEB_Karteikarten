@@ -566,6 +566,10 @@ func GetNutzeranz() (anz int) {
 
 func DeleteNutzer(id string) {
 	var db *couchdb.Database = GetDB()
+	var nutzer = GetNutzerById(id)
+	for _, arr := range nutzer.ErstellteKarteien {
+		DeleteKarteikastenByID(arr)
+	}
 	db.Delete(id)
 
 }
