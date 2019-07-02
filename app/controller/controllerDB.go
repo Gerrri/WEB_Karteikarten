@@ -219,7 +219,7 @@ func GetKarteikastenAnz() (anz int) {
 
 func GetKarteikastenAnzGespeicherte(NutzerID string) (anz int) {
 
-	return len(GetNutzerById(NutzerID).GelernteKarteien)
+	return len(GetNutzerById(NutzerID).GelernteKarteien) + len(GetNutzerById(NutzerID).ErstellteKarteien)
 
 }
 
@@ -290,6 +290,50 @@ func GetKarteikastenByid(id string) (k Karteikasten) {
 	}
 
 	return k
+}
+
+func DeleteKarteikastenByID(id string) {
+	var db *couchdb.Database = GetDB()
+	change := false
+
+	//Kasten auspflegen (Nutzer)
+
+	allenutzer := GetAlleNutzer()
+
+	for _, nutzer := range allenutzer {
+
+		a := nutzer.ErstellteKarteien
+		//Erstellete Karteien Löschen
+		for i, ide := range nutzer.ErstellteKarteien {
+
+			if ide == id {
+				//ID Löschen
+				// Remove the element at index i from a.
+				nutzer.ErstellteKarteien = append(a[:i], a[i+1:]...)
+				change = true
+
+				db.Delete(id)
+			}
+		}
+
+		a = nutzer.GelernteKarteien
+		//Gespeicherte Karteien Löschen
+		for i, ide := range nutzer.GelernteKarteien {
+			if ide == id {
+				//ID Löschen
+				// Remove the element at index i from a.
+				nutzer.GelernteKarteien = append(a[:i], a[i+1:]...)
+				change = true
+			}
+		}
+
+		//Nutzer Updaten
+		if change == true {
+			db.Set(nutzer.DocID, nutzer2Map(nutzer))
+		}
+
+	}
+
 }
 
 func ToggleKarteikastenSichtbarkeit(KastenID string) (Sichrbarkeit string) {
@@ -434,7 +478,7 @@ func AddKK2NutzerGespeichert(kk Karteikasten, n Nutzer) {
 		}
 	}
 
-	if vorhanden == false {
+	if vorhanden == false && n.DocID != kk.NutzerID {
 		n.GelernteKarteien = append(n.GelernteKarteien, kk.DocID)
 	}
 
