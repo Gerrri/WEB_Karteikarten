@@ -14,8 +14,8 @@
 											<div style="max-width: 35%; margin-left: auto; margin-right: auto; margin-top: 4%;" ><img src="/icons/Mein-Profil_black.svg" /></div>
 											<div style="text-align: center"> <a href="" class="button is-small is-warning" style=" margin-top: 3%; ">Edit</a> </div>
 											
-											<div style="text-align: center"> <h1 class="card_titel" style="font-size: 28px">Max Mustermann</h1> </div>
-											<div style="text-align: center; margin-bottom: 5%"> <p class="card_titel"> mustermann@example.com </p> </div>
+											<div style="text-align: center"> <h1 class="card_titel" style="font-size: 28px">{{.Nutzername}}</h1> </div>
+											<div style="text-align: center; margin-bottom: 5%"> <p class="card_titel"> {{.NutzerEmail}} </p> </div>
 											
 									
 										</div>
@@ -26,17 +26,17 @@
 											
 											<div class="columns" style="margin-left: 2%">
 												<div class="column"><div style="text-align: left; margin-bottom: 5%"> <p class="card_titel"> <nobr>Erstellte Karten :</nobr> </p> </div></div>
-												<div class="column"><div style="text-align: left; margin-bottom: 5%"> <p class="card_titel"> <nobr>24</nobr> </p> </div></div>
+												<div class="column"><div style="text-align: left; margin-bottom: 5%"> <p class="card_titel"> <nobr>{{.ErstellteKarten}}</nobr> </p> </div></div>
 											</div>
 											
 											<div class="columns" style="margin-left: 2%">
 												<div class="column"><div style="text-align: left; margin-bottom: 5%"> <p class="card_titel"> <nobr>Erstellte Karteien :</nobr> </p> </div></div>
-												<div class="column"><div style="text-align: left; margin-bottom: 5%"> <p class="card_titel"> <nobr>7</nobr> </p> </div></div>
+												<div class="column"><div style="text-align: left; margin-bottom: 5%"> <p class="card_titel"> <nobr>{{.ErstellteKarteien}}</nobr> </p> </div></div>
 											</div>
 											
 											<div class="columns" style="margin-left: 2%; margin-bottom: 4%">
 												<div class="column"><div style="text-align: left; margin-bottom: 5%"> <p class="card_titel"> <nobr>Mitglied seit :</nobr> </p> </div></div>
-												<div class="column"><div style="text-align: left; margin-bottom: 5%"> <p class="card_titel"> <nobr>24.12.2018</nobr> </p> </div></div>
+												<div class="column"><div style="text-align: left; margin-bottom: 5%"> <p class="card_titel"> <nobr>{{.MitgliedSeit}}</nobr> </p> </div></div>
 											</div>
 											
 							
@@ -70,7 +70,7 @@
 											<div class="columns">
 												<div class="column c1 is-2"> <label class="label">Neues Password</label> </div>
 												<div class="column is-6 c2"> <input name="passwort_neu" class="input input_field" type="password" placeholder=""> </div>
-												<div class="column c3"><p class="help is-danger info_text"> Altes Password darf nicht mit neuem übereinstimmen</p></div>
+												<div class="column c3">  <p class="help is-danger info_text"> Altes Password darf nicht mit neuem übereinstimmen</p> </div>
 											</div>
 											
 											<div class="columns">

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv" //strconv.Itoa -> int to string
+	"time"
 )
 
 // Structs
@@ -17,6 +18,7 @@ type Nutzer struct {
 	Passwort          string
 	ErstellteKarteien []string
 	GelernteKarteien  []string
+	MitgliedSeit      string
 }
 
 type Karte struct {
@@ -566,6 +568,8 @@ func AddKKtoNutzer(n Nutzer, kk Karteikasten) {
 
 func AddNutzer(n Nutzer) (id string) {
 	var db *couchdb.Database = GetDB()
+	dt := time.Now()
+	n.MitgliedSeit = dt.Format("01-02-2006")
 	var nutzermap = nutzer2Map(n)
 	delete(nutzermap, "_id")
 	delete(nutzermap, "_rev")
