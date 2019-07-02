@@ -23,6 +23,8 @@ type tmp_b_home struct {
 	ErstellteKarten   string
 	ErstellteKarteien string
 	MitgliedSeit      string
+	Bild              string
+	BildKlein         string
 }
 
 type tmp_L_lernen struct {
@@ -50,6 +52,7 @@ type tmp_L_lernen struct {
 	KartenID     int
 	KastenID     string
 	NextKartenID int
+	BildKlein    string
 }
 
 type tmp_nL_Karteikasten struct {
@@ -62,6 +65,7 @@ type tmp_nL_Karteikasten struct {
 	Wirtschaft            []Karteikasten
 	Geisteswissenschaften []Karteikasten
 	Sonstige              []Karteikasten
+	BildKlein             string
 }
 
 type tmp_L_MeineKarteikaesten struct {
@@ -73,6 +77,7 @@ type tmp_L_MeineKarteikaesten struct {
 	KastenID                  string
 	KartenID                  int
 	DelKastenID               string
+	BildKlein                 string
 }
 
 type tmp_L_modkarteikasten1 struct {
@@ -90,8 +95,9 @@ type tmp_L_modkarteikasten1 struct {
 	Antwort string
 
 	//aktueller Kasten
-	KastenID string
-	KartenID int
+	KastenID  string
+	KartenID  int
+	BildKlein string
 }
 
 /* ######################   not logged in Pages   ###################### */
@@ -256,10 +262,16 @@ func NL_registrieren(w http.ResponseWriter, r *http.Request) {
 
 /* ######################   logged in Pages   ###################### */
 func L_Home(w http.ResponseWriter, r *http.Request) {
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
 
-	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	p := tmp_b_home{BildKlein: link, Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/b_home.html", "./templates/L_logged_in.html")
-
+	p.BildKlein = link
 	t.ExecuteTemplate(w, "layout", p)
 }
 
@@ -313,7 +325,15 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
+
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_karteikaesten.html")
+	data.BildKlein = link
 	t.ExecuteTemplate(w, "layout", data)
 }
 
@@ -358,8 +378,14 @@ func L_aufdecken(w http.ResponseWriter, r *http.Request) {
 		data.KartenID = 0
 	}
 
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_aufdecken.html")
-
+	data.BildKlein = link
 	t.ExecuteTemplate(w, "layout", data)
 }
 
@@ -444,9 +470,15 @@ func L_lernen(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//fmt.Printf("%vHier: \n", data.Titel)
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
 
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_lernen.html")
-
+	data.BildKlein = link
 	t.ExecuteTemplate(w, "layout", data)
 }
 
@@ -481,7 +513,14 @@ func L_meinekarteikaesten_popup(w http.ResponseWriter, r *http.Request) {
 
 	}
 
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten_popup.html")
+	data.BildKlein = link
 	t.ExecuteTemplate(w, "layout", data)
 
 }
@@ -594,7 +633,14 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinekarteikaesten.html")
+	data.BildKlein = link
 	t.ExecuteTemplate(w, "layout", data)
 }
 
@@ -644,9 +690,15 @@ func L_meinProfil(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, MitgliedSeit: GetNutzerById(SessionNutzerID).MitgliedSeit, ErstellteKarteien: strconv.Itoa(len(GetNutzerById(SessionNutzerID).ErstellteKarteien)), NutzerEmail: GetNutzerById(SessionNutzerID).EMail, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
+	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Bild: GetNutzerById(SessionNutzerID).Bild, MitgliedSeit: GetNutzerById(SessionNutzerID).MitgliedSeit, ErstellteKarteien: strconv.Itoa(len(GetNutzerById(SessionNutzerID).ErstellteKarteien)), NutzerEmail: GetNutzerById(SessionNutzerID).EMail, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil.html")
-
+	p.BildKlein = link
 	t.ExecuteTemplate(w, "layout", p)
 }
 
@@ -657,16 +709,71 @@ func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "./nl_home", http.StatusSeeOther)
 	}
 
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
 	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil_popup.html")
+	p.BildKlein = link
+	t.ExecuteTemplate(w, "layout", p)
+}
 
+func L_meinProfil_popup_pic(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		r.ParseForm()
+		var link = r.FormValue("link")
+		var nutzer = GetNutzerById(SessionNutzerID)
+		if link == "Hund" || link == "1" {
+			nutzer.Bild = "https://svgsilh.com/svg/294256.svg"
+		} else if link == "" {
+			nutzer.Bild = "/icons/Mein-Profil_black.svg"
+		} else if link == "Katze" || link == "2" {
+			nutzer.Bild = "https://svgsilh.com/svg/2570357.svg"
+		} else if link == "Ente" {
+			nutzer.Bild = "/icons/Ente.svg"
+		} else if link == "Eule" {
+			nutzer.Bild = "/icons/Eule.svg"
+		} else if link == "Grun" {
+			nutzer.Bild = "/icons/Grun.svg"
+		} else if link == "Sessel" {
+			nutzer.Bild = "/icons/Sessel.svg"
+		} else if link == "Zone30" {
+			nutzer.Bild = "https://upload.wikimedia.org/wikipedia/commons/e/eb/Zeichen_274.1_-_Beginn_einer_Tempo_30-Zone%2C_StVO_2013.svg"
+		} else {
+			nutzer.Bild = link
+		}
+
+		UpdateNutzer(nutzer)
+
+		http.Redirect(w, r, "http://localhost/l_meinProfil", http.StatusSeeOther)
+	}
+
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
+	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil_popup_pic.html")
+	p.BildKlein = link
 	t.ExecuteTemplate(w, "layout", p)
 }
 
 func L_modkarteikasten1(w http.ResponseWriter, r *http.Request) {
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
 	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_modkarteikasten1.html")
 
+	p.BildKlein = link
 	t.ExecuteTemplate(w, "layout", p)
 }
 
@@ -754,6 +861,13 @@ func L_modkarteikasten2(w http.ResponseWriter, r *http.Request) {
 		data.AlleKarten[i].Index = i
 	}
 
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
+	data.BildKlein = link
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_modkarteikasten2.html")
 	t.ExecuteTemplate(w, "layout", data)
 }
@@ -813,6 +927,13 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 	data.AktuelleKarte = karte
 	data.AktuelleKarte.NutzerFach = strconv.Itoa(data.Wiederholungen[akt])
 
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
+	data.BildKlein = link
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_showKarteikarten.html")
 	t.ExecuteTemplate(w, "layout", data)
 }
