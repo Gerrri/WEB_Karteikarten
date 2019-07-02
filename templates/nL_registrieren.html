@@ -16,13 +16,13 @@
 					<div class="columns">
 						<div class="column c1 is-2"> <label class="label">Nutzername</label> </div>
 						<div class="column is-6 c2"> <input name="benutzername" class="input input_field" type="text" placeholder="MeinBenutzername"> </div>
-						<div class="column c3"> <p id="benutzername_info" class="help is-danger info_text">Dieser Nutzername ist bereits vergeben!</p> </div>
+						<div class="column c3"> {{ if eq .NameVergeben "true"}} <p id="benutzername_info" class="help is-danger info_text">Dieser Nutzername ist bereits vergeben!</p> {{end}} </div>
 					</div>
 					
 					<div class="columns">
 						<div class="column c1 is-2"> <label class="label">E-Mail</label> </div>
 						<div class="column is-6 c2"> <input name="email" class="input input_field" type="email" placeholder="example@email.com"> </div>
-						<div class="column c3"> <p id="email_info" class="help is-danger info_text">Diese E-Mail ist bereits vergeben!</p> </div>
+						<div class="column c3"> {{ if eq .EmailVergeben "true"}} <p id="email_info" class="help is-danger info_text">Diese E-Mail ist bereits vergeben!</p> {{end}} </div>
 					</div>
 					
 					<div class="columns">
@@ -34,13 +34,13 @@
 					<div class="columns">
 						<div class="column c1 is-2"> <label class="label">Password wiederholen</label> </div>
 						<div class="column is-6 c2"> <input name="passwortWdhl" class="input input_field" type="password" placeholder=""> </div>
-						<div class="column c3"> <p id="passwort_info" class="help is-danger info_text">Die Passwörter stimmen nicht überein!</p> </div>
+						<div class="column c3"> {{ if eq .PasswortFalsch "true"}} <p id="passwort_info" class="help is-danger info_text">Die Passwörter stimmen nicht überein!</p> {{end}} </div>
 					</div>
 					
 					<div class="columns">
 						<div class="column c1 is-2"> <label class="label"></label> </div>
 						<div class="column is-6 c2"> <input name="datenschutz" type="checkbox">Ich habe die nicht vorhandene Datenschutz- <br>erklärung zur Kenntnis genommen. </div>
-						<div class="column c3"> <p id="datenschutz_info" class="help is-danger info_text">Bitte setzen Sie hier einen Hacken!</p> </div>
+						<div class="column c3"> {{ if eq .DatenschutzFalsch "true"}} <p id="datenschutz_info" class="help is-danger info_text">Bitte setzen Sie hier einen Hacken!</p> {{end}} </div>
 					</div>
 					
 					<div class="columns">
