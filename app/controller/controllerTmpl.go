@@ -95,30 +95,28 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 		var passwort = r.FormValue("passwort")
 		var nutzer = GetAlleNutzer()
 
+		var isExecuted bool = false
+
 		for _, arr := range nutzer {
 			if arr.Name == nutzername && arr.Name != "" {
 				if arr.Passwort == passwort {
 					SessionNutzerID = arr.DocID
 					fmt.Println(SessionNutzerID)
 					r.Method = ""
+					isExecuted = true
+					//http.Post("http://localhost/l_meinekarteikaesten", "", nil)
 					http.Redirect(w, r, "http://localhost/l_meinekarteikaesten", http.StatusSeeOther)
 
-				} else {
-					p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
-					t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
-
-					t.ExecuteTemplate(w, "layout", p)
 				}
-
-			} else {
-				p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
-				t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
-
-				t.ExecuteTemplate(w, "layout", p)
 			}
-
 		}
 
+		if !isExecuted {
+			p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
+			t, _ := template.ParseFiles("./templates/b_home.html", "./templates/nL_not_logged_in.html")
+
+			t.ExecuteTemplate(w, "layout", p)
+		}
 	} else {
 		fmt.Println("Joooo Broo")
 		p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}
@@ -525,7 +523,6 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_meinProfil(w http.ResponseWriter, r *http.Request) {
-<<<<<<< HEAD
 	if r.Method == "POST" {
 		fmt.Println("Ich bin hier")
 		r.ParseForm()
@@ -571,8 +568,6 @@ func L_meinProfil(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-=======
->>>>>>> master
 	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(GetKarteikastenAnz())}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil.html")
 
