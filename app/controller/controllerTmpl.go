@@ -102,6 +102,7 @@ func NL_Home(w http.ResponseWriter, r *http.Request) {
 					fmt.Println(SessionNutzerID)
 					r.Method = ""
 					http.Redirect(w, r, "http://localhost/l_meinekarteikaesten", http.StatusSeeOther)
+					break
 
 				} else {
 					p := tmp_b_home{Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(GetKarteikastenAnz())}

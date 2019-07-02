@@ -163,9 +163,18 @@ func UpdateKarteikastenKarte(KastenID string, KartenID int, n Nutzer, Richtig bo
 	wd := GetKKWiederholungenByNutzer(kk, n)
 	//k := kk.Karten[KartenID]
 
+	//Get Fortschritt index
+	FortschrittIndex := -1
+
+	for i, _ := range kk.Fortschritt {
+		if kk.Fortschritt[i].ID == n.DocID {
+			FortschrittIndex = i
+		}
+	}
+
 	//Richtig
 	if Richtig == true {
-		//nur wenn Fortschritt kleriner 4 ++
+		//nur wenn Fortschritt kleiner 4 ++
 
 		//damit es beim zurückspringen nicht zu "out of bounce" kommt
 		if KartenID == -1 {
@@ -173,7 +182,7 @@ func UpdateKarteikastenKarte(KastenID string, KartenID int, n Nutzer, Richtig bo
 		}
 
 		if wd[KartenID] < 4 {
-			wd[KartenID]++
+			kk.Fortschritt[FortschrittIndex].Wiederholung[KartenID]++
 		}
 	}
 
@@ -186,7 +195,7 @@ func UpdateKarteikastenKarte(KastenID string, KartenID int, n Nutzer, Richtig bo
 		}
 
 		if wd[KartenID] > 0 {
-			wd[KartenID]--
+			kk.Fortschritt[FortschrittIndex].Wiederholung[KartenID]--
 		}
 	}
 
@@ -194,6 +203,9 @@ func UpdateKarteikastenKarte(KastenID string, KartenID int, n Nutzer, Richtig bo
 
 	//fmt.Println("id: ", kk.DocID)
 	//fmt.Println("Rev: ", kk.DocRev)
+
+	fmt.Println(Richtig)
+	fmt.Println(kk)
 
 	//altes Löschen & neues rein
 	db.Set(kk.DocID, kk2Map(kk))
