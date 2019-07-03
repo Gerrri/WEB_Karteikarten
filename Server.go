@@ -9,12 +9,14 @@ func main() {
 
 	//Pages Logged in
 	http.HandleFunc("/l_home", controller.L_Home)
+	http.HandleFunc("/l_changeKK", controller.L_changeKK)
 	http.HandleFunc("/l_aufdecken", controller.L_aufdecken)
 	http.HandleFunc("/l_karteikaesten", controller.L_karteikaesten)
 	http.HandleFunc("/l_lernen", controller.L_lernen)
 	http.HandleFunc("/l_meinekarteikaesten", controller.L_meinekarteikaesten)
 	http.HandleFunc("/l_meinekarteikaesten_popup", controller.L_meinekarteikaesten_popup)
 	http.HandleFunc("/l_meinProfil", controller.L_meinProfil)
+
 
 	http.HandleFunc("/l_meinProfil_popup", controller.L_meinProfil_popup)
 	http.HandleFunc("/l_meinProfil_popup_pic", controller.L_meinProfil_popup_pic)

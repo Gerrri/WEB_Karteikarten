@@ -1,0 +1,139 @@
+{{ define "content" }}
+					    <h1 class="text_headline">Karteikasten bearbeiten</h1>
+						  <p>Hier kannst du eine neue Kartei erstellen oder eine vorhandene nach Bedarf bearbeiten.</p>
+						  <div class="columns">
+								<div class="column has-background-light Content_Box_reg is-paddingless">
+									<div class="green_line"></div>
+									<div class="mod_content">
+										<h1 style="font-weight: bold; font-size: 20px; margin-bottom: 4%">Allgemeine Daten</h1>
+										
+										<div class="input_fields">
+											
+												<form method="POST" action="/l_meinekarteikaesten?Kasten={{.KastenID}}&Update=1">
+
+
+													<div class="columns">
+													  <div class="column is-2"> <label class="label">Titel</label> </div>
+													  <div class="column is-6"> <input class="input" type="text" name="titel" value="{{.KastenTitel}}"> </div>
+													  <div class="column">
+														<p class="help is-danger "></p>
+													  </div>
+													</div>
+										
+													<div class="columns">
+													  <div class="column is-2"> <label class="label">Kategorie</label> </div>
+													  <div class="column is-6">
+														<div class="control">
+														  <div class="select is-fullwidth" style="width:100%;">
+															<select name="kategorie">
+														
+															  <optgroup label="Naturwissenschaften">
+																<option value="Biologie">Biologie</option>
+																<option value="Chemie">Chemie</option>
+																<option value="Elektrotechnik">Elektrotechnik</option>
+																<option value="Informatik">Informatik</option>
+																<option value="Mathematik">Mathematik</option>
+																<option value="Medizin">Medizin</option>
+																<option value="Naturkunde">Naturkunde</option>
+																<option value="Physik">Physik</option>
+										
+															  </optgroup>
+															  <optgroup label="Sprachen">
+																<option value="Chinesisch">Chinesisch</option>
+																<option value="Deutsch">Deutsch</option>
+																<option value="Englisch">Englisch</option>
+																<option value="Französisch">Französisch</option>
+																<option value="Griechisch">Griechisch</option>
+																<option value="Italienisch">Italienisch</option>
+																<option value="Latein">Latein</option>
+																<option value="Russisch">Russisch</option>
+										
+															  </optgroup>
+															  <optgroup label="Gesellschaft">
+																<option value="Ethik">Ethik</option>
+																<option value="Geschichte">Geschichte</option>
+																<option value="Literatur">Literatur</option>
+																<option value="Musik">Musik</option>
+																<option value="Politik">Politik</option>
+																<option value="Recht">Recht</option>
+																<option value="Soziales">Soziales</option>
+																<option value="Sport">Sport</option>
+																<option value="Verkehrskunde">Verkehrskunde</option>
+										
+															  </optgroup>
+															  <optgroup label="Wirtschaft">
+																<option value="BWL">BWL</option>
+																<option value="Finanzen">Finanzen</option>
+																<option value="Landwirtschaft">Landwirtschaft</option>
+																<option value="Marketing">Marketing</option>
+																<option value="VWL">VWL</option>
+										
+															  </optgroup>
+															  <optgroup label="Geisteswissenschaften">
+																<option value="Kriminilogie">Kriminilogie</option>
+																<option value="Philosophie">Philosophie</option>
+																<option value="Psychologie">Psychologie</option>
+																<option value="Pädagogik">Pädagogik</option>
+																<option value="Theologie">Theologie</option>
+										
+															  </optgroup>
+															  <optgroup label="Sonstige">
+																<option value="Sonstige">Sonstige</option>
+															  </optgroup>
+										
+										
+															</select>
+														  </div>
+														</div>
+										
+										
+													  </div>
+													  <div class="column">
+														<p class="help is-danger" style="text-align: left;"></p>
+													  </div>
+													</div>
+										
+													<div class="columns">
+													  <div class="column is-2"> <label class="label">Beschreibung</label> </div>
+													  <div class="column is-6 "> <textarea class="textarea" name="beschreibung" placeholder="Beschreibung">{{.KastenBeschr}}</textarea> </div>
+													  <div class="column">
+														<p class="help is-danger "></p>
+													  </div>
+													</div>
+										
+													<div class="columns">
+													  <div class="column is-2"> <label class="label"> Sichtbarkeit </label> </div>
+													  <div class="column is-6">
+														<div class="control">
+														  <label class="radio">
+															<input type="radio" name="answer" value="Öffentlich" >
+															Öffentlich
+														  </label>
+														  <label class="radio" style="margin-left: 10%;">
+															<input type="radio" name="answer" value="Privat" checked>
+															Privat
+														  </label>
+														</div>
+													  </div>
+													  <div class="column">
+														<p class="help is-danger "></p>
+													  </div>
+													</div>
+										
+													<div class="columns">
+													  <div class="column is-2"> <label class="label"></label> </div>
+													  <div class="column is-6"> <button type="submit" class="button is-warning text_white" style="margin-right: 15%; text-align: centered;"><b>Speichern und weiter</b></div>
+													  <div class="column"></div>
+													</div>
+										</form>
+										</div>
+										
+									
+									</div>
+								
+								
+								</div>
+					    </div>
+
+
+{{ end }}
