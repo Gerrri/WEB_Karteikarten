@@ -23,7 +23,7 @@
 									</div>
 									
 									<div class="column is-2">
-										<a href="l_modkarteikasten2?Kasten={{$.KastenID}}&Karte=0&Switch=1" class="button is-small is-success is-pulled-right btn_del_bearbeiten" style="margin-top: 15%">{{.SwitchName}}</a>
+										<a href="l_changeKK?Kasten={{$.KastenID}}" class="button is-small is-success is-pulled-right btn_del_bearbeiten" style="margin-top: 15%">Bearbeiten</a>
 									</div>
 								  
 								    <div class="column is-2 is-paddingless">
@@ -135,6 +135,9 @@
 											<p class="control">
 												<button type="submit" class="button is-warning text_white" style=" margin-bottom: 5%">Speichern</button>
 												<a href="l_meinekarteikaesten" class="button is-danger is-center" style="margin-left: 2%">Abbrechen</a>
+												<a href="l_modkarteikasten2?Kasten={{$.KastenID}}&Karte=0&Switch=1" class="button  is-success is-center" style="margin-left: 20%">{{.SwitchName}}</a>
+
+											
 											</p>
 										  </div>
 										</div>

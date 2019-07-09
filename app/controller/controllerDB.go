@@ -134,6 +134,10 @@ func GetKarteikartenAnzByFach(k Karteikasten, fach int, n Nutzer) (anz int) {
 	return anzahl_fach
 }
 
+func GetKarteikartenAnzByKarteikasten(kk Karteikasten)(anzahl int ){
+	return len(kk.Karten)
+}
+
 // ############################### Ende Kartei Methoden ################################ //
 
 func GetKKWiederholungenByNutzer(k Karteikasten, n Nutzer) (wd []int) {
@@ -156,6 +160,11 @@ func GetKKWiederholungenByNutzer(k Karteikasten, n Nutzer) (wd []int) {
 }
 
 // ############################### START Karteikasten Methoden ############################### //
+
+func UpdateKarteikasten(kk Karteikasten){
+	var db *couchdb.Database = GetDB()
+	db.Set(kk.DocID, kk2Map(kk))
+}
 
 func UpdateKarteikastenKarte(KastenID string, KartenID int, n Nutzer, Richtig bool) {
 	var db *couchdb.Database = GetDB()
@@ -492,6 +501,8 @@ func TerminalOutKarteikasten(k Karteikasten) {
 // ############################### ENDE Karteikasten Methoden ############################### //
 
 // ############################### START Nutzer Methoden ############################### //
+
+
 
 //Wenn nicht bereits vorhanden
 func AddKK2NutzerGespeichert(kk Karteikasten, n Nutzer) {
