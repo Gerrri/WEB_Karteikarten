@@ -9,6 +9,8 @@ import (
 
 var SessionNutzerID = ""
 
+
+
 type tmp_b_home struct {
 	Nutzername         string
 	Nutzer             string
@@ -73,6 +75,7 @@ type tmp_nL_Karteikasten struct {
 	BildKlein             string
 }
 
+
 type tmp_L_changeKK struct {
 	Nutzername         string
 	MeineKarteien      string
@@ -85,6 +88,7 @@ type tmp_L_changeKK struct {
 	KastenSichtbarkeit string
 	checkedprivate     string
 	checkedpublics     string
+
 }
 
 type tmp_L_MeineKarteikaesten struct {
@@ -369,6 +373,8 @@ func L_karteikaesten(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	
+
 	var link = ""
 	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
 		link = "/icons/Mein-Profil.svg"
@@ -588,8 +594,10 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 	radio := ""
 	if r.Method == "POST" {
 
+
 		//von changeKK
 		if r.FormValue("Update") != "" {
+
 
 			var query = r.URL.Query()
 
@@ -634,9 +642,11 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 			kk.Titel = titel
 			kk.Beschreibung = beschreibung
 
+
 			UpdateKarteikasten(kk)
 
 		} else if r.FormValue("kategorieFilter") != "" {
+
 			r.ParseForm()
 			kategorieFilter = r.FormValue("kategorieFilter")
 			fmt.Println("kategorieFilter: ", kategorieFilter)
@@ -920,6 +930,7 @@ func L_changeKK(w http.ResponseWriter, r *http.Request) {
 	KID := (query["Kasten"])[0]
 	kk := GetKarteikastenByid(KID)
 
+
 	data := tmp_L_changeKK{
 		Nutzername:         GetNutzerById(SessionNutzerID).Name,
 		MeineKarteien:      strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)),
@@ -935,6 +946,7 @@ func L_changeKK(w http.ResponseWriter, r *http.Request) {
 		data.checkedpublics = "checked"
 		data.checkedprivate = ""
 	} else {
+
 		data.checkedpublics = ""
 		data.checkedprivate = "checked"
 	}
@@ -1083,8 +1095,9 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("kk: ", kasten)
 
-	AddKK2NutzerGespeichert(kasten, GetNutzerById(SessionNutzerID))
 
+	AddKK2NutzerGespeichert(kasten,GetNutzerById(SessionNutzerID) )
+	
 	for _, element := range GetKKWiederholungenByNutzer(kasten, GetNutzerById(SessionNutzerID)) {
 		data.Wiederholungen = append(data.Wiederholungen, element)
 	}
@@ -1094,8 +1107,10 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 
 	//fmt.Println("AlleFortschritte: ", data.Wiederholungen)
 	fmt.Println("akt: ", akt)
+
 	fmt.Println("data :", GetKKWiederholungenByNutzer(kasten, GetNutzerById(SessionNutzerID)))
 	fmt.Println("Nutzer: ", GetNutzerById(SessionNutzerID))
+
 
 	data.AktuelleKarte = karte
 	data.AktuelleKarte.NutzerFach = strconv.Itoa(data.Wiederholungen[akt])
