@@ -1,100 +1,100 @@
 {{ define "content" }}
-						<h1 class="text_headline">Meine Karteikästen</h1>
-						<h1 class="text_headline_klein">Hier findest du deine Karteien, sowie öffentliche Karteien, die du angefangen hast zu Lernen.</h1>
-						<div class="dropdown_sort">
-							  <!-- SUCHE 
+<h1 class="text_headline">Meine Karteikästen</h1>
+<h1 class="text_headline_klein">Hier findest du deine Karteien, sowie öffentliche Karteien, die du angefangen hast zu Lernen.</h1>
+<div class="dropdown_sort">
+	<!-- SUCHE
 								<div class="suche is-pulled-right">
 										<input class="input" type="text" placeholder="Suche ...">
 								</div>
 -->
 
-							  <!-- DROPDOWN -->
-									<div class="dropdown is-right is-active is-pulled-right">
-									  <div class="dropdown-trigger">
-										
-									  </div>
-									  <div class="dropdown-menu" id="dropdown-menu6" role="menu">
+	<!-- DROPDOWN -->
+	<div class="dropdown is-right is-active is-pulled-right">
+		<div class="dropdown-trigger">
 
-											<form class="is-pulled-right" method="POST" action="/l_meinekarteikaesten">
-												<div class="control is-pulled-right">
-												  <div class="select" style="width:100%;">
-														<select name="kategorieFilter" onchange="this.form.submit()">
-																  <option value="Alle">Filtern nach ...</option>
-																<optgroup label="Hauptkategorien">
-																  <option value="Naturwissenschaften">Naturwissenschaften</option>
-																  <option value="Sprachen">Sprachen</option>
-																  <option value="Gesellschaft">Gesellschaft</option>
-																  <option value="Wirtschaft">Wirtschaft</option>
-																  <option value="Geisteswissenschaften">Geisteswissenschaften</option>
-																  <option value="Sonstige">Sonstige</option>
-																	  
-																<optgroup label="Naturwissenschaften">
-																  <option value="Biologie">Biologie</option>
-																  <option value="Chemie">Chemie</option>
-																  <option value="Elektrotechnik">Elektrotechnik</option>
-																  <option value="Informatik">Informatik</option>
-																  <option value="Mathematik">Mathematik</option>
-																  <option value="Medizin">Medizin</option>
-																  <option value="Naturkunde">Naturkunde</option>
-																  <option value="Physik">Physik</option>
-										  
-																</optgroup>
-																<optgroup label="Sprachen">
-																  <option value="Chinesisch">Chinesisch</option>
-																  <option value="Deutsch">Deutsch</option>
-																  <option value="Englisch">Englisch</option>
-																  <option value="Französisch">Französisch</option>
-																  <option value="Griechisch">Griechisch</option>
-																  <option value="Italienisch">Italienisch</option>
-																  <option value="Latein">Latein</option>
-																  <option value="Russisch">Russisch</option>
-										  
-																</optgroup>
-																<optgroup label="Gesellschaft">
-																  <option value="Ethik">Ethik</option>
-																  <option value="Geschichte">Geschichte</option>
-																  <option value="Literatur">Literatur</option>
-																  <option value="Musik">Musik</option>
-																  <option value="Politik">Politik</option>
-																  <option value="Recht">Recht</option>
-																  <option value="Soziales">Soziales</option>
-																  <option value="Sport">Sport</option>
-																  <option value="Verkehrskunde">Verkehrskunde</option>
-										  
-																</optgroup>
-																<optgroup label="Wirtschaft">
-																  <option value="BWL">BWL</option>
-																  <option value="Finanzen">Finanzen</option>
-																  <option value="Landwirtschaft">Landwirtschaft</option>
-																  <option value="Marketing">Marketing</option>
-																  <option value="VWL">VWL</option>
-										  
-																</optgroup>
-																<optgroup label="Geisteswissenschaften">
-																  <option value="Kriminilogie">Kriminilogie</option>
-																  <option value="Philosophie">Philosophie</option>
-																  <option value="Psychologie">Psychologie</option>
-																  <option value="Pädagogik">Pädagogik</option>
-																  <option value="Theologie">Theologie</option>
-										  
-																</optgroup>
-																<optgroup label="Sonstige">
-																  <option value="Sonstige">Sonstige</option>
-																</optgroup>
-										  
-										  
-															  </select>
-												  </div>
-										
-												</div>
-												
-										</form>
-								<!--		<div class="dropdown-content">
+		</div>
+		<div class="dropdown-menu" id="dropdown-menu6" role="menu">
+
+			<form class="is-pulled-right" method="POST" action="/l_meinekarteikaesten">
+				<div class="control is-pulled-right">
+					<div class="select" style="width:100%;">
+						<select name="kategorieFilter" onchange="this.form.submit()">
+							<option value="Alle">Filtern nach ...</option>
+							<optgroup label="Hauptkategorien">
+								<option value="Naturwissenschaften">Naturwissenschaften</option>
+								<option value="Sprachen">Sprachen</option>
+								<option value="Gesellschaft">Gesellschaft</option>
+								<option value="Wirtschaft">Wirtschaft</option>
+								<option value="Geisteswissenschaften">Geisteswissenschaften</option>
+								<option value="Sonstige">Sonstige</option>
+
+							<optgroup label="Naturwissenschaften">
+								<option value="Biologie">Biologie</option>
+								<option value="Chemie">Chemie</option>
+								<option value="Elektrotechnik">Elektrotechnik</option>
+								<option value="Informatik">Informatik</option>
+								<option value="Mathematik">Mathematik</option>
+								<option value="Medizin">Medizin</option>
+								<option value="Naturkunde">Naturkunde</option>
+								<option value="Physik">Physik</option>
+
+							</optgroup>
+							<optgroup label="Sprachen">
+								<option value="Chinesisch">Chinesisch</option>
+								<option value="Deutsch">Deutsch</option>
+								<option value="Englisch">Englisch</option>
+								<option value="Französisch">Französisch</option>
+								<option value="Griechisch">Griechisch</option>
+								<option value="Italienisch">Italienisch</option>
+								<option value="Latein">Latein</option>
+								<option value="Russisch">Russisch</option>
+
+							</optgroup>
+							<optgroup label="Gesellschaft">
+								<option value="Ethik">Ethik</option>
+								<option value="Geschichte">Geschichte</option>
+								<option value="Literatur">Literatur</option>
+								<option value="Musik">Musik</option>
+								<option value="Politik">Politik</option>
+								<option value="Recht">Recht</option>
+								<option value="Soziales">Soziales</option>
+								<option value="Sport">Sport</option>
+								<option value="Verkehrskunde">Verkehrskunde</option>
+
+							</optgroup>
+							<optgroup label="Wirtschaft">
+								<option value="BWL">BWL</option>
+								<option value="Finanzen">Finanzen</option>
+								<option value="Landwirtschaft">Landwirtschaft</option>
+								<option value="Marketing">Marketing</option>
+								<option value="VWL">VWL</option>
+
+							</optgroup>
+							<optgroup label="Geisteswissenschaften">
+								<option value="Kriminilogie">Kriminilogie</option>
+								<option value="Philosophie">Philosophie</option>
+								<option value="Psychologie">Psychologie</option>
+								<option value="Pädagogik">Pädagogik</option>
+								<option value="Theologie">Theologie</option>
+
+							</optgroup>
+							<optgroup label="Sonstige">
+								<option value="Sonstige">Sonstige</option>
+							</optgroup>
+
+
+						</select>
+					</div>
+
+				</div>
+
+			</form>
+			<!--		<div class="dropdown-content">
 
 
 										  <div class="dropdown-item">
 											<p> Kartenanzahl</p>
-										  </div>	
+										  </div>
 
 										  <div class="dropdown-item">
 											<p> Kategorien</p>
@@ -111,125 +111,137 @@
 										</div>
 
 								-->
-									  </div>
-									</div>
-								</div>
-
-		<!-- Karteikästen -->					  
-		<div class="columns is-multiline">
-	
-							
-						<!-- MeineKarteikaesten -->
-						<div class="column is-12 kategorie_head"> Selbst erstelle Karteikästen</div>
-						{{range .MeineKarteikaesten}} 
-						
-													<div class="column is-one-quarter kartei">
-													
-													<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
-													
-													<div class="has_background_light kartei">
-														<div class="columns">
-															<div class="column">
-																	<h1 class="kartei_content_head"><a class="text_color_black" href="l_showKarteikarten?Kasten={{.DocID}}&Karte=0">{{.Titel}}</a></h1>
-															</div>
-															<div class="column is-5 is-paddingless">
-																
-																		<div id="hex1_kk" class="hexagon-wrapper">
-																		<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
-																	</div>	
-															</div>
-														</div>
-													</div>
-													
-													<div class="has_background_light kartei">
-														<p class="kartei_content">
-																{{.Beschreibung}}
-														</p>
-													
-													</div>
-
-													<div class="has_background_light kartei">
-															<div class="columns kartei_content" style="margin-top:20px;">
-																<div class="column"><nobr>Sichtbarkeit:</nobr></div>
-																<div class="column"><b>{{.Sichtbarkeit}}</b></div>
-															</div>
-															<div class="columns kartei_content">
-																<div class="column"><nobr>Fortschritt:</nobr></div>
-																<div class="column"><b>{{.FortschrittP}}%</b></div>
-															</div>
-													</div>
-													
-													<div class="has_background_light kartei is-paddingless">
-															<div class="columns kartei_content">
-																<div class="column is-one-third"><a href="l_lernen?Kasten={{.DocID}}&Karte=0" 		class="button is-warning is-small">Lernen</a></div>
-																<div class="column is-one-third"><a href="l_modkarteikasten2?Kasten={{.DocID}}&Karte=0"   class="button is-success is-small">Bearbeiten</a></div>
-																<div class="column is-one-third"><a href="l_meinekarteikaesten_popup?Kasten={{.DocID}}"     class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
-													</div>
-															
-														</div>
-												</div>	
-						{{end}}
-						<!-- /MeineKarteikaesten -->
-
-
-						<!-- GespeicherteKarteikaesten -->
-						<div class="column is-12 kategorie_head"> Gespeicherte Karteikästen</div>
-						{{range .GespeicherteKarteikaesten}} 
-						
-													<div class="column is-one-quarter kartei">
-													
-													<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
-													
-													<div class="has_background_light kartei">
-														<div class="columns">
-															<div class="column">
-																	<h1 class="kartei_content_head"><a class="text_color_black" href="l_showKarteikarten">{{.Titel}}</a></h1>
-															</div>
-															<div class="column is-5 is-paddingless">
-																
-																		<div id="hex1_kk" class="hexagon-wrapper">
-																		<div id="color1" class="hexagon"><h1 id="hex_text">{{.Anzahl}}</h1> </div>
-																	</div>	
-															</div>
-														</div>
-													</div>
-													
-													<div class="has_background_light kartei">
-														<p class="kartei_content">
-																{{.Beschreibung}}
-														</p>
-													
-													</div>
-
-													<div class="has_background_light kartei">
-															<div class="columns kartei_content" style="margin-top:20px;">
-																<div class="column"><nobr>Sichtbarkeit:</nobr></div>
-																<div class="column"><b>{{.Sichtbarkeit}}</b></div>
-															</div>
-															<div class="columns kartei_content">
-																<div class="column"><nobr>Fortschritt:</nobr></div>
-																<div class="column"><b>{{.FortschrittP}}%</b></div>
-															</div>
-													</div>
-													
-													<div class="has_background_light kartei is-paddingless">
-															<div class="columns kartei_content">
-																<div class="column is-one-third"><a href="l_lernen?Kasten={{.DocID}}&Karte=0" 		class="button is-warning is-small">Lernen</a></div>
-																<div class="column is-one-third"><a href="l_meinekarteikaesten_popup?Kasten={{.DocID}}"     class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg"/> </a></div>
-													</div>
-															
-														</div>
-												</div>	
-						{{end}}
-						<!-- /MeineKarteikaesten -->
-
-
-						
-
-						
 		</div>
-				  
-						  	
-							 
+	</div>
+</div>
+
+<!-- Karteikästen -->
+<div class="columns is-multiline">
+
+
+	<!-- MeineKarteikaesten -->
+	<div class="column is-12 kategorie_head"> Selbst erstelle Karteikästen</div>
+	{{range .MeineKarteikaesten}}
+
+	<div class="column is-one-quarter kartei">
+
+		<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
+
+		<div class="has_background_light kartei">
+			<div class="columns">
+				<div class="column">
+					<h1 class="kartei_content_head"><a class="text_color_black" href="l_showKarteikarten?Kasten={{.DocID}}&Karte=0">{{.Titel}}</a></h1>
+				</div>
+				<div class="column is-5 is-paddingless">
+
+					<div id="hex1_kk" class="hexagon-wrapper">
+						<div id="color1" class="hexagon">
+							<h1 id="hex_text">{{.Anzahl}}</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="has_background_light kartei">
+			<p class="kartei_content">
+				{{.Beschreibung}}
+			</p>
+
+		</div>
+
+		<div class="has_background_light kartei">
+			<div class="columns kartei_content" style="margin-top:20px;">
+				<div class="column">
+					<nobr>Sichtbarkeit:</nobr>
+				</div>
+				<div class="column"><b>{{.Sichtbarkeit}}</b></div>
+			</div>
+			<div class="columns kartei_content">
+				<div class="column">
+					<nobr>Fortschritt:</nobr>
+				</div>
+				<div class="column"><b>{{.FortschrittP}}%</b></div>
+			</div>
+		</div>
+
+		<div class="has_background_light kartei is-paddingless">
+			<div class="columns kartei_content">
+				<div class="column is-one-third"><a href="l_lernen?Kasten={{.DocID}}&Karte=0" class="button is-warning is-small">Lernen</a></div>
+				<div class="column is-one-third"><a href="l_modkarteikasten2?Kasten={{.DocID}}&Karte=0" class="button is-success is-small">Bearbeiten</a></div>
+				<div class="column is-one-third"><a href="l_meinekarteikaesten_popup?Kasten={{.DocID}}" class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg" /> </a></div>
+			</div>
+
+		</div>
+	</div>
+	{{end}}
+	<!-- /MeineKarteikaesten -->
+
+
+	<!-- GespeicherteKarteikaesten -->
+	<div class="column is-12 kategorie_head"> Gespeicherte Karteikästen</div>
+	{{range .GespeicherteKarteikaesten}}
+
+	<div class="column is-one-quarter kartei">
+
+		<div class="has_background_primary_green kartei_head">{{.Unterkategorie}}</div>
+
+		<div class="has_background_light kartei">
+			<div class="columns">
+				<div class="column">
+					<h1 class="kartei_content_head"><a class="text_color_black" href="l_showKarteikarten?Kasten={{.DocID}}&Karte=0">{{.Titel}}</a></h1>
+				</div>
+				<div class="column is-5 is-paddingless">
+
+					<div id="hex1_kk" class="hexagon-wrapper">
+						<div id="color1" class="hexagon">
+							<h1 id="hex_text">{{.Anzahl}}</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="has_background_light kartei">
+			<p class="kartei_content">
+				{{.Beschreibung}}
+			</p>
+
+		</div>
+
+		<div class="has_background_light kartei">
+			<div class="columns kartei_content" style="margin-top:20px;">
+				<div class="column">
+					<nobr>Sichtbarkeit:</nobr>
+				</div>
+				<div class="column"><b>{{.Sichtbarkeit}}</b></div>
+			</div>
+			<div class="columns kartei_content">
+				<div class="column">
+					<nobr>Fortschritt:</nobr>
+				</div>
+				<div class="column"><b>{{.FortschrittP}}%</b></div>
+			</div>
+		</div>
+
+		<div class="has_background_light kartei is-paddingless">
+			<div class="columns kartei_content">
+				<div class="column is-one-third"><a href="l_lernen?Kasten={{.DocID}}&Karte=0" class="button is-warning is-small">Lernen</a></div>
+				<div class="column is-one-third"><a href="l_meinekarteikaesten_popup?Kasten={{.DocID}}" class="button is-danger is-small"> <img class="menu_icon" src="/icons/Delete.svg" /> </a></div>
+			</div>
+
+		</div>
+	</div>
+	{{end}}
+	<!-- /MeineKarteikaesten -->
+
+
+
+
+
+</div>
+
+
+
 
 {{ end }}

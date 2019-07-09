@@ -28,6 +28,10 @@ type tmp_b_home struct {
 	MitgliedSeit       string
 	Bild               string
 	BildKlein          string
+	FPW                string
+	FEM                string
+	FPWN               string
+	Richtig            string
 }
 
 type tmp_L_lernen struct {
@@ -71,18 +75,20 @@ type tmp_nL_Karteikasten struct {
 	BildKlein             string
 }
 
-type tmp_L_changeKK struct{
-	Nutzername            string
-	MeineKarteien         string
-	Karteien              string
-	KastenID			  string
+
+type tmp_L_changeKK struct {
+	Nutzername         string
+	MeineKarteien      string
+	Karteien           string
+	KastenID           string
 	BildKlein          string
-	KastenTitel string
-	KastenKategorie	string
-	KastenBeschr string
-	KastenSichtbarkeit string 
-	checkedprivate	string
-	checkedpublics string
+	KastenTitel        string
+	KastenKategorie    string
+	KastenBeschr       string
+	KastenSichtbarkeit string
+	checkedprivate     string
+	checkedpublics     string
+
 }
 
 type tmp_L_MeineKarteikaesten struct {
@@ -181,10 +187,31 @@ func NL_karteikaesten(w http.ResponseWriter, r *http.Request) {
 		Sonstige:              []Karteikasten{},
 	}
 
+	kategorie := ""
+
+	//POST Dropdown
+	//Post auswertung
+	if r.Method == "POST" {
+
+		r.ParseForm()
+		kategorie = r.FormValue("kategorie")
+		fmt.Println("kategorie: ", kategorie)
+		//Karteikästen nach Kategorien Laden
+
+	}
+
 	kk := []Karteikasten{}
-	kk = GetAlleKarteikaestenOeffentlich()
+
+	if kategorie == "" {
+		kk = GetAlleKarteikaestenOeffentlich()
+	} else {
+		kk = SelectKarteikaestenByKategorie(GetAlleKarteikaestenOeffentlich(), kategorie)
+	}
 
 	for _, element := range kk {
+
+		element.Anzahl = GetKarteikartenAnzByKarteikasten(element)
+
 		if element.Kategorie == "Naturwissenschaften" {
 			data.Naturwissenschaften = append(data.Naturwissenschaften, element)
 		} else if element.Kategorie == "Sprachen" {
@@ -287,7 +314,7 @@ func L_Home(w http.ResponseWriter, r *http.Request) {
 		link = GetNutzerById(SessionNutzerID).Bild
 	}
 
-	p := tmp_b_home{BildKlein: link, Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(len(GetAlleKarteikaestenOeffentlich()))}
+	p := tmp_b_home{BildKlein: link, Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Lernkarten: strconv.Itoa(GetKartenAnz()), Karteien: strconv.Itoa(len(GetAlleKarteikaestenOeffentlich()))}
 	t, _ := template.ParseFiles("./templates/b_home.html", "./templates/L_logged_in.html")
 	p.BildKlein = link
 	t.ExecuteTemplate(w, "layout", p)
@@ -569,7 +596,8 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 
 
 		//von changeKK
-		if r.FormValue("Update") != ""{
+		if r.FormValue("Update") != "" {
+
 
 			var query = r.URL.Query()
 
@@ -615,11 +643,10 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 			kk.Beschreibung = beschreibung
 
 
-			
 			UpdateKarteikasten(kk)
-		
 
-		}else if r.FormValue("kategorieFilter") != "" {
+		} else if r.FormValue("kategorieFilter") != "" {
+
 			r.ParseForm()
 			kategorieFilter = r.FormValue("kategorieFilter")
 			fmt.Println("kategorieFilter: ", kategorieFilter)
@@ -722,6 +749,20 @@ func L_meinekarteikaesten(w http.ResponseWriter, r *http.Request) {
 }
 
 func L_meinProfil(w http.ResponseWriter, r *http.Request) {
+	p := tmp_b_home{
+		Nutzername:        GetNutzerById(SessionNutzerID).Name,
+		Bild:              GetNutzerById(SessionNutzerID).Bild,
+		MitgliedSeit:      GetNutzerById(SessionNutzerID).MitgliedSeit,
+		ErstellteKarteien: strconv.Itoa(len(GetNutzerById(SessionNutzerID).ErstellteKarteien)),
+
+		Nutzer:             strconv.Itoa(GetNutzeranz()),
+		Lernkarten:         strconv.Itoa(GetKartenAnz()),
+		MeineKarteien:      strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)),
+		Karteien:           strconv.Itoa(len(GetAlleKarteikaestenOeffentlich())),
+		ErstellteKartenAnz: strconv.Itoa(GetErstellteKartenAnz(GetNutzerById(SessionNutzerID))),
+		Richtig:            "2",
+	}
+
 	if r.Method == "POST" {
 		fmt.Println("Ich bin hier")
 		r.ParseForm()
@@ -747,24 +788,54 @@ func L_meinProfil(w http.ResponseWriter, r *http.Request) {
 
 		if vorhandenMail {
 			//Fehlermeldung
+			p.FEM = "Fehler"
+			p.Richtig = "1"
 		} else {
 			if passwortNichtGleich {
+				p.FPWN = "Fehler"
+				p.Richtig = "1"
 				//Fehlermeldgung
 			} else {
 				if passwort == nutzer.Passwort {
 
 					if passwortNeu != "" {
 						nutzer.Passwort = passwortNeu
+						p.Richtig = "3"
 					}
 					if email != "" {
+						p.Richtig = "3"
 						nutzer.EMail = email
 					}
 					fmt.Println(nutzer)
 					UpdateNutzer(nutzer)
+				} else {
+					p.FPW = "Fehler"
+					p.Richtig = "1"
 				}
+
 			}
 		}
 
+	}
+
+	var link = ""
+	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
+		link = "/icons/Mein-Profil.svg"
+	} else {
+		link = GetNutzerById(SessionNutzerID).Bild
+	}
+
+	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil.html")
+	p.BildKlein = link
+	p.NutzerEmail = GetNutzerById(SessionNutzerID).EMail
+	t.ExecuteTemplate(w, "layout", p)
+}
+
+func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		DeleteNutzer(SessionNutzerID)
+		r.Method = ""
+		http.Redirect(w, r, "./nl_home", http.StatusSeeOther)
 	}
 
 	var link = ""
@@ -784,25 +855,6 @@ func L_meinProfil(w http.ResponseWriter, r *http.Request) {
 		Karteien:           strconv.Itoa(len(GetAlleKarteikaestenOeffentlich())),
 		ErstellteKartenAnz: strconv.Itoa(GetErstellteKartenAnz(GetNutzerById(SessionNutzerID))),
 	}
-	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil.html")
-	p.BildKlein = link
-	t.ExecuteTemplate(w, "layout", p)
-}
-
-func L_meinProfil_popup(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "POST" {
-		DeleteNutzer(SessionNutzerID)
-		r.Method = ""
-		http.Redirect(w, r, "./nl_home", http.StatusSeeOther)
-	}
-
-	var link = ""
-	if GetNutzerById(SessionNutzerID).Bild == "/icons/Mein-Profil_black.svg" {
-		link = "/icons/Mein-Profil.svg"
-	} else {
-		link = GetNutzerById(SessionNutzerID).Bild
-	}
-	p := tmp_b_home{Nutzername: GetNutzerById(SessionNutzerID).Name, Nutzer: strconv.Itoa(GetNutzeranz()), Lernkarten: strconv.Itoa(GetKartenAnz()), MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), Karteien: strconv.Itoa(len(GetAlleKarteikaestenOeffentlich()))}
 	t, _ := template.ParseFiles("./templates/L_logged_in.html", "./templates/L_meinProfil_popup.html")
 	p.BildKlein = link
 	t.ExecuteTemplate(w, "layout", p)
@@ -877,26 +929,24 @@ func L_changeKK(w http.ResponseWriter, r *http.Request) {
 	//Kastenid auslesen
 	KID := (query["Kasten"])[0]
 	kk := GetKarteikastenByid(KID)
-	
-
-
 
 
 	data := tmp_L_changeKK{
-		Nutzername: GetNutzerById(SessionNutzerID).Name, 
-		MeineKarteien: strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)), 
-		Karteien: strconv.Itoa(len(GetAlleKarteikaestenOeffentlich())),
-		KastenID: KID,
-		KastenTitel: kk.Titel,
-		KastenKategorie: kk.Kategorie,
-		KastenBeschr: kk.Beschreibung,
-		KastenSichtbarkeit: kk.Sichtbarkeit,	
+		Nutzername:         GetNutzerById(SessionNutzerID).Name,
+		MeineKarteien:      strconv.Itoa(GetKarteikastenAnzGespeicherte(SessionNutzerID)),
+		Karteien:           strconv.Itoa(len(GetAlleKarteikaestenOeffentlich())),
+		KastenID:           KID,
+		KastenTitel:        kk.Titel,
+		KastenKategorie:    kk.Kategorie,
+		KastenBeschr:       kk.Beschreibung,
+		KastenSichtbarkeit: kk.Sichtbarkeit,
 	}
 
-	if kk.Sichtbarkeit == "Öffentlich"{
+	if kk.Sichtbarkeit == "Öffentlich" {
 		data.checkedpublics = "checked"
 		data.checkedprivate = ""
-	}else{
+	} else {
+
 		data.checkedpublics = ""
 		data.checkedprivate = "checked"
 	}
@@ -1026,6 +1076,7 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 	}
 
 	kasten.FortschrittP = int(GetKarteikastenFortschritt(kasten, GetNutzerById(SessionNutzerID)))
+	kasten.Anzahl = GetKarteikartenAnzByKarteikasten(kasten)
 
 	//gewählte Karte
 
@@ -1044,6 +1095,7 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("kk: ", kasten)
 
+
 	AddKK2NutzerGespeichert(kasten,GetNutzerById(SessionNutzerID) )
 	
 	for _, element := range GetKKWiederholungenByNutzer(kasten, GetNutzerById(SessionNutzerID)) {
@@ -1055,8 +1107,10 @@ func L_showKarteikarten(w http.ResponseWriter, r *http.Request) {
 
 	//fmt.Println("AlleFortschritte: ", data.Wiederholungen)
 	fmt.Println("akt: ", akt)
-	fmt.Println("data :" , GetKKWiederholungenByNutzer(kasten, GetNutzerById(SessionNutzerID)))
-	fmt.Println("Nutzer: ",GetNutzerById(SessionNutzerID))
+
+	fmt.Println("data :", GetKKWiederholungenByNutzer(kasten, GetNutzerById(SessionNutzerID)))
+	fmt.Println("Nutzer: ", GetNutzerById(SessionNutzerID))
+
 
 	data.AktuelleKarte = karte
 	data.AktuelleKarte.NutzerFach = strconv.Itoa(data.Wiederholungen[akt])
