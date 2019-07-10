@@ -28,57 +28,57 @@
 															<select name="kategorie">
 														
 															  <optgroup label="Naturwissenschaften">
-																<option value="Biologie">Biologie</option>
-																<option value="Chemie">Chemie</option>
-																<option value="Elektrotechnik">Elektrotechnik</option>
-																<option value="Informatik">Informatik</option>
-																<option value="Mathematik">Mathematik</option>
-																<option value="Medizin">Medizin</option>
-																<option value="Naturkunde">Naturkunde</option>
-																<option value="Physik">Physik</option>
+																<option value="Biologie"						{{if eq .KastenUnterKategorie "Biologie"}}selected="selected"{{end}}>Biologie</option>
+																<option value="Chemie"							{{if eq .KastenUnterKategorie "Chemie"}}selected="selected"{{end}}>Chemie</option>
+																<option value="Elektrotechnik"					{{if eq .KastenUnterKategorie "Elektrotechnik"}}selected="selected"{{end}}>Elektrotechnik</option>
+																<option value="Informatik" 						{{if eq .KastenUnterKategorie "Informatik"}}selected="selected"{{end}} >Informatik</option>
+																<option value="Mathematik"						{{if eq .KastenUnterKategorie "Mathematik"}}selected="selected"{{end}} >Mathematik</option>
+																<option value="Medizin"							{{if eq .KastenUnterKategorie "Medizin"}}selected="selected"{{end}} >Medizin</option>
+																<option value="Naturkunde"						{{if eq .KastenUnterKategorie "Naturkunde"}}selected="selected"{{end}} >Naturkunde</option>
+																<option value="Physik"							{{if eq .KastenUnterKategorie "Physik"}}selected="selected"{{end}} >Physik</option>
 										
 															  </optgroup>
 															  <optgroup label="Sprachen">
-																<option value="Chinesisch">Chinesisch</option>
-																<option value="Deutsch">Deutsch</option>
-																<option value="Englisch">Englisch</option>
-																<option value="Französisch">Französisch</option>
-																<option value="Griechisch">Griechisch</option>
-																<option value="Italienisch">Italienisch</option>
-																<option value="Latein">Latein</option>
-																<option value="Russisch">Russisch</option>
+																<option value="Chinesisch"						{{if eq .KastenUnterKategorie "Chinesisch"}}selected="selected"{{end}} >Chinesisch</option>
+																<option value="Deutsch"							{{if eq .KastenUnterKategorie "Deutsch"}}selected="selected"{{end}} >Deutsch</option>
+																<option value="Englisch"						{{if eq .KastenUnterKategorie "Englisch"}}selected="selected"{{end}} >Englisch</option>
+																<option value="Französisch"						{{if eq .KastenUnterKategorie "Französisch"}}selected="selected"{{end}} >Französisch</option>
+																<option value="Griechisch"						{{if eq .KastenUnterKategorie "Griechisch"}}selected="selected"{{end}} >Griechisch</option>
+																<option value="Italienisch"						{{if eq .KastenUnterKategorie "Italienisch"}}selected="selected"{{end}} >Italienisch</option>
+																<option value="Latein"							{{if eq .KastenUnterKategorie "Latein"}}selected="selected"{{end}} >Latein</option>
+																<option value="Russisch"						{{if eq .KastenUnterKategorie "Russisch"}}selected="selected"{{end}} >Russisch</option>
 										
 															  </optgroup>
 															  <optgroup label="Gesellschaft">
-																<option value="Ethik">Ethik</option>
-																<option value="Geschichte">Geschichte</option>
-																<option value="Literatur">Literatur</option>
-																<option value="Musik">Musik</option>
-																<option value="Politik">Politik</option>
-																<option value="Recht">Recht</option>
-																<option value="Soziales">Soziales</option>
-																<option value="Sport">Sport</option>
-																<option value="Verkehrskunde">Verkehrskunde</option>
+																<option value="Ethik"							{{if eq .KastenUnterKategorie "Ethik"}}selected="selected"{{end}} >Ethik</option>
+																<option value="Geschichte"						{{if eq .KastenUnterKategorie "Geschichte"}}selected="selected"{{end}} >Geschichte</option>
+																<option value="Literatur"						{{if eq .KastenUnterKategorie "Literatur"}}selected="selected"{{end}} >Literatur</option>
+																<option value="Musik"							{{if eq .KastenUnterKategorie "Musik"}}selected="selected"{{end}} >Musik</option>
+																<option value="Politik"							{{if eq .KastenUnterKategorie "Politik"}}selected="selected"{{end}} >Politik</option>
+																<option value="Recht"							{{if eq .KastenUnterKategorie "Recht"}}selected="selected"{{end}} >Recht</option>
+																<option value="Soziales"						{{if eq .KastenUnterKategorie "Soziales"}}selected="selected"{{end}} >Soziales</option>
+																<option value="Sport"							{{if eq .KastenUnterKategorie "Sport"}}selected="selected"{{end}} >Sport</option>
+																<option value="Verkehrskunde"					{{if eq .KastenUnterKategorie "Verkehrskunde"}}selected="selected"{{end}} >Verkehrskunde</option>
 										
 															  </optgroup>
 															  <optgroup label="Wirtschaft">
-																<option value="BWL">BWL</option>
-																<option value="Finanzen">Finanzen</option>
-																<option value="Landwirtschaft">Landwirtschaft</option>
-																<option value="Marketing">Marketing</option>
-																<option value="VWL">VWL</option>
+																<option value="BWL"								{{if eq .KastenUnterKategorie "BWL"}}selected="selected"{{end}} >BWL</option>
+																<option value="Finanzen"						{{if eq .KastenUnterKategorie "Finanzen"}}selected="selected"{{end}} >Finanzen</option>
+																<option value="Landwirtschaft"					{{if eq .KastenUnterKategorie "Landwirtschaft"}}selected="selected"{{end}} >Landwirtschaft</option>
+																<option value="Marketing"						{{if eq .KastenUnterKategorie "Marketing"}}selected="selected"{{end}} >Marketing</option>
+																<option value="VWL"								{{if eq .KastenUnterKategorie "VWL"}}selected="selected"{{end}} >VWL</option>
 										
 															  </optgroup>
 															  <optgroup label="Geisteswissenschaften">
-																<option value="Kriminilogie">Kriminilogie</option>
-																<option value="Philosophie">Philosophie</option>
-																<option value="Psychologie">Psychologie</option>
-																<option value="Pädagogik">Pädagogik</option>
-																<option value="Theologie">Theologie</option>
+																<option value="Kriminilogie"					{{if eq .KastenUnterKategorie "Kriminilogie"}}selected="selected"{{end}} >Kriminilogie</option>
+																<option value="Philosophie"						{{if eq .KastenUnterKategorie "Philosophie"}}selected="selected"{{end}} >Philosophie</option>
+																<option value="Psychologie"						{{if eq .KastenUnterKategorie "Psychologie"}}selected="selected"{{end}} >Psychologie</option>
+																<option value="Pädagogik"						{{if eq .KastenUnterKategorie "Pädagogik"}}selected="selected"{{end}} >Pädagogik</option>
+																<option value="Theologie"						{{if eq .KastenUnterKategorie "Theologie"}}selected="selected"{{end}} >Theologie</option>
 										
 															  </optgroup>
 															  <optgroup label="Sonstige">
-																<option value="Sonstige">Sonstige</option>
+																<option value="Sonstige"						{{if eq .KastenUnterKategorie "Sonstige"}}selected="selected"{{end}} >Sonstige</option>
 															  </optgroup>
 										
 										

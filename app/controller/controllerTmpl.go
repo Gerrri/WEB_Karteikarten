@@ -80,7 +80,8 @@ type tmp_L_changeKK struct {
 	KastenID           string
 	BildKlein          string
 	KastenTitel        string
-	KastenKategorie    string
+	KastenOberKategorie    string
+	KastenUnterKategorie string
 	KastenBeschr       string
 	KastenSichtbarkeit string
 	checkedprivate     string
@@ -927,16 +928,19 @@ func L_changeKK(w http.ResponseWriter, r *http.Request) {
 		Karteien:           strconv.Itoa(len(GetAlleKarteikaestenOeffentlich())),
 		KastenID:           KID,
 		KastenTitel:        kk.Titel,
-		KastenKategorie:    kk.Kategorie,
+		KastenOberKategorie:    kk.Kategorie,
+		KastenUnterKategorie: kk.Unterkategorie,
 		KastenBeschr:       kk.Beschreibung,
 		KastenSichtbarkeit: kk.Sichtbarkeit,
+
 	}
+
+	fmt.Println("kategorie: ", data.KastenUnterKategorie)
 
 	if kk.Sichtbarkeit == "Öffentlich" {
 		data.checkedpublics = "checked"
 		data.checkedprivate = ""
 	} else {
-
 		data.checkedpublics = ""
 		data.checkedprivate = "checked"
 	}
